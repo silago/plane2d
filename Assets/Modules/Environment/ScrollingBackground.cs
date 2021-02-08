@@ -19,7 +19,9 @@ namespace Modules.Environment
 
         private Vector3 _halfDist;
         private Vector3 _bgSize;
-        private Camera _cam; 
+        private Camera _cam;
+
+        private bool toStop = false;
 
         void Start() {
             var ul = bg;
@@ -36,8 +38,6 @@ namespace Modules.Environment
             lr.transform.position+= new Vector3( _halfDist.x, -_halfDist.y);
             
             _startPos = transform.position = _cam.transform.position;
-            
-            Debug.Log(_bgSize);
         }
     
         Vector3 GetDirection() {
@@ -57,47 +57,51 @@ namespace Modules.Environment
 
         void UpdatePos(float dt)
         {
-            var dir = Vector3.zero;
             var camPosition = _cam.transform.position;
-            var d = camPosition - _startPos;
-            var taret = _startPos + (d) * speed;
+            var offset = camPosition - _startPos;
+            var taret = _startPos + (offset) * speed;
             
             //taret = camPosition * 0.3f;
             taret.z = 2;
-            transform.position = taret; 
+            transform.position = taret;
         }
 
         private void LateUpdate()
         {
             UpdatePos(Time.deltaTime);
+            if (toStop) return;
          
             var direction = GetDirection(); 
             if (direction == Vector3.zero) {
                 return;
             }
-            //var offset = _startPos + (transform. - _startPos) * speed;
-            
-            
-            S(transform.position);
-            var camPosition = _cam.transform.position;
-            var d = camPosition - _startPos;
-            Debug.Log(d);
-            var d2  = (transform.position - _startPos);
-            Debug.Log(d2);
-            _startPos = _startPos + new Vector3(
+            var offset = new Vector3(
                 _bgSize.x * direction.x,
                 _bgSize.y * direction.y
-            )-d*speed;
-            
-            S(_startPos);
+            )*(1+speed);
+            _startPos = _startPos + offset ;//+ o*2  ;  
         }
 
-        void S( Vector3 s)
+        void S( Vector3 s, string name = "")
         {
             points.Add(_startPos);
-            var x = new GameObject();
-            x.transform.position = s;
-
+            var g = Instantiate(this);
+            g.enabled = false;
+            /*
+            foreach (Transform item in g.transform)
+            {
+                if (g.bg.gameObject != item.gameObject)
+                {
+                    Destroy(item.gameObject);
+                }
+            }
+            */
+            
+            g.transform.position = s;
+            if (name != "")
+            {
+                g.name = name;
+            }
         }
 
         private void OnDrawGizmos()

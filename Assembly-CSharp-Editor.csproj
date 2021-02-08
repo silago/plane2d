@@ -76,6 +76,9 @@
  <Reference Include="YarnSpinner.Unity.Editor">
  <HintPath>/home/silago/unity/plane2d/Library/ScriptAssemblies/YarnSpinner.Unity.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Nrjwolf.Tools.AttachAttributes">
+ <HintPath>/home/silago/unity/plane2d/Library/ScriptAssemblies/Nrjwolf.Tools.AttachAttributes.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>/home/silago/unity/plane2d/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
  </Reference>
@@ -93,6 +96,9 @@
  </Reference>
  <Reference Include="Unity.Timeline">
  <HintPath>/home/silago/unity/plane2d/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ </Reference>
+ <Reference Include="Nrjwolf.Tools.Editor.AttachAttributes">
+ <HintPath>/home/silago/unity/plane2d/Library/ScriptAssemblies/Nrjwolf.Tools.Editor.AttachAttributes.dll</HintPath>
  </Reference>
  <Reference Include="com.unity.multiplayer-weaver.Editor">
  <HintPath>/home/silago/unity/plane2d/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
@@ -141,12 +147,6 @@
  </Reference>
  <Reference Include="com.unity.multiplayer-hlapi.Runtime">
  <HintPath>/home/silago/unity/plane2d/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Nrjwolf.Tools.AttachAttributes">
- <HintPath>/home/silago/unity/plane2d/Library/ScriptAssemblies/Nrjwolf.Tools.AttachAttributes.dll</HintPath>
- </Reference>
- <Reference Include="Nrjwolf.Tools.Editor.AttachAttributes">
- <HintPath>/home/silago/unity/plane2d/Library/ScriptAssemblies/Nrjwolf.Tools.Editor.AttachAttributes.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine">
  <HintPath>/home/silago/Unity/Hub/Editor/2020.1.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
