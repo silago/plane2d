@@ -1,3 +1,75 @@
-Library
-Logs
-obj
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Obj/
+UnityGenerated/
+Library/
+
+# ============== #
+#      TK2D      #
+# ============== #
+Assets/-tk2d
+*-tk2d.asset*
+Assets/Resources/tk2d/*
+/*.apk
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+_ReSharper.*/
+# ===================================#
+# Visual Studio 2015 cache directory #
+# ===================================#
+/.vs/
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+#-------
+Reference/
+/ios*
+Assets/-tk2d.asset
+/Assets/-tk2d.asset
+/Assets/Resources/UserConfig.asset
+/Assets/Resources/UserConfig.asset.meta
+/Export
+/.idea
+/Library
+/Builds
+/Assets/Plugins/Editor/JetBrains
+/Assets/Plugins/Editor/JetBrains.meta
+/.idea/.idea.codedynamycs/.idea/contentModel.xml
+/BeautySalon/.idea/.idea.BeautySalon/.idea/contentModel.xml
+/BeautySalon/.idea/.idea.BeautySalon/.idea/encodings.xml
+/BeautySalon/.idea/.idea.BeautySalon/.idea/indexLayout.xml
+/BeautySalon/.idea/.idea.BeautySalon/.idea/modules.xml
+/BeautySalon/.idea/.idea.BeautySalon/.idea/projectSettingsUpdater.xml
+/BeautySalon/.idea/.idea.BeautySalon/.idea/vcs.xml
+/BeautySalon/.idea/.idea.BeautySalon/.idea/workspace.xml
+/BeautySalon/.idea/.idea.BeautySalon/riderModule.iml
+Downloads
+BeautySalon/obj
+BeautySalon/Builds
+BeautySalon/UserSettings/EditorUserSettings.asset
+BeautySalon/Logs
+BeautySalon/.vimspector.json
+BeautySalon/.vscode
+BeautySalon/Logs
