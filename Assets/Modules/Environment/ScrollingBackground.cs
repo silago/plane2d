@@ -11,6 +11,7 @@ namespace Modules.Environment
         [SerializeField] private float speed = 1f;
         private Vector3 _startPos;
         protected List<Vector3> points = new List<Vector3>();
+        protected Vector3 offset = Vector3.zero;
         
         [SerializeField]
         SpriteRenderer bg;
@@ -38,13 +39,12 @@ namespace Modules.Environment
             lr.transform.position+= new Vector3( _halfDist.x, -_halfDist.y);
             
             _startPos = transform.position = _cam.transform.position;
+            
+            Debug.Log(_bgSize);
         }
     
         Vector3 GetDirection() {
-            //var dist = cam.transform.position - /*transform.position*/ startPos;
-            //var dist = cam.transform.position - transform.position;// startPos;
             var dist = _cam.transform.position -  transform.position;
-            //dist *= speed;
             var x = dist.x > _halfDist.x ? 1 : dist.x < -_halfDist.x ? -1 : 0;
             var y = dist.y > _halfDist.y ? 1 : dist.y < -_halfDist.y ? -1 : 0;
             return new Vector3(
@@ -57,6 +57,7 @@ namespace Modules.Environment
 
         void UpdatePos(float dt)
         {
+            if (toStop) return;
             var camPosition = _cam.transform.position;
             var offset = camPosition - _startPos;
             var taret = _startPos + (offset) * speed;
@@ -64,6 +65,10 @@ namespace Modules.Environment
             //taret = camPosition * 0.3f;
             taret.z = 2;
             transform.position = taret;
+            if (toStop)
+            {
+                Time.timeScale = 0f;
+            }
         }
 
         private void LateUpdate()
@@ -75,11 +80,12 @@ namespace Modules.Environment
             if (direction == Vector3.zero) {
                 return;
             }
+            var camPosition = _cam.transform.position;
             var offset = new Vector3(
                 _bgSize.x * direction.x,
                 _bgSize.y * direction.y
-            )*(1+speed);
-            _startPos = _startPos + offset ;//+ o*2  ;  
+            );
+            _startPos = (transform.position + offset - camPosition * speed) / (1 - speed);
         }
 
         void S( Vector3 s, string name = "")
