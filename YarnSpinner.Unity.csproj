@@ -50,12 +50,32 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@e050b45804\Runtime\DialogueRunner.cs" />
-     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@e050b45804\Runtime\YarnTranslation.cs" />
-     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@e050b45804\Runtime\Culture.cs" />
-     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@e050b45804\Runtime\InMemoryVariableStorage.cs" />
-     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@e050b45804\Runtime\YarnProgram.cs" />
-     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@e050b45804\Runtime\DialogueUI.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\YarnProgram.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\DialogueRunner.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\Views\DialogueCharacterNameView.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\YarnLinesAsCanvasText.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\YarnTranslation.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\LineProviders\TextLineProvider.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\Culture.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\Views\VoiceOverPlaybackFmod.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\LineProviders\LineProviderBase.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\LineProviders\AudioLineProvider.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\ProjectSettings.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\LanguageToAudioclip.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\InMemoryVariableStorage.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\Views\DialogueViewBase.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\Views\VoiceOverPlaybackUnity.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\YarnLocaleGroup.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\LineProviders\AddressableAudioLineProvider.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\Cultures.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\Preferences.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\SerializedDictionary.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\AssemblyInfo.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\StringTableEntry.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\YarnSettingsHelper.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\Views\DialogueUI.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\LocalizationDatabase.cs" />
+     <Compile Include="Library\PackageCache\dev.yarnspinner.unity@1b30441f76\Runtime\Localization.cs" />
  <Reference Include="UnityEngine">
  <HintPath>/home/silago/Unity/Hub/Editor/2020.1.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -261,34 +281,34 @@
  <HintPath>/home/silago/unity/plane2d/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="Google.Protobuf">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/Google.Protobuf.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/Google.Protobuf.dll</HintPath>
  </Reference>
  <Reference Include="Antlr4.Runtime.Standard">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/Antlr4.Runtime.Standard.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/Antlr4.Runtime.Standard.dll</HintPath>
  </Reference>
  <Reference Include="YarnSpinner">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/YarnSpinner.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/YarnSpinner.dll</HintPath>
  </Reference>
  <Reference Include="System.Buffers">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/System.Buffers.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/System.Buffers.dll</HintPath>
  </Reference>
  <Reference Include="YarnSpinner.Compiler">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/YarnSpinner.Compiler.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/YarnSpinner.Compiler.dll</HintPath>
  </Reference>
  <Reference Include="CsvHelper">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/CsvHelper.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/CsvHelper.dll</HintPath>
  </Reference>
  <Reference Include="System.Memory">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/System.Memory.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/System.Memory.dll</HintPath>
  </Reference>
  <Reference Include="System.Reflection.TypeExtensions">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/System.Reflection.TypeExtensions.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/System.Reflection.TypeExtensions.dll</HintPath>
  </Reference>
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="System.Numerics.Vectors">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/System.Numerics.Vectors.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/System.Numerics.Vectors.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>/home/silago/Unity/Hub/Editor/2020.1.16f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

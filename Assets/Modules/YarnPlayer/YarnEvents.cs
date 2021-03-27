@@ -22,6 +22,10 @@ public class OptionSelectedMessage : Message {
 public class NodeComplete : Message {}
 public class CloseEvent : Message {}
 
+public class DialogueComplete : Message
+{
+}
+
 public class OptionsProvidedMessage : Message {
     public Dictionary<int,OptionLine> Options { get; set; } 
 }

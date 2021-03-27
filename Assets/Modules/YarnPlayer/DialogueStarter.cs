@@ -9,6 +9,7 @@ public class DialogueStarter : MonoBehaviour
 {
     [SerializeField]
     string NodeName;
+    
     // Start is called before the first frame update
     void Start()
     {

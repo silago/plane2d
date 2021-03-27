@@ -262,34 +262,34 @@
  <HintPath>/home/silago/unity/plane2d/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="Google.Protobuf">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/Google.Protobuf.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/Google.Protobuf.dll</HintPath>
  </Reference>
  <Reference Include="Antlr4.Runtime.Standard">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/Antlr4.Runtime.Standard.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/Antlr4.Runtime.Standard.dll</HintPath>
  </Reference>
  <Reference Include="YarnSpinner">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/YarnSpinner.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/YarnSpinner.dll</HintPath>
  </Reference>
  <Reference Include="System.Buffers">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/System.Buffers.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/System.Buffers.dll</HintPath>
  </Reference>
  <Reference Include="YarnSpinner.Compiler">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/YarnSpinner.Compiler.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/YarnSpinner.Compiler.dll</HintPath>
  </Reference>
  <Reference Include="CsvHelper">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/CsvHelper.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/CsvHelper.dll</HintPath>
  </Reference>
  <Reference Include="System.Memory">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/System.Memory.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/System.Memory.dll</HintPath>
  </Reference>
  <Reference Include="System.Reflection.TypeExtensions">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/System.Reflection.TypeExtensions.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/System.Reflection.TypeExtensions.dll</HintPath>
  </Reference>
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="System.Numerics.Vectors">
- <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@e050b45804/Runtime/DLLs/System.Numerics.Vectors.dll</HintPath>
+ <HintPath>/home/silago/unity/plane2d/Library/PackageCache/dev.yarnspinner.unity@1b30441f76/Runtime/DLLs/System.Numerics.Vectors.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>/home/silago/Unity/Hub/Editor/2020.1.16f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

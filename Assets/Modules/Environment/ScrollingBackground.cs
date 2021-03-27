@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 
 namespace Modules.Environment
 {
-    [RequireComponent(typeof(Camera))]
     public class ScrollingBackground : MonoBehaviour 
     {
         [SerializeField] private float speed = 1f;
@@ -31,7 +29,9 @@ namespace Modules.Environment
             var lr = Instantiate(bg,transform);
 
             _cam = Camera.main;
-            _bgSize = bg.size;//cam.ScreenToWorldPoint(_size);
+            _bgSize = bg.sprite.bounds.size;
+            //_bgSize = _cam.ScreenToWorldPoint(size);
+            
             _halfDist = _bgSize * 0.5f;
             ul.transform.position+= new Vector3(-_halfDist.x,  _halfDist.y); 
             ur.transform.position+= new Vector3( _halfDist.x,  _halfDist.y); 

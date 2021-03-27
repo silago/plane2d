@@ -1,5 +1,6 @@
 using System;
 using Events;
+using Modules.YarnPlayer;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -25,21 +26,24 @@ namespace Modules.Iteractions
         string DialogueId;
         
         [SerializeField] private string text;
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             this.SendEvent( new HintMessage() { active = true, text =  text });
         }
 
-        private void OnCollisionExit2D(Collision2D other)
+        private void OnTriggerExit2D(Collider2D other)
         {
             this.SendEvent( new HintMessage() { active = false });
         }
 
-        private void OnCollisionStay2D(Collision2D other)
+
+        private void OnTriggerStay2D(Collider2D other)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-               this.SendEvent(new LocationEnterMsg {dialogueId = DialogueId}); 
+                //this.SendEvent(new LocationEnterMsg {dialogueId = DialogueId});
+                this.SendEvent(new StartDialogueMessage { NodeName = DialogueId });  
+                
             }
         }
     }

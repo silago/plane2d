@@ -11,6 +11,7 @@ using UnityEngine.UI;
 namespace Modules.YarnPlayer {
 public class DialoguePlayer : MonoBehaviour
 {
+	[SerializeField] private GameObject mainContainer;
 	private readonly List<YarnDialogueOptionNode> _buttons = new List<YarnDialogueOptionNode>();
 	[SerializeField] private Button continueButton;
 	[SerializeField] private Button    closeButton;
@@ -24,10 +25,11 @@ public class DialoguePlayer : MonoBehaviour
 	// Called when the node enters the scene tree for the first time.
 	void Awake()
 	{
+		mainContainer.SetActive(false);
 		this.Subscribe<OptionsProvidedMessage>(OnOptionsProvided);
 		this.Subscribe<OptionSelectedMessage>(OnOptionSelected);
 		this.Subscribe<NewLineMessage>(OnNewLine);
-		this.Subscribe<NodeComplete>(OnNodeComplete);
+		this.Subscribe<DialogueComplete>(OnDialogueComplete);
 		this.Subscribe<StartDialogueMessage>(OnStartDialogueMessage);
 		
 		continueButton.onClick.AddListener(() =>
@@ -37,18 +39,20 @@ public class DialoguePlayer : MonoBehaviour
 		
 		closeButton.onClick.AddListener(() =>
 		{
-			this.gameObject.SetActive(false);
+			Time.timeScale = 1f;
+			mainContainer.SetActive(false);
 		});
 		
 	}
 
 	private void OnStartDialogueMessage(StartDialogueMessage obj)
 	{
-		this.gameObject.SetActive(true);
+		Time.timeScale = 0f;
+		mainContainer.SetActive(true);
 		closeButton.gameObject.SetActive(false);
 	}
 
-	private void OnNodeComplete(NodeComplete obj)
+	private void OnDialogueComplete(DialogueComplete _)
 	{
 		continueButton.gameObject.SetActive(false);
 		closeButton.gameObject.SetActive(true);

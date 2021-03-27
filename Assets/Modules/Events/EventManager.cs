@@ -1,12 +1,60 @@
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 namespace Events{
 
     public static class ObjectExt
     {
-        public static void Subscribe<T>(this object _, Action<T> cb) where T : Message
+        public class DestroyActionContainer : MonoBehaviour
+        {
+            private Action _unsubscription;
+            private void OnDestroy()
+            {
+                _unsubscription();
+            }
+            public void Init(Action action)
+            {
+                _unsubscription = action;
+            }
+        }
+        
+        public class Subscriber<TMessage, TKey> where TMessage : Message
+        {
+            private readonly Action<TMessage> _action;
+            private TKey _key;
+            public Subscriber(Action<TMessage> action, TKey key)
+            {
+                _action = action;
+                _key = key;
+            }
+            
+            public void BindTo(MonoBehaviour mb)
+            {
+                mb.gameObject.AddComponent<DestroyActionContainer>().Init(
+                    () => this.Unsubscribe(_action, _key)
+                );
+            }
+        }
+        
+        public class Subscriber<T> where T : Message
+        {
+            private readonly Action<T> _action;
+            public Subscriber(Action<T> action)
+            {
+                _action = action;
+            }
+            
+            public void BindTo(MonoBehaviour mb)
+            {
+                mb.gameObject.AddComponent<DestroyActionContainer>().Init(
+                    () => this.Unsubscribe(_action) 
+                    );
+            }
+        }
+        public static Subscriber<T> Subscribe<T>(this object _, Action<T> cb) where T : Message
         {
             EventManager<T>.Subscribe(cb);
+            return new Subscriber<T>(cb);
         }
         
         public static void Unsubscribe<T>(this object _, Action<T> cb) where T : Message
@@ -33,9 +81,10 @@ namespace Events{
         {
             TopicEventManager<TMessage, TKey>.Unsubscribe(action, key);
         }
-        public static void Subscribe<TMessage,TKey>(this object _, Action<TMessage> action, TKey key) where TMessage : Message
+        public static Subscriber<TMessage, TKey> Subscribe<TMessage,TKey>(this object _, Action<TMessage> action, TKey key) where TMessage : Message
         {
             TopicEventManager<TMessage, TKey>.Subscribe(action, key);
+            return new Subscriber<TMessage, TKey>(action, key);
         }
         public static void SendEvent<TMessage,TKey>(this object _, TMessage data, TKey key) where TMessage : Message
         {

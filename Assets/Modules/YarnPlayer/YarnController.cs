@@ -4,7 +4,6 @@ using Yarn;
 using Events;
 using System.Linq;
 using UnityEngine;
-using CsvHelper;
 using Yarn.Unity;
 
 namespace Modules.YarnPlayer {
@@ -98,6 +97,7 @@ public class YarnController : MonoBehaviour {
 	}
 
 	private void DialogueCompleteHandle() {
+        this.SendEvent(new DialogueComplete());
     }//GD.Print("dialogue complete");
 
 
