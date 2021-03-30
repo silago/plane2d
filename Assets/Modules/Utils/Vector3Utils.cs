@@ -1,8 +1,11 @@
+#region
 using UnityEngine;
+#endregion
 namespace Modules.Utils
 {
-    public static class Vector3Utils {
-        
+    public static class Vector3Utils
+    {
+
         public static void Clamp(this ref Vector3 value, Vector3 Max)
         {
             value.Clamp(Vector3.zero, Max);

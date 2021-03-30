@@ -26,22 +26,19 @@ You can contact me by email at guyquad27@gmail.com or on Reddit at https://www.r
 
 
 #if UNITY_EDITOR
-using UnityEngine;
-using System.Collections;
+#region
 using System.Collections.Generic;
-
-
+using UnityEngine;
+#endregion
 [AddComponentMenu("Physics 2D/Bezier Curve Collider 2D")]
-
 [RequireComponent(typeof(EdgeCollider2D))]
-public class BezierCurveCollider2D : MonoBehaviour {
+public class BezierCurveCollider2D : MonoBehaviour
+{
 
     public List<Vector2> controlPoints, handlerPoints;
 
-    [Range(3,36)]
+    [Range(3, 36)]
     public int smoothness = 15;
-        
-    Vector2 origin, center;
 
     [HideInInspector]
     public bool initialized;
@@ -50,8 +47,10 @@ public class BezierCurveCollider2D : MonoBehaviour {
 
     [HideInInspector]
     public EdgeCollider2D edge;
-    List<Vector2> pts;
-    
+
+    private Vector2 origin, center;
+    private List<Vector2> pts;
+
 
     public void Init()
     {
@@ -66,7 +65,7 @@ public class BezierCurveCollider2D : MonoBehaviour {
         controlPoints.Clear();
         handlerPoints.Clear();
 
-        Vector2 pos = transform.localPosition;        
+        Vector2 pos = transform.localPosition;
         controlPoints.Add(pos);
 
         pos.x += 4;
@@ -81,27 +80,25 @@ public class BezierCurveCollider2D : MonoBehaviour {
 
         drawCurve();
     }
-    
+
     public void drawCurve()
     {
         pts = new List<Vector2>();
         pts.Clear();
 
         edge = GetComponent<EdgeCollider2D>();
-        if (edge == null)
-        {
-            gameObject.AddComponent<EdgeCollider2D>();
-        }
+        if (edge == null) gameObject.AddComponent<EdgeCollider2D>();
 
         if (controlPoints.Count == 2)
         {
             drawSegment(controlPoints[0], controlPoints[1], handlerPoints[0], handlerPoints[1]);
-        } else if (controlPoints.Count > 2)
+        }
+        else if (controlPoints.Count > 2)
         {
-            int h = 0;
-            for(int i = 0; i < controlPoints.Count - 1; i++)
+            var h = 0;
+            for (var i = 0; i < controlPoints.Count - 1; i++)
             {
-                drawSegment(controlPoints[i], controlPoints[i+1], handlerPoints[h], handlerPoints[h+1]);
+                drawSegment(controlPoints[i], controlPoints[i + 1], handlerPoints[h], handlerPoints[h + 1]);
                 h += 2;
             }
         }
@@ -111,34 +108,31 @@ public class BezierCurveCollider2D : MonoBehaviour {
 
     }
 
-    void drawSegment(Vector3 cPt1, Vector3 cPt2, Vector3 hPt1, Vector3 hPt2)
+    private void drawSegment(Vector3 cPt1, Vector3 cPt2, Vector3 hPt1, Vector3 hPt2)
     {
 
         pts.Add(cPt1);
-        for (int i = 1; i < smoothness; i++)
-        {
-            pts.Add(CalculateBezierPoint((1f / smoothness) * i, cPt1, hPt1, hPt2, cPt2));
-        }
+        for (var i = 1; i < smoothness; i++) pts.Add(CalculateBezierPoint(1f / smoothness * i, cPt1, hPt1, hPt2, cPt2));
         pts.Add(cPt2);
     }
 
-    Vector3 CalculateBezierPoint(float t, Vector3 controlP0, Vector3 handlerP0, Vector3 handlerP1, Vector3 controlP1)
+    private Vector3 CalculateBezierPoint(float t, Vector3 controlP0, Vector3 handlerP0, Vector3 handlerP1, Vector3 controlP1)
     {
         //http://devmag.org.za/2011/04/05/bzier-curves-a-tutorial/
-        Vector3 p = (Mathf.Pow((1.0f - t), 3) * controlP0) + (3 * Mathf.Pow((1 - t), 2) * t * handlerP0) + (3 * (1.0f - t) * Mathf.Pow(t, 2) * handlerP1) + (Mathf.Pow(t, 3) * controlP1);
+        var p = Mathf.Pow(1.0f - t, 3) * controlP0 + 3 * Mathf.Pow(1 - t, 2) * t * handlerP0 + 3 * (1.0f - t) * Mathf.Pow(t, 2) * handlerP1 + Mathf.Pow(t, 3) * controlP1;
         return p;
     }
 
 
     public void addControlPoint()
     {
-        Vector2 pos = controlPoints[controlPoints.Count - 1];
-        float hPosY = handlerPoints[handlerPoints.Count - 1].y;
+        var pos = controlPoints[controlPoints.Count - 1];
+        var hPosY = handlerPoints[handlerPoints.Count - 1].y;
 
-        float mul = (hPosY > pos.y) ? -1 : 1; // check if the handler point was below or top of the control point and use that info to make sure that the next handler point is in the opposite direction
-        
-        handlerPoints.Add(new Vector2(pos.x, pos.y + (4 * mul)));
-        
+        float mul = hPosY > pos.y ? -1 : 1; // check if the handler point was below or top of the control point and use that info to make sure that the next handler point is in the opposite direction
+
+        handlerPoints.Add(new Vector2(pos.x, pos.y + 4 * mul));
+
         pos.x += 4;
         controlPoints.Add(pos);
 
@@ -151,7 +145,7 @@ public class BezierCurveCollider2D : MonoBehaviour {
 
     public void removeControlPoint()
     {
-        if(controlPoints.Count > 2)
+        if (controlPoints.Count > 2)
         {
             controlPoints.RemoveAt(controlPoints.Count - 1);
             handlerPoints.RemoveAt(handlerPoints.Count - 1);

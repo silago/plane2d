@@ -25,43 +25,42 @@ You can contact me by email at guyquad27@gmail.com or on Reddit at https://www.r
 */
 
 
-using UnityEngine;
+#region
 using UnityEditor;
-using System.Collections;
+using UnityEngine;
+#endregion
+[CustomEditor(typeof(RoundedBoxCollider2D))]
+public class RoundedBoxCollider_Editor : Editor
+{
+    private Vector2 off;
+    private PolygonCollider2D polyCollider;
 
-[CustomEditor (typeof(RoundedBoxCollider2D))]
-public class RoundedBoxCollider_Editor : Editor {
+    private RoundedBoxCollider2D rb;
 
-    RoundedBoxCollider2D rb;
-    PolygonCollider2D polyCollider;
-    Vector2 off;
-
-    void OnEnable()
+    private void OnEnable()
     {
         rb = (RoundedBoxCollider2D)target;
 
         polyCollider = rb.GetComponent<PolygonCollider2D>();
-        if (polyCollider == null) {
-            polyCollider = rb.gameObject.AddComponent<PolygonCollider2D>();
-        }
+        if (polyCollider == null) polyCollider = rb.gameObject.AddComponent<PolygonCollider2D>();
 
-        Vector2[] pts = rb.getPoints();
+        var pts = rb.getPoints();
         if (pts != null) polyCollider.points = pts;
     }
 
     public override void OnInspectorGUI()
     {
         GUI.changed = false;
-        DrawDefaultInspector();       
+        DrawDefaultInspector();
 
 
         // automatically adjust the radius according to width and height
-        float lesser = (rb.width > rb.height) ? rb.height : rb.width;
+        var lesser = rb.width > rb.height ? rb.height : rb.width;
         lesser /= 2f;
-        lesser = Mathf.Round(lesser * 100f) / 100f; 
-        rb.radius = EditorGUILayout.Slider("Radius",rb.radius, 0f, lesser);
+        lesser = Mathf.Round(lesser * 100f) / 100f;
+        rb.radius = EditorGUILayout.Slider("Radius", rb.radius, 0f, lesser);
         rb.radius = Mathf.Clamp(rb.radius, 0f, lesser);
-        
+
         rb.advanced = EditorGUILayout.Toggle("Advanced", rb.advanced);
         if (rb.advanced)
         {
@@ -86,11 +85,10 @@ public class RoundedBoxCollider_Editor : Editor {
 
         if (GUI.changed || !off.Equals(polyCollider.offset))
         {
-            Vector2[] pts = rb.getPoints();
+            var pts = rb.getPoints();
             if (pts != null) polyCollider.points = pts;
         }
 
         off = polyCollider.offset;
     }
-    
 }

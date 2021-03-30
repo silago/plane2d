@@ -121,7 +121,7 @@ Material:
     m_Colors:
     - MainColor: {r: 1, g: 0, b: 0, a: 0}
     - Vector2_10fe261eff5848afb12da6dc56c17cf2: {r: 1, g: 1, b: 1, a: 1}
-    - Vector2_57cfe006aa2846db9b3037e2590e871f: {r: 0.3, g: 0, b: 0, a: 0}
+    - Vector2_57cfe006aa2846db9b3037e2590e871f: {r: 1, g: 0, b: 0, a: 0}
     - Vector2_f832ab9226c546f2980b0dec91288122: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

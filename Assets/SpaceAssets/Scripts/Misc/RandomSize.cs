@@ -1,16 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#region
 using UnityEngine;
-
-public class RandomSize : MonoBehaviour {
+#endregion
+public class RandomSize : MonoBehaviour
+{
     [Range(1.0f, 10.0f)]
     public float multiplierMax = 3f;
-    Vector3 initialScale;
+    private Vector3 initialScale;
 
-    void Start () {
+    private void Start()
+    {
         //Initial scale
         initialScale = transform.localScale;
         Generate();
+    }
+
+    private void Update()
+    {
+
     }
 
     public void Generate()
@@ -18,8 +24,4 @@ public class RandomSize : MonoBehaviour {
         //Choose a random multiplied scale from the initial scale and the multiplierMax variable
         transform.localScale = initialScale * Random.Range(1f, multiplierMax);
     }
-    
-    void Update () {
-		
-	}
 }

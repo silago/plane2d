@@ -26,25 +26,24 @@ You can contact me by email at guyquad27@gmail.com or on Reddit at https://www.r
 
 
 #if UNITY_EDITOR
-using UnityEngine;
+#region
 using UnityEditor;
-using System.Collections;
+using UnityEngine;
+#endregion
+[CustomEditor(typeof(StarCollider2D))]
+public class StarCollider_Editor : Editor
+{
+    private Vector2 off;
+    private PolygonCollider2D polyCollider;
 
-[CustomEditor (typeof(StarCollider2D))]
-public class StarCollider_Editor : Editor {
+    private StarCollider2D sc;
 
-    StarCollider2D sc;
-    PolygonCollider2D polyCollider;
-    Vector2 off;
-
-    void OnEnable()
+    private void OnEnable()
     {
         sc = (StarCollider2D)target;
 
         polyCollider = sc.GetComponent<PolygonCollider2D>();
-        if (polyCollider == null) {
-            polyCollider = sc.gameObject.AddComponent<PolygonCollider2D>();
-        }
+        if (polyCollider == null) polyCollider = sc.gameObject.AddComponent<PolygonCollider2D>();
         polyCollider.points = sc.getPoints();
     }
 
@@ -68,13 +67,9 @@ public class StarCollider_Editor : Editor {
         }
 
 
-        if (GUI.changed || !off.Equals(polyCollider.offset))
-        {
-            polyCollider.points = sc.getPoints();
-        }
+        if (GUI.changed || !off.Equals(polyCollider.offset)) polyCollider.points = sc.getPoints();
 
         off = polyCollider.offset;
     }
-
 }
 #endif

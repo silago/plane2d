@@ -26,48 +26,48 @@ You can contact me by email at guyquad27@gmail.com or on Reddit at https://www.r
 
 
 #if UNITY_EDITOR
-using UnityEngine;
-using System.Collections;
+#region
 using System.Collections.Generic;
-
+using UnityEngine;
+#endregion
 [AddComponentMenu("Physics 2D/Star Collider 2D")]
-
 [RequireComponent(typeof(PolygonCollider2D))]
-public class StarCollider2D : MonoBehaviour {
+public class StarCollider2D : MonoBehaviour
+{
 
-    [Range(1, 25), HideInInspector]
+    [Range(1, 25)] [HideInInspector]
     public float radiusA = 1;
 
-    [Range(1, 25), HideInInspector]
+    [Range(1, 25)] [HideInInspector]
     public float radiusB = 2;
 
-    [Range(3,36)]
+    [Range(3, 36)]
     public int points = 5;
-    
-    [HideInInspector]
-    public int rotation = 0;
 
     [HideInInspector]
-    public bool advanced = false;
+    public int rotation;
 
-    Vector2 origin, center;
-    
+    [HideInInspector]
+    public bool advanced;
+
+    private Vector2 origin, center;
+
     public Vector2[] getPoints()
     {
-        List<Vector2> pts = new List<Vector2>();
+        var pts = new List<Vector2>();
 
         origin = transform.localPosition;
 
         float ang = rotation;
 
-        for (int i = 0; i <= points * 2; i++)
+        for (var i = 0; i <= points * 2; i++)
         {
-            float radius = (i % 2 == 0) ? radiusA : radiusB;
-            float x = radius * Mathf.Cos(ang * Mathf.Deg2Rad);
-            float y = radius * Mathf.Sin(ang * Mathf.Deg2Rad);
+            var radius = i % 2 == 0 ? radiusA : radiusB;
+            var x = radius * Mathf.Cos(ang * Mathf.Deg2Rad);
+            var y = radius * Mathf.Sin(ang * Mathf.Deg2Rad);
 
             pts.Add(new Vector2(x, y));
-            ang += 360f/(points*2f);
+            ang += 360f / (points * 2f);
         }
 
         return pts.ToArray();

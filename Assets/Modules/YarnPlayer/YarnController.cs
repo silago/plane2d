@@ -1,167 +1,186 @@
+#region
 using System;
 using System.Collections.Generic;
-using Yarn;
-using Events;
 using System.Linq;
+using Events;
 using UnityEngine;
+using Yarn;
 using Yarn.Unity;
+#endregion
+namespace Modules.YarnPlayer
+{
+    public class YarnController : MonoBehaviour
+    {
 
-namespace Modules.YarnPlayer {
-public class YarnController : MonoBehaviour {
-
-    [SerializeField]
-    string lang;
-    [SerializeField]
-    List<YarnProgram> programs;
-    private Dialogue _dialogue;
-	bool isWaitingForAnswer = false;
-	IDictionary<string, string> stringTable = new Dictionary<string, string>();
-	bool isReady = false;
-	private Program _mainProgram;
+        [SerializeField]
+        private string lang;
+        [SerializeField]
+        private List<YarnProgram> programs;
+        private Dialogue _dialogue;
+        private Program _mainProgram;
+        private bool isReady = false;
+        private bool isWaitingForAnswer;
+        private IDictionary<string, string> stringTable = new Dictionary<string, string>();
 
 
-	void Awake() {
-		LoadCompileAndLoad();
-	}
-
-	void LoadCompileAndLoad() 
-	{
-        foreach(var p in programs) {
-            AddStringTable(p);
+        private void Awake()
+        {
+            LoadCompileAndLoad();
         }
-        _mainProgram =Program.Combine(programs.Select(x => x.GetProgram()).ToArray());
-		_dialogue = InitDialogue(_mainProgram);
-		InitFunctions(_dialogue);
+        private void OnDisable()
+        {
+            this.Unsubscribe<StartDialogueMessage>(OnStartDialogueMessage);
+        }
 
-		this.Subscribe<StartDialogueMessage>(OnStartDialogueMessage);
-		this.Subscribe<OptionSelectedMessage>(OnOptionSelectMessage);
-		this.Subscribe<ContinueMessage>(OnContinueMessage);
-	}
+        private void LoadCompileAndLoad()
+        {
+            foreach (var p in programs) AddStringTable(p);
+            _mainProgram = Program.Combine(programs.Select(x => x.GetProgram()).ToArray());
+            _dialogue = InitDialogue(_mainProgram);
+            InitFunctions(_dialogue);
 
-	private void OnContinueMessage(ContinueMessage obj)
-	{
-		_dialogue.Continue();
-	}
+            this.Subscribe<StartDialogueMessage>(OnStartDialogueMessage);
+            this.Subscribe<OptionSelectedMessage>(OnOptionSelectMessage);
+            this.Subscribe<ContinueMessage>(OnContinueMessage);
+        }
 
-	private void OnOptionSelectMessage(OptionSelectedMessage obj)
-	{
-		OnOptionSelected(obj.ID);
-	}
-	private void OnStartDialogueMessage(StartDialogueMessage obj)
-	{
-		Run(obj.NodeName);
-	}
-	void OnDisable() 
-	{
-		this.Unsubscribe<StartDialogueMessage>(OnStartDialogueMessage);
-	}
+        private void OnContinueMessage(ContinueMessage obj)
+        {
+            _dialogue.Continue();
+        }
 
-	Dialogue InitDialogue(Program program)
-	{
-		var variableStorage = new MemoryVariableStore();//DictStorage();
-		
-		var dialogue = new Dialogue(variableStorage);
+        private void OnOptionSelectMessage(OptionSelectedMessage obj)
+        {
+            OnOptionSelected(obj.ID);
+        }
+        private void OnStartDialogueMessage(StartDialogueMessage obj)
+        {
+            Run(obj.NodeName);
+        }
 
-		dialogue.DialogueCompleteHandler = DialogueCompleteHandle;
-		dialogue.NodeCompleteHandler = NodeCompleteHandler;
-		dialogue.NodeStartHandler = NodeStartHandler;
-		dialogue.CommandHandler = CommandHandler; 
-		dialogue.OptionsHandler = OptionsHandler;
-		dialogue.LineHandler = LineHandler;
-		dialogue.LogDebugMessage = (msg) => Debug.Log(msg); //GD.Print(msg);
-		dialogue.LogErrorMessage = (msg) => Debug.LogError(msg); //GD.PrintErr(msg);
-        dialogue.SetProgram(program);
-		return dialogue;
-	}
+        private Dialogue InitDialogue(Program program)
+        {
+            var variableStorage = new MemoryVariableStore(); //DictStorage();
 
-	void InitFunctions(Dialogue dialogue)
-	{
-		AddFunction("visited", (string s) => false); 
-	}
+            var dialogue = new Dialogue(variableStorage);
 
-	private bool Visited(string name)
-	{
-		return false;
-	}
+            dialogue.DialogueCompleteHandler = DialogueCompleteHandle;
+            dialogue.NodeCompleteHandler = NodeCompleteHandler;
+            dialogue.NodeStartHandler = NodeStartHandler;
+            dialogue.CommandHandler = CommandHandler;
+            dialogue.OptionsHandler = OptionsHandler;
+            dialogue.LineHandler = LineHandler;
+            dialogue.LogDebugMessage = msg => Debug.Log(msg); //GD.Print(msg);
+            dialogue.LogErrorMessage = msg => Debug.LogError(msg); //GD.PrintErr(msg);
+            dialogue.SetProgram(program);
+            return dialogue;
+        }
 
-	public void Run(string node)
-	{
-		_dialogue.SetNode(node);
-		_dialogue.Continue();
-	}
+        private void InitFunctions(Dialogue dialogue)
+        {
+            AddFunction("visited", (string s) => false);
+        }
 
+        private bool Visited(string name)
+        {
+            return false;
+        }
 
-	private void NodeStartHandler(string startedNodeName)
-	{
-		//return Dialogue.HandlerExecutionType.ContinueExecution;
-	}
-
-	private void DialogueCompleteHandle() {
-        this.SendEvent(new DialogueComplete());
-    }//GD.Print("dialogue complete");
+        public void Run(string node)
+        {
+            _dialogue.SetNode(node);
+            _dialogue.Continue();
+        }
 
 
+        private void NodeStartHandler(string startedNodeName)
+        {
+            //return Dialogue.HandlerExecutionType.ContinueExecution;
+        }
 
-    // todo:: rewrite
-    /*
-	public override void _Input(InputEvent ev) {
-		if (isWaitingForAnswer == false) {
-			return;
-		}
-		if ( ev is InputEventKey ke && ke.Pressed) {
-			var textInput = ke.AsText();
-			int num;
-			if (int.TryParse(textInput, out num)) {
-				isWaitingForAnswer = false;
-				OnOptionSelected(num);
-			}
-		}
-	}
-    */
+        private void DialogueCompleteHandle()
+        {
+            this.SendEvent(new DialogueComplete());
+        } //GD.Print("dialogue complete");
 
-    
-	private void AddFunction(string name, Delegate implementation)
-		=> _dialogue.Library.RegisterFunction(name, implementation);
 
-	private void AddFunction<TResult, T1>(string name, Func<TResult, T1> implementation)
-		=> AddFunction(name, (Delegate) implementation); 
 
-	private void NodeCompleteHandler(string completedNodeName)
-	{
-        this.SendEvent(new NodeComplete());
-		//throw new NotImplementedException();
-		//return Dialogue.HandlerExecutionType.ContinueExecution;
+        // todo:: rewrite
+        /*
+        public override void _Input(InputEvent ev) {
+            if (isWaitingForAnswer == false) {
+                return;
+            }
+            if ( ev is InputEventKey ke && ke.Pressed) {
+                var textInput = ke.AsText();
+                int num;
+                if (int.TryParse(textInput, out num)) {
+                    isWaitingForAnswer = false;
+                    OnOptionSelected(num);
+                }
+            }
+        }
+        */
 
-	}
-	void CommandHandler(Command command)
-	{
-		//throw new NotImplementedException();
-	}
 
-	void OptionsHandler(OptionSet options) {
+        private void AddFunction(string name, Delegate implementation)
+        {
+            _dialogue.Library.RegisterFunction(name, implementation);
+        }
 
-		isWaitingForAnswer = true;
-		Dictionary<int,OptionLine> optionsStrings = new Dictionary<int, OptionLine>();
-		foreach(OptionSet.Option opt in options.Options) {
-			stringTable.TryGetValue(opt.Line.ID, out var info);
-			optionsStrings[opt.ID]=new OptionLine(){Line = opt.Line, Text = info};
-		}
+        private void AddFunction<TResult, T1>(string name, Func<TResult, T1> implementation)
+        {
+            AddFunction(name, (Delegate)implementation);
+        }
 
-		this.SendEvent( new OptionsProvidedMessage { Options=optionsStrings } );
-	}
+        private void NodeCompleteHandler(string completedNodeName)
+        {
+            this.SendEvent(new NodeComplete());
+            //throw new NotImplementedException();
+            //return Dialogue.HandlerExecutionType.ContinueExecution;
 
-	void OnOptionSelected(int optionId) {
-		_dialogue.SetSelectedOption(optionId);
-		_dialogue.Continue();
-	}
-	
-	void LineHandler(Line line) {
-		stringTable.TryGetValue(line.ID, out var info);
-		this.SendEvent(new NewLineMessage { Text = info, Line = line });
-		//return Dialogue.HandlerExecutionType.PauseExecution;
-	}
+        }
+        private void CommandHandler(Command command)
+        {
+            //throw new NotImplementedException();
+        }
 
-    public void AddStringTable(YarnProgram yarnScript)
+        private void OptionsHandler(OptionSet options)
+        {
+
+            isWaitingForAnswer = true;
+            var optionsStrings = new Dictionary<int, OptionLine>();
+            foreach (var opt in options.Options)
+            {
+                stringTable.TryGetValue(opt.Line.ID, out var info);
+                optionsStrings[opt.ID] = new OptionLine {
+                    Line = opt.Line,
+                    Text = info
+                };
+            }
+
+            this.SendEvent(new OptionsProvidedMessage {
+                Options = optionsStrings
+            });
+        }
+
+        private void OnOptionSelected(int optionId)
+        {
+            _dialogue.SetSelectedOption(optionId);
+            _dialogue.Continue();
+        }
+
+        private void LineHandler(Line line)
+        {
+            stringTable.TryGetValue(line.ID, out var info);
+            this.SendEvent(new NewLineMessage {
+                Text = info,
+                Line = line
+            });
+            //return Dialogue.HandlerExecutionType.PauseExecution;
+        }
+
+        public void AddStringTable(YarnProgram yarnScript)
         {
             Debug.Log(" add string table");
             //var textToLoad = new TextAsset();
@@ -195,6 +214,5 @@ public class YarnController : MonoBehaviour {
             
             */
         }
-
-}
+    }
 }

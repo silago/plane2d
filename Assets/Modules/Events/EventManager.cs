@@ -1,10 +1,53 @@
-using System.Collections.Generic;
+#region
 using System;
+using System.Collections.Generic;
 using UnityEngine;
-namespace Events{
+#endregion
+namespace Events
+{
 
     public static class ObjectExt
     {
+        public static Subscriber<T> Subscribe<T>(this object _, Action<T> cb) where T : Message
+        {
+            EventManager<T>.Subscribe(cb);
+            return new Subscriber<T>(cb);
+        }
+
+        public static void Unsubscribe<T>(this object _, Action<T> cb) where T : Message
+        {
+            EventManager<T>.Unsubscribe(cb);
+        }
+
+        public static void SendEvent<T>(this object _, T data = null) where T : Message
+        {
+            EventManager<T>.Invoke(data);
+        }
+
+        public static void SubscribeOnce<T>(this object @this, Action<T> action) where T : Message
+        {
+            void WrapperAction(T data)
+            {
+                action?.Invoke(data);
+                EventManager<T>.Unsubscribe(WrapperAction);
+            }
+
+            EventManager<T>.Subscribe(WrapperAction);
+        }
+
+        public static void Unsubscribe<TMessage, TKey>(this object _, Action<TMessage> action, TKey key) where TMessage : Message
+        {
+            TopicEventManager<TMessage, TKey>.Unsubscribe(action, key);
+        }
+        public static Subscriber<TMessage, TKey> Subscribe<TMessage, TKey>(this object _, Action<TMessage> action, TKey key) where TMessage : Message
+        {
+            TopicEventManager<TMessage, TKey>.Subscribe(action, key);
+            return new Subscriber<TMessage, TKey>(action, key);
+        }
+        public static void SendEvent<TMessage, TKey>(this object _, TMessage data, TKey key) where TMessage : Message
+        {
+            TopicEventManager<TMessage, TKey>.Invoke(data, key);
+        }
         public class DestroyActionContainer : MonoBehaviour
         {
             private Action _unsubscription;
@@ -17,7 +60,7 @@ namespace Events{
                 _unsubscription = action;
             }
         }
-        
+
         public class Subscriber<TMessage, TKey> where TMessage : Message
         {
             private readonly Action<TMessage> _action;
@@ -27,7 +70,7 @@ namespace Events{
                 _action = action;
                 _key = key;
             }
-            
+
             public void BindTo(MonoBehaviour mb)
             {
                 mb.gameObject.AddComponent<DestroyActionContainer>().Init(
@@ -35,7 +78,7 @@ namespace Events{
                 );
             }
         }
-        
+
         public class Subscriber<T> where T : Message
         {
             private readonly Action<T> _action;
@@ -43,56 +86,19 @@ namespace Events{
             {
                 _action = action;
             }
-            
+
             public void BindTo(MonoBehaviour mb)
             {
                 mb.gameObject.AddComponent<DestroyActionContainer>().Init(
-                    () => this.Unsubscribe(_action) 
-                    );
+                    () => this.Unsubscribe(_action)
+                );
             }
-        }
-        public static Subscriber<T> Subscribe<T>(this object _, Action<T> cb) where T : Message
-        {
-            EventManager<T>.Subscribe(cb);
-            return new Subscriber<T>(cb);
-        }
-        
-        public static void Unsubscribe<T>(this object _, Action<T> cb) where T : Message
-        {
-            EventManager<T>.Unsubscribe(cb);
-        }
-        
-        public static void SendEvent<T>(this object _, T data = null) where T : Message
-        {
-            EventManager<T>.Invoke(data);
-        }
-        
-        public static void SubscribeOnce<T>(this object @this, Action<T> action) where T : Message
-        {
-            void WrapperAction(T data)
-            {
-                action?.Invoke(data);
-                EventManager<T>.Unsubscribe(WrapperAction);
-            }
-            EventManager<T>.Subscribe(WrapperAction);
-        }
-        
-        public static void Unsubscribe<TMessage,TKey>(this object _, Action<TMessage> action, TKey key) where TMessage : Message
-        {
-            TopicEventManager<TMessage, TKey>.Unsubscribe(action, key);
-        }
-        public static Subscriber<TMessage, TKey> Subscribe<TMessage,TKey>(this object _, Action<TMessage> action, TKey key) where TMessage : Message
-        {
-            TopicEventManager<TMessage, TKey>.Subscribe(action, key);
-            return new Subscriber<TMessage, TKey>(action, key);
-        }
-        public static void SendEvent<TMessage,TKey>(this object _, TMessage data, TKey key) where TMessage : Message
-        {
-            TopicEventManager<TMessage, TKey>.Invoke(data, key);
         }
     }
 
-    public abstract class Message {}
+    public abstract class Message
+    {
+    }
 
     public abstract class BoolMessage : Message
     {
@@ -104,7 +110,7 @@ namespace Events{
         public T value { get; set; }
     }
 
-    class EventContainer<T>
+    internal class EventContainer<T>
     {
         public event Action<T> Event;
 
@@ -114,51 +120,46 @@ namespace Events{
         }
     }
 
-    static class TopicEventManager<TMessage, TKey> where TMessage : Message
+    internal static class TopicEventManager<TMessage, TKey> where TMessage : Message
     {
-        static readonly Dictionary<TKey, EventContainer<TMessage>> _events = new Dictionary<TKey, EventContainer<TMessage>>();
+        private static readonly Dictionary<TKey, EventContainer<TMessage>> _events = new Dictionary<TKey, EventContainer<TMessage>>();
 
         public static void Subscribe(Action<TMessage> action, TKey topic)
         {
-            if (_events.TryGetValue(topic, out var container) == false)
-            {
-                _events[topic] = container = new EventContainer<TMessage>();
-            }
+            if (_events.TryGetValue(topic, out var container) == false) _events[topic] = container = new EventContainer<TMessage>();
 
             container.Event += action;
         }
 
         public static void Unsubscribe(Action<TMessage> action, TKey topic)
         {
-            if (_events.TryGetValue(topic, out var container))
-            {
-                container.Event -= action;
-            }
+            if (_events.TryGetValue(topic, out var container)) container.Event -= action;
         }
 
         public static void Invoke(TMessage message, TKey key)
         {
-            if (_events.TryGetValue(key, out var container))
-            {
-                container.Invoke(message);
-            }
-        }
-    }
-    
-    static class EventManager<T> where T : Message {
-        public static event Action<T> Event; 
-        public static void Subscribe(Action<T> cb)  {       
-            Event+=cb;
-        }
-
-        public static void Unsubscribe(Action<T> cb) {
-            Event-=cb;
-        }
-
-        public static void Invoke(T data = null) {
-                Event?.Invoke(data);
+            if (_events.TryGetValue(key, out var container)) container.Invoke(message);
         }
     }
 
-    
+    internal static class EventManager<T> where T : Message
+    {
+        public static event Action<T> Event;
+        public static void Subscribe(Action<T> cb)
+        {
+            Event += cb;
+        }
+
+        public static void Unsubscribe(Action<T> cb)
+        {
+            Event -= cb;
+        }
+
+        public static void Invoke(T data = null)
+        {
+            Event?.Invoke(data);
+        }
+    }
+
+
 }

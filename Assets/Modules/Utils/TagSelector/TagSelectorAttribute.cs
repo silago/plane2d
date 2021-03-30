@@ -1,5 +1,6 @@
+#region
 using UnityEngine;
-
+#endregion
 namespace Modules.Utils.TagSelector
 {
     public class TagSelectorAttribute : PropertyAttribute

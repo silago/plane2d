@@ -1,9 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+#region
 using UnityEngine;
 using Zenject;
-
+#endregion
 public class EyeActivator : MonoBehaviour
 {
     [SerializeField]
@@ -13,12 +11,14 @@ public class EyeActivator : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform == _player.Transform)
-            foreach (var eye in eyes) eye.Activate(other.transform);
+            foreach (var eye in eyes)
+                eye.Activate(other.transform);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.transform == _player.Transform)
-            foreach (var eye in eyes)  eye.Deactivate();
+            foreach (var eye in eyes)
+                eye.Deactivate();
     }
 }

@@ -1,28 +1,32 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class CameraMovement : MonoBehaviour {
+﻿#region
+using UnityEngine;
+#endregion
+public class CameraMovement : MonoBehaviour
+{
     //Set the speed that the camera moves through space
     public float cameraSpeed = 8f;
-    float currentScrollPosition = 0f;
+    private float currentScrollPosition;
 
-	void Start () {
+    private void Start()
+    {
         switch (SpaceManager.instance.scrollDirection)
         {
             case ScrollDirection.LeftToRight:
             case ScrollDirection.RightToLeft:
                 currentScrollPosition = transform.position.x / cameraSpeed;
                 break;
-            case ScrollDirection.DownToUp: case ScrollDirection.UpToDown:
+            case ScrollDirection.DownToUp:
+            case ScrollDirection.UpToDown:
                 currentScrollPosition = transform.position.y / cameraSpeed;
                 break;
         }
     }
-	
-	void Update () {
+
+    private void Update()
+    {
         //Assign the current position using a variable to set the position
         currentScrollPosition += Time.deltaTime;
-        Vector3 newPosition = Vector3.zero;
+        var newPosition = Vector3.zero;
         //Set the new position based on the scroll direction and speed
         switch (SpaceManager.instance.scrollDirection)
         {

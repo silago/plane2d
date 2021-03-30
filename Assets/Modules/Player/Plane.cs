@@ -1,110 +1,124 @@
-﻿using System;
+﻿#region
 using UnityEngine;
-
-namespace Plane {
+#endregion
+namespace Plane
+{
     public class Plane : MonoBehaviour
     {
         #if UNITY_EDITOR
-        public bool UpdateRotation = false;
+        public bool UpdateRotation;
         #endif
-
-        Quaternion currentVelocityRotation;
-
-        SpriteRenderer spriteRenderer;
         [SerializeField]
-        float velocity = 1f;
+        private float velocity = 1f;
 
         [SerializeField]
-        float strafingSpeed = 1f;
+        private float strafingSpeed = 1f;
 
         [SerializeField]
-        float rotationSpeed;
+        private float rotationSpeed;
 
         [SerializeField]
-        float accelerationSpeed;
+        private float accelerationSpeed;
 
         [SerializeField]
-        Sprite[] sprites;
+        private Sprite[] sprites;
 
         [SerializeField]
-        float maxVelocity;
+        private float maxVelocity;
 
         [SerializeField]
-        float minVelocity;
+        private float minVelocity;
 
         [SerializeField]
-        float rotationDecceleration;
-        
+        private float rotationDecceleration;
+
         [SerializeField]
-        float inertia;
+        private float inertia;
 
 
-        Rigidbody2D body;
-        void Awake() {
-            body  = GetComponent<Rigidbody2D>();
+        private Rigidbody2D body;
+
+        private Quaternion currentVelocityRotation;
+
+        private SpriteRenderer spriteRenderer;
+        private void Awake()
+        {
+            body = GetComponent<Rigidbody2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
-            // Start is called before the first frame update
-        void Start()
+        // Start is called before the first frame update
+        private void Start()
         {
-           spriteRenderer.sprite = sprites[0]; 
-           velocity = minVelocity; 
+            spriteRenderer.sprite = sprites[0];
+            velocity = minVelocity;
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             ProcessSpeed(Time.deltaTime);
             ProcessStrafing(Time.deltaTime);
             UpdateRepresentation();
         }
 
-        void foo()
+        private void FixedUpdate()
         {
-            
-
-        }
-
-        void FixedUpdate() 
-        {
-            Vector2 v =transform.rotation * Vector2.right * (velocity );
+            Vector2 v = transform.rotation * Vector2.right * velocity;
             body.velocity = Vector2.MoveTowards(body.velocity, v, inertia);
             ProcessRotation();
         }
 
-        void ProcessSpeed(float dt) {
-            if (Input.GetKey(KeyCode.DownArrow)) {
-                velocity+=-dt*accelerationSpeed;
-            } else if (Input.GetKey(KeyCode.UpArrow)) {
-                velocity+=dt*accelerationSpeed;
-            } else {
-                return;
-            }
-
-            velocity = Mathf.Clamp(velocity , minVelocity, maxVelocity);
+        private void OnValidate()
+        {
+            UpdateRotation = false;
+            var currentRotation = transform.rotation.eulerAngles.z;
+            var currentSpriteIndex = (int)(currentRotation / 360 * sprites.Length);
+            Debug.Log(currentSpriteIndex);
+            Debug.Log(currentRotation);
+            GetComponent<SpriteRenderer>().sprite = sprites[currentSpriteIndex];
         }
 
-        void ProcessStrafing(float dt)
+        private void foo()
         {
-            if ( Input.GetKeyDown(KeyCode.Q)) {
-                var v = body.transform.up * dt * strafingSpeed;
-                body.AddForce(  new Vector2(v.x, v.y), ForceMode2D.Impulse);
-            } else if ( Input.GetKeyDown(KeyCode.E)) 
+
+
+        }
+
+        private void ProcessSpeed(float dt)
+        {
+            if (Input.GetKey(KeyCode.DownArrow))
+                velocity += -dt * accelerationSpeed;
+            else if (Input.GetKey(KeyCode.UpArrow))
+                velocity += dt * accelerationSpeed;
+            else
+                return;
+
+            velocity = Mathf.Clamp(velocity, minVelocity, maxVelocity);
+        }
+
+        private void ProcessStrafing(float dt)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 var v = body.transform.up * dt * strafingSpeed;
-                body.AddForce( - new Vector2(v.x, v.y), ForceMode2D.Impulse);
+                body.AddForce(new Vector2(v.x, v.y), ForceMode2D.Impulse);
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                var v = body.transform.up * dt * strafingSpeed;
+                body.AddForce(-new Vector2(v.x, v.y), ForceMode2D.Impulse);
             }
         }
 
-        void ProcessRotation() {
+        private void ProcessRotation()
+        {
             var fdt = Time.fixedDeltaTime;
-            if (Input.GetKey(KeyCode.RightArrow)) {
-                transform.Rotate(0,0,-fdt*rotationSpeed);
-            } else if (Input.GetKey(KeyCode.LeftArrow)) {
-                transform.Rotate(0,0,fdt*rotationSpeed);
-            } else {
+            if (Input.GetKey(KeyCode.RightArrow))
+                transform.Rotate(0, 0, -fdt * rotationSpeed);
+            else if (Input.GetKey(KeyCode.LeftArrow))
+                transform.Rotate(0, 0, fdt * rotationSpeed);
+            else
                 return;
-            }
 
             /*
             velocity-=rotationDecceleration * Time.fixedDeltaTime;
@@ -113,26 +127,17 @@ namespace Plane {
             var v = body.velocity;
             var m = v.magnitude;
             m = m - Time.fixedDeltaTime * rotationDecceleration;
-            if (m<0) m = 0;
+            if (m < 0) m = 0;
 
-            body.velocity = v.normalized *  m ; 
+            body.velocity = v.normalized * m;
             UpdateRepresentation();
         }
 
-        void UpdateRepresentation() {
-            var currentRotation = transform.rotation.eulerAngles.z;
-            var currentSpriteIndex = (int)((currentRotation /360) * sprites.Length); 
-            spriteRenderer.sprite = sprites[currentSpriteIndex];
-        }
-
-        private void OnValidate()
+        private void UpdateRepresentation()
         {
-            UpdateRotation = false;
             var currentRotation = transform.rotation.eulerAngles.z;
-            var currentSpriteIndex = (int)((currentRotation /360) * sprites.Length); 
-            Debug.Log(currentSpriteIndex);
-            Debug.Log(currentRotation);
-            GetComponent<SpriteRenderer>().sprite = sprites[currentSpriteIndex];
+            var currentSpriteIndex = (int)(currentRotation / 360 * sprites.Length);
+            spriteRenderer.sprite = sprites[currentSpriteIndex];
         }
     }
 }

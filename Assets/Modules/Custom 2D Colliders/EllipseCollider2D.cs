@@ -26,39 +26,39 @@ You can contact me by email at guyquad27@gmail.com or on Reddit at https://www.r
 
 
 #if UNITY_EDITOR
-using UnityEngine;
-using System.Collections;
+#region
 using System.Collections.Generic;
-
+using UnityEngine;
+#endregion
 [AddComponentMenu("Physics 2D/Ellipse Collider 2D")]
-
 [RequireComponent(typeof(PolygonCollider2D))]
-public class EllipseCollider2D : MonoBehaviour {
+public class EllipseCollider2D : MonoBehaviour
+{
 
-    [Range(1, 25), HideInInspector]
+    [Range(1, 25)] [HideInInspector]
     public float radiusX = 1, radiusY = 2;
 
-    [Range(10,90)]
+    [Range(10, 90)]
     public int smoothness = 30;
 
     [Range(0, 180)]
-    public int rotation = 0;
+    public int rotation;
 
     [HideInInspector]
-    public bool advanced = false;
+    public bool advanced;
 
-    Vector2 origin, center;
-    
+    private Vector2 origin, center;
+
     public Vector2[] getPoints()
     {
-        List<Vector2> points = new List<Vector2>();
-        
-        float ang = 0;
-        float o = rotation * Mathf.Deg2Rad;
+        var points = new List<Vector2>();
 
-        for (int i = 0; i <= smoothness; i++)
+        float ang = 0;
+        var o = rotation * Mathf.Deg2Rad;
+
+        for (var i = 0; i <= smoothness; i++)
         {
-            float a = ang * Mathf.Deg2Rad;
+            var a = ang * Mathf.Deg2Rad;
 
             // fan shuriken
             //float radius;
@@ -69,11 +69,11 @@ public class EllipseCollider2D : MonoBehaviour {
             //float y = center.y + radius * Mathf.Sin(a);
 
             // https://www.uwgb.edu/dutchs/Geometry/HTMLCanvas/ObliqueEllipses5a.HTM
-            float x = radiusX * Mathf.Cos(a) * Mathf.Cos(o) - radiusY * Mathf.Sin(a) * Mathf.Sin(o);
-            float y = -radiusX * Mathf.Cos(a) * Mathf.Sin(o) - radiusY * Mathf.Sin(a) * Mathf.Cos(o);
+            var x = radiusX * Mathf.Cos(a) * Mathf.Cos(o) - radiusY * Mathf.Sin(a) * Mathf.Sin(o);
+            var y = -radiusX * Mathf.Cos(a) * Mathf.Sin(o) - radiusY * Mathf.Sin(a) * Mathf.Cos(o);
 
             points.Add(new Vector2(x, y));
-            ang += 360f/smoothness;
+            ang += 360f / smoothness;
         }
 
         points.RemoveAt(0);

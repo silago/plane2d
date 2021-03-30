@@ -1,5 +1,6 @@
+#region
 using Yarn;
-
+#endregion
 namespace Modules.YarnPlayer
 {
     public class OptionLine

@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Nrjwolf.Tools.AttachAttributes;
+﻿#region
 using UnityEngine;
-
+#endregion
 [RequireComponent(typeof(SpriteRenderer))]
 public class RotationController : MonoBehaviour
 {
-    
-    #if UNITY_EDITOR
-    public bool UpdateRotation = false;
-    protected float _previousZRotation = 0f;
-    #endif
-    
+
     [SerializeField]
-    Sprite[] sprites;
-    
+    private Sprite[] sprites;
+
     //[GetComponent]
     [SerializeField]
     private SpriteRenderer spriteRenderer;
@@ -30,17 +22,23 @@ public class RotationController : MonoBehaviour
         }
     }
 
-    void UpdateRepresentation() {
-            var currentRotation = transform.rotation.eulerAngles.z;
-            var currentSpriteIndex = (int)((currentRotation /360) * sprites.Length); 
-            spriteRenderer.sprite = sprites[currentSpriteIndex];
-        }
-
     private void OnValidate()
     {
-            UpdateRotation = false;
-            var currentRotation = transform.rotation.eulerAngles.z;
-            var currentSpriteIndex = (int)((currentRotation /360) * sprites.Length); 
-            GetComponent<SpriteRenderer>().sprite = sprites[currentSpriteIndex];
-        }
+        UpdateRotation = false;
+        var currentRotation = transform.rotation.eulerAngles.z;
+        var currentSpriteIndex = (int)(currentRotation / 360 * sprites.Length);
+        GetComponent<SpriteRenderer>().sprite = sprites[currentSpriteIndex];
+    }
+
+    private void UpdateRepresentation()
+    {
+        var currentRotation = transform.rotation.eulerAngles.z;
+        var currentSpriteIndex = (int)(currentRotation / 360 * sprites.Length);
+        spriteRenderer.sprite = sprites[currentSpriteIndex];
+    }
+
+    #if UNITY_EDITOR
+    public bool UpdateRotation;
+    protected float _previousZRotation;
+    #endif
 }

@@ -1,31 +1,37 @@
-﻿using System;
+﻿#region
 using System.Collections;
 using System.Collections.Generic;
-using Modules.Utils;
 using Modules.Utils.TagSelector;
-using UnityEditor;
 using UnityEngine;
 using Zenject;
 using static Modules.Utils.Vector3Extensions;
-    
+#endregion
+
 
 namespace Modules.Enemies
 {
     public class EnemyRamBehaviour : MonoBehaviour
     {
+
+        [SerializeField] private Transform aim;
+
+        [SerializeField] private Transform bulletPrefab;
+
+        [SerializeField] private float rotationSpeed;
+
+        [SerializeField]
+        private float bulletSpeed = 10f;
+
+        private bool _active;
         [Inject(Id = "Player")]
         private IMovable _player;
 
-        [SerializeField] private Transform aim;
-                
         private Transform _target;
+        private List<Transform> bullets = new List<Transform>();
         [TagSelector]
         private string filterTag;
 
-        [SerializeField] private Transform bulletPrefab;
-        private List<Transform> bullets = new List<Transform>();
-
-        [SerializeField] private float rotationSpeed;
+        private Vector3 t = new Vector3();
 
         private void Start()
         {
@@ -33,23 +39,14 @@ namespace Modules.Enemies
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             Aim();
-            foreach (var bullet in bullets)
-            {
-                bullet.position += -bullet.up * (Time.deltaTime * bulletSpeed);
-            }
+            foreach (var bullet in bullets) bullet.position += -bullet.up * (Time.deltaTime * bulletSpeed);
         }
-
-        void RotateTowardsTarget()
+        private void OnDrawGizmos()
         {
-            if (_target == null) return;;
-            transform.rotation = Quaternion.RotateTowards(
-                    transform.rotation,
-                Quaternion.LookRotation(Vector3.forward, transform.position - _target.position),
-                Time.deltaTime * rotationSpeed
-                );
+            Gizmos.DrawSphere(t, 1f);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -61,28 +58,31 @@ namespace Modules.Enemies
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.transform == _player)
-            {
-                _target = null;
-            }
+            if (other.transform == _player) _target = null;
             //if (false == other.CompareTag(filterTag)) return;
             _target = null;
         }
 
-        private bool _active = false;
-
-        [SerializeField]
-        private float bulletSpeed = 10f;
-        void Aim()
+        private void RotateTowardsTarget()
+        {
+            if (_target == null) return;
+            ;
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                Quaternion.LookRotation(Vector3.forward, transform.position - _target.position),
+                Time.deltaTime * rotationSpeed
+            );
+        }
+        private void Aim()
         {
 
             Quaternion? q;
-            if ((q = Vector3Extensions.PredictAim2(
+            if ((q = PredictAim2(
                 transform.position,
                 _player.Transform.position,
                 _player.Direction * _player.VelocityMagnitude,
                 bulletSpeed
-            ))!=null)
+            )) != null)
             {
                 _active = true;
                 transform.rotation = q.Value;
@@ -93,30 +93,21 @@ namespace Modules.Enemies
             }
         }
 
-        private Vector3 t = new Vector3();
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawSphere(t, 1f);
-        }
-
-        IEnumerator ShootCo()
+        private IEnumerator ShootCo()
         {
             for (;;)
             {
                 yield return new WaitForSeconds(3);
-                if (_active == false)
-                {
-                    continue;
-                }
+                if (_active == false) continue;
                 var b = Instantiate(bulletPrefab, transform.parent);
                 b.rotation = transform.rotation;
                 b.position = transform.position;
                 bullets.Add(b);
-            } 
+            }
         }
 
 
-        void StateBattle()
+        private void StateBattle()
         {
             RotateTowardsTarget();
         }

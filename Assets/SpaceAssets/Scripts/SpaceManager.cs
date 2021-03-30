@@ -1,26 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#region
 using UnityEngine;
+#endregion
+public enum ScrollDirection { LeftToRight, RightToLeft, DownToUp, UpToDown }
 
-public enum ScrollDirection { LeftToRight, RightToLeft, DownToUp, UpToDown };
+public class SpaceManager : MonoBehaviour
+{
 
-public class SpaceManager : MonoBehaviour {
+    public static SpaceManager instance;
     //Set the direction that the screen or the camera is moving
     public ScrollDirection scrollDirection = ScrollDirection.LeftToRight;
-    ScrollDirection direction;
+    private ScrollDirection direction;
 
-    public static SpaceManager instance = null;
-
-    void Start () {
+    private void Start()
+    {
         direction = scrollDirection;
         instance = this;
     }
-	
-	void Update () {
+
+    private void Update()
+    {
         //Prevent that the variable could be changed in execution mode (removing this could cause bugs)
-        if(direction != scrollDirection)
-        {
-            scrollDirection = direction;
-        }
-	}
+        if (direction != scrollDirection) scrollDirection = direction;
+    }
 }

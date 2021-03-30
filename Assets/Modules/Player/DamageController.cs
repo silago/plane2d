@@ -1,10 +1,10 @@
+#region
 using System;
 using System.Collections;
 using Events;
 using Modules.Utils;
 using UnityEngine;
-
-
+#endregion
 public class DestroyMessage : Message
 {
     public int Damage;
@@ -28,7 +28,7 @@ namespace Modules.Game.Player
         private int Hull;
         private void Awake()
         {
-            this.Subscribe<DamageMessage,int>(OnDamage,transform.GetInstanceID()).BindTo(this);
+            this.Subscribe<DamageMessage, int>(OnDamage, transform.GetInstanceID()).BindTo(this);
         }
         private void OnDamage(DamageMessage obj)
         {
@@ -38,7 +38,7 @@ namespace Modules.Game.Player
                 var p = Instantiate(destroyEffect, transform.parent);
                 p.transform.position = transform.position;
                 p.gameObject.SetActive(true);
-                this.DoWithDelay( 0.3f, () => Destroy(this.gameObject));
+                this.DoWithDelay(0.3f, () => Destroy(gameObject));
                 //_renderer.enabled = false;
                 //StartCoroutine(OnEffectEnd(p, () => {Destroy(this.gameObject);} ));
             }
@@ -49,15 +49,15 @@ namespace Modules.Game.Player
                 //StartCoroutine(OnEffectEnd(p, () => {Destroy(p.gameObject);} ));
             }
         }
-        
-        IEnumerator OnEffectEnd(ParticleSystem p, Action cb)
+
+        private IEnumerator OnEffectEnd(ParticleSystem p, Action cb)
         {
             while (p.IsAlive())
                 yield return new WaitForSeconds(1);
             cb();
         }
 
-        IEnumerator DestroyEffectOnEnd(ParticleSystem p)
+        private IEnumerator DestroyEffectOnEnd(ParticleSystem p)
         {
             while (p.IsAlive())
                 yield return new WaitForSeconds(1);

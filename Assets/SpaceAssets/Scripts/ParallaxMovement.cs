@@ -1,30 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#region
 using UnityEngine;
+#endregion
+public class ParallaxMovement : MonoBehaviour
+{
 
-public class ParallaxMovement : MonoBehaviour {
-    //Set the direction that the screen or the camera is moving
-    ScrollDirection direction;
+    public enum BehaviourOnExit { Destroy, Regenerate }
     //This speed value create the parallax effect
     //Note: This speed affect the movement of the object based on the camera speed
     public float minSpeed = 0.2f;
     public float maxSpeed = 0.6f;
-    Vector3 speed;
-    float scrollValue;
-    float lastScrollValue;
-
-    public enum BehaviourOnExit { Destroy, Regenerate };
     //Define if the object is destroyed or regenerate when the object is out of the screen
     public BehaviourOnExit behaviourOnExit = BehaviourOnExit.Regenerate;
-
-    Transform cameraTransform;
     //Determine the value offScreen that the object has to be to consider out of screen
     //It also is used to regenerate it
     //if the value is 1f is the screen's width or heigth depending on the direction   
     public float limitOffScreen = 1f;
 
-    void Start () {
-        if(SpaceManager.instance != null)
+    private Transform cameraTransform;
+    //Set the direction that the screen or the camera is moving
+    private ScrollDirection direction;
+    private float lastScrollValue;
+    private float scrollValue;
+    private Vector3 speed;
+
+    private void Start()
+    {
+        if (SpaceManager.instance != null)
             direction = SpaceManager.instance.scrollDirection;
         cameraTransform = Camera.main.transform;
         if (minSpeed > maxSpeed) Debug.LogError("The variable minSpeed cannot be greater than maxSpeed");
@@ -50,37 +51,8 @@ public class ParallaxMovement : MonoBehaviour {
         }
     }
 
-    void Regenerate()
+    private void Update()
     {
-        switch (direction)
-        {
-            case ScrollDirection.LeftToRight:
-                transform.position = Camera.main.ViewportToWorldPoint(new Vector3(1f + limitOffScreen, Random.Range(0f, 1f), 10f));
-                break;
-            case ScrollDirection.RightToLeft:
-                transform.position = Camera.main.ViewportToWorldPoint(new Vector3(-limitOffScreen, Random.Range(0f, 1f), 10f));
-                break;
-            case ScrollDirection.DownToUp:
-                transform.position = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), 1f + limitOffScreen, 10f));
-                break;
-            case ScrollDirection.UpToDown:
-                transform.position = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), -limitOffScreen, 10f));
-                break;
-        }
-        //Check for random components to randomize the object
-        RandomSize[] randomSizes = gameObject.GetComponentsInChildren<RandomSize>();
-        RandomRotation[] randomRotations = gameObject.GetComponentsInChildren<RandomRotation>();
-        RandomColor[] randomColors = gameObject.GetComponentsInChildren<RandomColor>();
-        RandomSprite[] randomSprites = gameObject.GetComponentsInChildren<RandomSprite>();
-
-        //Randomize the components in the object and his children objects
-        if (randomSizes != null) foreach (RandomSize r in randomSizes) r.Generate();
-        if (randomRotations != null) foreach (RandomRotation r in randomRotations) r.Generate();
-        if (randomColors != null) foreach (RandomColor r in randomColors) r.Generate();
-        if (randomSprites != null) foreach (RandomSprite r in randomSprites) r.Generate();
-    }
-	
-	void Update () {
         //Set the current scroll position based on the camera position and the scroll direction
         switch (direction)
         {
@@ -109,8 +81,7 @@ public class ParallaxMovement : MonoBehaviour {
         switch (direction)
         {
             case ScrollDirection.LeftToRight:
-                if(Camera.main.WorldToViewportPoint(transform.position).x < -limitOffScreen)
-                {
+                if (Camera.main.WorldToViewportPoint(transform.position).x < -limitOffScreen)
                     switch (behaviourOnExit)
                     {
                         case BehaviourOnExit.Destroy:
@@ -120,11 +91,9 @@ public class ParallaxMovement : MonoBehaviour {
                             Regenerate();
                             break;
                     }
-                }
                 break;
             case ScrollDirection.RightToLeft:
                 if (Camera.main.WorldToViewportPoint(transform.position).x > 1f + limitOffScreen)
-                {
                     switch (behaviourOnExit)
                     {
                         case BehaviourOnExit.Destroy:
@@ -134,11 +103,9 @@ public class ParallaxMovement : MonoBehaviour {
                             Regenerate();
                             break;
                     }
-                }
                 break;
             case ScrollDirection.DownToUp:
                 if (Camera.main.WorldToViewportPoint(transform.position).y < -limitOffScreen)
-                {
                     switch (behaviourOnExit)
                     {
                         case BehaviourOnExit.Destroy:
@@ -148,11 +115,9 @@ public class ParallaxMovement : MonoBehaviour {
                             Regenerate();
                             break;
                     }
-                }
                 break;
             case ScrollDirection.UpToDown:
                 if (Camera.main.WorldToViewportPoint(transform.position).y > 1f + limitOffScreen)
-                {
                     switch (behaviourOnExit)
                     {
                         case BehaviourOnExit.Destroy:
@@ -162,8 +127,45 @@ public class ParallaxMovement : MonoBehaviour {
                             Regenerate();
                             break;
                     }
-                }
                 break;
         }
+    }
+
+    private void Regenerate()
+    {
+        switch (direction)
+        {
+            case ScrollDirection.LeftToRight:
+                transform.position = Camera.main.ViewportToWorldPoint(new Vector3(1f + limitOffScreen, Random.Range(0f, 1f), 10f));
+                break;
+            case ScrollDirection.RightToLeft:
+                transform.position = Camera.main.ViewportToWorldPoint(new Vector3(-limitOffScreen, Random.Range(0f, 1f), 10f));
+                break;
+            case ScrollDirection.DownToUp:
+                transform.position = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), 1f + limitOffScreen, 10f));
+                break;
+            case ScrollDirection.UpToDown:
+                transform.position = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), -limitOffScreen, 10f));
+                break;
+        }
+        //Check for random components to randomize the object
+        var randomSizes = gameObject.GetComponentsInChildren<RandomSize>();
+        var randomRotations = gameObject.GetComponentsInChildren<RandomRotation>();
+        var randomColors = gameObject.GetComponentsInChildren<RandomColor>();
+        var randomSprites = gameObject.GetComponentsInChildren<RandomSprite>();
+
+        //Randomize the components in the object and his children objects
+        if (randomSizes != null)
+            foreach (var r in randomSizes)
+                r.Generate();
+        if (randomRotations != null)
+            foreach (var r in randomRotations)
+                r.Generate();
+        if (randomColors != null)
+            foreach (var r in randomColors)
+                r.Generate();
+        if (randomSprites != null)
+            foreach (var r in randomSprites)
+                r.Generate();
     }
 }

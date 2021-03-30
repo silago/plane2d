@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿#region
 using Events;
 using Modules.YarnPlayer;
-
-
+using UnityEngine;
+#endregion
 public class DialogueStarter : MonoBehaviour
 {
     [SerializeField]
-    string NodeName;
-    
+    private string NodeName;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        this.SendEvent(new StartDialogueMessage { NodeName = this.NodeName });  
+        this.SendEvent(new StartDialogueMessage {
+            NodeName = NodeName
+        });
     }
 }

@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+#region
 using UnityEngine;
-
+#endregion
 public class FireController : MonoBehaviour
 {
     [SerializeField]
     private Projectile _projectile;
-    void Update()
+    private void Update()
     {
-        
-        
+
+
     }
 }

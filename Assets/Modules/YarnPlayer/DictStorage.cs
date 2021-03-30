@@ -1,6 +1,5 @@
-using Yarn;
-using System.Collections.Generic;
-namespace Modules.YarnPlayer {
+namespace Modules.YarnPlayer
+{
     /*
     public class DictStorage : VariableStorage
     {
@@ -27,4 +26,4 @@ namespace Modules.YarnPlayer {
         public void SetValue(string variableName, bool boolValue)=> Data.Add(variableName, new Value(boolValue));
     }
     */
-    }
+}

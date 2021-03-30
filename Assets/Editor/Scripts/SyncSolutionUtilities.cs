@@ -1,3 +1,4 @@
+#region
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,88 +6,78 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-
+#endregion
 namespace EditorUtilities.Solution
 {
-	public static class SyncSolutionUtilities
-	{
-		private static Type _syncVSType;
-		private static MethodInfo _syncSolutionMethodInfo;
+    public static class SyncSolutionUtilities
+    {
+        private static Type _syncVSType;
+        private static MethodInfo _syncSolutionMethodInfo;
 
-		private static FieldInfo _synchronizerField;
-		private static object _synchronizerObject;
-		private static Type _synchronizerType;
-		private static MethodInfo _synchronizerSyncMethodInfo;
-		
-		static SyncSolutionUtilities()
-		{
-			_syncVSType = Type.GetType("UnityEditor.SyncVS,UnityEditor");
-			_synchronizerField = _syncVSType.GetField("Synchronizer", BindingFlags.NonPublic | BindingFlags.Static);
-			_syncSolutionMethodInfo = _syncVSType.GetMethod("SyncSolution", BindingFlags.Public | BindingFlags.Static);
-			
-			_synchronizerObject = _synchronizerField.GetValue(_syncVSType);
-			_synchronizerType = _synchronizerObject.GetType();
-			_synchronizerSyncMethodInfo = _synchronizerType.GetMethod("Sync", BindingFlags.Public | BindingFlags.Instance);
-		}
+        private static FieldInfo _synchronizerField;
+        private static object _synchronizerObject;
+        private static Type _synchronizerType;
+        private static MethodInfo _synchronizerSyncMethodInfo;
 
-		[MenuItem("Assets/Sync C# Solution", priority = 1000000)]
-		public static void Sync()
-		{
-			Sync(true);
-		}
+        static SyncSolutionUtilities()
+        {
+            _syncVSType = Type.GetType("UnityEditor.SyncVS,UnityEditor");
+            _synchronizerField = _syncVSType.GetField("Synchronizer", BindingFlags.NonPublic | BindingFlags.Static);
+            _syncSolutionMethodInfo = _syncVSType.GetMethod("SyncSolution", BindingFlags.Public | BindingFlags.Static);
 
-		public static void Sync(bool logsEnabled)
-		{
-			CleanOldFiles(logsEnabled);
-			Call_SyncSolution(logsEnabled);
-			Call_SynchronizerSync(logsEnabled);
-		}
+            _synchronizerObject = _synchronizerField.GetValue(_syncVSType);
+            _synchronizerType = _synchronizerObject.GetType();
+            _synchronizerSyncMethodInfo = _synchronizerType.GetMethod("Sync", BindingFlags.Public | BindingFlags.Instance);
+        }
 
-		private static void CleanOldFiles(bool logsEnabled)
-		{
-			DirectoryInfo assetsDirectoryInfo = new DirectoryInfo(Application.dataPath);
-			DirectoryInfo projectDirectoryInfo = assetsDirectoryInfo.Parent;
+        [MenuItem("Assets/Sync C# Solution", priority = 1000000)]
+        public static void Sync()
+        {
+            Sync(true);
+        }
 
-			IEnumerable<FileInfo> files = GetFilesByExtensions(projectDirectoryInfo, "*.sln", "*.csproj");
-			foreach(FileInfo file in files)
-			{
-				if(logsEnabled)
-				{
-					Debug.Log($"Remove old solution file: {file.Name}");
-				}
-				file.Delete();
-			}
-		}
+        public static void Sync(bool logsEnabled)
+        {
+            CleanOldFiles(logsEnabled);
+            Call_SyncSolution(logsEnabled);
+            Call_SynchronizerSync(logsEnabled);
+        }
 
-		private static void Call_SyncSolution(bool logsEnabled)
-		{
-			if(logsEnabled)
-			{
-				Debug.Log($"Coll method: SyncVS.Sync()");
-			}
+        private static void CleanOldFiles(bool logsEnabled)
+        {
+            var assetsDirectoryInfo = new DirectoryInfo(Application.dataPath);
+            var projectDirectoryInfo = assetsDirectoryInfo.Parent;
 
-			_syncSolutionMethodInfo.Invoke(null, null);
-		}
+            var files = GetFilesByExtensions(projectDirectoryInfo, "*.sln", "*.csproj");
+            foreach (var file in files)
+            {
+                if (logsEnabled) Debug.Log($"Remove old solution file: {file.Name}");
+                file.Delete();
+            }
+        }
 
-		private static void Call_SynchronizerSync(bool logsEnabled)
-		{
-			if(logsEnabled)
-			{
-				Debug.Log($"Coll method: SyncVS.Synchronizer.Sync()");
-			}
+        private static void Call_SyncSolution(bool logsEnabled)
+        {
+            if (logsEnabled) Debug.Log("Coll method: SyncVS.Sync()");
 
-			_synchronizerSyncMethodInfo.Invoke(_synchronizerObject, null);
-		}
+            _syncSolutionMethodInfo.Invoke(null, null);
+        }
 
-		private static IEnumerable<FileInfo> GetFilesByExtensions(DirectoryInfo dir, params string[] extensions)
-		{
-			extensions = extensions ?? new []{"*"};
-			IEnumerable<FileInfo> files = Enumerable.Empty<FileInfo>();
-			foreach(string ext in extensions)
-			{
-				files = files.Concat(dir.GetFiles(ext));
-			}
-			return files;
-		}
-	}
+        private static void Call_SynchronizerSync(bool logsEnabled)
+        {
+            if (logsEnabled) Debug.Log("Coll method: SyncVS.Synchronizer.Sync()");
+
+            _synchronizerSyncMethodInfo.Invoke(_synchronizerObject, null);
+        }
+
+        private static IEnumerable<FileInfo> GetFilesByExtensions(DirectoryInfo dir, params string[] extensions)
+        {
+            extensions = extensions ?? new[] {
+                "*"
+            };
+            var files = Enumerable.Empty<FileInfo>();
+            foreach (var ext in extensions) files = files.Concat(dir.GetFiles(ext));
+            return files;
+        }
+    }
 }

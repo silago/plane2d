@@ -1,6 +1,7 @@
+#region
 using UnityEngine;
 using Zenject;
-
+#endregion
 public class Installer : MonoInstaller
 {
     [SerializeField] private MovementController player;

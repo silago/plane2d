@@ -25,23 +25,25 @@ You can contact me by email at guyquad27@gmail.com or on Reddit at https://www.r
 */
 
 
-using UnityEngine;
+#region
 using UnityEditor;
-using System.Collections;
+using UnityEngine;
+#endregion
+[CustomEditor(typeof(ArcCollider2D))]
+public class ArcCollider_Editor : Editor
+{
 
-[CustomEditor (typeof(ArcCollider2D))]
-public class ArcCollider_Editor : Editor {
-    
-    ArcCollider2D ac;
-    PolygonCollider2D polyCollider;
-    Vector2 off;
+    private ArcCollider2D ac;
+    private Vector2 off;
+    private PolygonCollider2D polyCollider;
 
-    void OnEnable()
+    private void OnEnable()
     {
         ac = (ArcCollider2D)target;
 
         polyCollider = ac.GetComponent<PolygonCollider2D>();
-        if (polyCollider == null) {
+        if (polyCollider == null)
+        {
             ac.gameObject.AddComponent<PolygonCollider2D>();
             polyCollider = ac.GetComponent<PolygonCollider2D>();
         }
@@ -55,30 +57,18 @@ public class ArcCollider_Editor : Editor {
 
         ac.advanced = EditorGUILayout.Toggle("Advanced", ac.advanced);
         if (ac.advanced)
-        {
             ac.radius = EditorGUILayout.FloatField("Radius", ac.radius);
-        }
         else
-        {
             ac.radius = EditorGUILayout.Slider("Radius", ac.radius, 1, 25);
-        }
         if (!ac.pizzaSlice)
         {
             if (ac.advanced)
-            {
                 ac.Thickness = EditorGUILayout.FloatField("Thickness", ac.Thickness);
-            }
             else
-            {
                 ac.Thickness = EditorGUILayout.Slider("Thickness", ac.Thickness, 1, 25);
-            }
         }
 
-        if (GUI.changed || !off.Equals(polyCollider.offset))
-        {
-            polyCollider.points = ac.getPoints(polyCollider.offset);
-        }
+        if (GUI.changed || !off.Equals(polyCollider.offset)) polyCollider.points = ac.getPoints(polyCollider.offset);
         off = polyCollider.offset;
     }
-    
 }

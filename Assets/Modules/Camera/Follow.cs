@@ -1,41 +1,33 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿#region
 using UnityEngine;
-
-namespace Plane {
-public class Follow : MonoBehaviour
+#endregion
+namespace Plane
 {
-    [SerializeField]
-        private Mode _mode;
+    public class Follow : MonoBehaviour
+    {
         public enum Mode
         {
-            Update,Late,Fixed
-            
+            Update, Late, Fixed
+
         }
         [SerializeField]
-        Transform target;
+        private Mode _mode;
+        [SerializeField]
+        private Transform target;
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-            
-        }
 
-        void UpdatePosition()
-        {
-            transform.position = new Vector3(
-                    target.position.x,
-                    target.position.y,
-                    transform.position.z
-                    );
         }
         // Update is called once per frame
-        void Update() {
+        private void Update()
+        {
             if (_mode == Mode.Update)
                 UpdatePosition();
         }
-        
-        void FixedUpdate() {
+
+        private void FixedUpdate()
+        {
             if (_mode == Mode.Fixed)
                 UpdatePosition();
         }
@@ -45,5 +37,13 @@ public class Follow : MonoBehaviour
                 UpdatePosition();
         }
 
-}
+        private void UpdatePosition()
+        {
+            transform.position = new Vector3(
+                target.position.x,
+                target.position.y,
+                transform.position.z
+            );
+        }
+    }
 }

@@ -25,25 +25,24 @@ You can contact me by email at guyquad27@gmail.com or on Reddit at https://www.r
 */
 
 
-using UnityEngine;
+#region
 using UnityEditor;
-using System.Collections;
+using UnityEngine;
+#endregion
+[CustomEditor(typeof(EllipseCollider2D))]
+public class EllipseCollider_Editor : Editor
+{
 
-[CustomEditor (typeof(EllipseCollider2D))]
-public class EllipseCollider_Editor : Editor {
+    private EllipseCollider2D ec;
+    private Vector2 off;
+    private PolygonCollider2D polyCollider;
 
-    EllipseCollider2D ec;
-    PolygonCollider2D polyCollider;
-    Vector2 off;
-
-    void OnEnable()
+    private void OnEnable()
     {
         ec = (EllipseCollider2D)target;
 
         polyCollider = ec.GetComponent<PolygonCollider2D>();
-        if (polyCollider == null) {
-            polyCollider = ec.gameObject.AddComponent<PolygonCollider2D>();
-        }
+        if (polyCollider == null) polyCollider = ec.gameObject.AddComponent<PolygonCollider2D>();
         polyCollider.points = ec.getPoints();
     }
 
@@ -64,12 +63,8 @@ public class EllipseCollider_Editor : Editor {
             ec.radiusY = EditorGUILayout.Slider("RadiusY", ec.radiusY, 1, 25);
         }
 
-        if (GUI.changed || !off.Equals(polyCollider.offset))
-        {
-            polyCollider.points = ec.getPoints();
-        }
+        if (GUI.changed || !off.Equals(polyCollider.offset)) polyCollider.points = ec.getPoints();
 
         off = polyCollider.offset;
     }
-    
 }

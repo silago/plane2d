@@ -1,31 +1,34 @@
-﻿using System;
+﻿#region
 using System.Collections;
-using System.Collections.Generic;
-using Events;
-using Modules.Utils;
 using Modules.Utils.TagSelector;
-using UnityEditor;
 using UnityEngine;
 using Zenject;
 using static Modules.Utils.Vector3Extensions;
-    
+#endregion
+
 
 namespace Modules.Enemies
 {
     public class EnemyShootBehaviour : MonoBehaviour
     {
-        [Inject(Id = "Player")]
-        private IMovable _player;
 
         [SerializeField] private Transform aim;
-                
-        private Transform _target;
-        [TagSelector]
-        private string filterTag;
 
         [SerializeField] private Projectile bulletPrefab;
 
         [SerializeField] private float rotationSpeed;
+        [Inject(Id = "Player")]
+        private IMovable _player;
+
+        private Transform _target;
+
+        private bool active;
+        [TagSelector]
+        private string filterTag;
+
+        private Vector3 prevPlayerPos;
+
+        private Vector3 t = new Vector3();
 
         private void Start()
         {
@@ -34,19 +37,17 @@ namespace Modules.Enemies
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             Aim();
         }
 
-        void RotateTowardsTarget()
+        private void OnDestroy()
         {
-            if (_target == null) return;;
-            transform.rotation = Quaternion.RotateTowards(
-                    transform.rotation,
-                Quaternion.LookRotation(Vector3.forward, transform.position - _target.position),
-                Time.deltaTime * rotationSpeed
-                );
+        }
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawSphere(t, 1f);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -58,32 +59,36 @@ namespace Modules.Enemies
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.transform == _player)
-            {
-                _target = null;
-            }
+            if (other.transform == _player) _target = null;
             //if (false == other.CompareTag(filterTag)) return;
             _target = null;
         }
 
-        void StateIdle()
+        private void RotateTowardsTarget()
         {
-            
+            if (_target == null) return;
+            ;
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                Quaternion.LookRotation(Vector3.forward, transform.position - _target.position),
+                Time.deltaTime * rotationSpeed
+            );
         }
 
-        private bool active = false;
+        private void StateIdle()
+        {
 
-        Vector3 prevPlayerPos = new Vector3();
-        void Aim()
+        }
+        private void Aim()
         {
 
             Quaternion? q;
-            if ((q = Vector3Extensions.PredictAim2(
+            if ((q = PredictAim2(
                 transform.position,
                 _player.Transform.position,
                 _player.Direction * _player.VelocityMagnitude,
                 bulletPrefab.speed
-            ))!=null)
+            )) != null)
             {
                 active = true;
                 transform.rotation = q.Value;
@@ -92,37 +97,23 @@ namespace Modules.Enemies
             {
                 active = false;
             }
-            return;
         }
 
-        private Vector3 t = new Vector3();
-        private void OnDrawGizmos()
+        private IEnumerator ShootCo()
         {
-            Gizmos.DrawSphere(t, 1f);
-        }
-
-        IEnumerator ShootCo()
-        {
-            for (var i = 0;i<30;i++)
+            for (var i = 0; i < 30; i++)
             {
                 yield return new WaitForSeconds(3);
-                if (active == false)
-                {
-                    continue;
-                }
+                if (active == false) continue;
                 var b = Instantiate(bulletPrefab, transform.parent);
                 b.gameObject.SetActive(true);
                 b.transform.rotation = transform.rotation;
                 b.transform.position = transform.position;
-            } 
-        }
-
-        private void OnDestroy()
-        {
+            }
         }
 
 
-        void StateBattle()
+        private void StateBattle()
         {
             RotateTowardsTarget();
         }

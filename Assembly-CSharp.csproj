@@ -60,6 +60,8 @@
      <Compile Include="Assets\Modules\Utils\TagSelector\TagSelectorPropertyDrawer.cs" />
      <Compile Include="Assets\SpaceAssets\Scripts\Misc\RandomSprite.cs" />
      <Compile Include="Assets\Modules\YarnPlayer\DictStorage.cs" />
+     <Compile Include="Assets\StateChanged.cs" />
+     <Compile Include="Assets\Models\#OnePotatoKingdom_FULL\Bonus_Assets\Rotation_Script\Rotatator.cs" />
      <Compile Include="Assets\Modules\Player\PlayerInput.cs" />
      <Compile Include="Assets\Modules\Enemies\EnemyRamBehaviour.cs" />
      <Compile Include="Assets\Modules\Enemies\EnemyShootBehaviour.cs" />
@@ -78,6 +80,7 @@
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\FlipX.cs" />
      <Compile Include="Assets\Modules\Utils\Vector3Extensions.cs" />
      <Compile Include="Assets\Modules\Player\DamageController.cs" />
+     <Compile Include="Assets\Modules\Animation\AnimationOffset.cs" />
      <Compile Include="Assets\Modules\Player\MovementController.cs" />
      <Compile Include="Assets\Modules\LOS\Utilities\SHelper.cs" />
      <Compile Include="Assets\Modules\LOS\Core\LOSRadialLight.cs" />
@@ -110,6 +113,7 @@
      <Compile Include="Assets\Modules\LOS\Core\Event\LOSEventTrigger.cs" />
      <Compile Include="Assets\Modules\Environment\Cloud.cs" />
      <Compile Include="Assets\Modules\YarnPlayer\YarnController.cs" />
+     <Compile Include="Assets\Modules\Player\RotationController3D.cs" />
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\MovePhysics.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\BezierCurveCollider2D.cs" />
      <Compile Include="Assets\SpaceAssets\Scripts\Misc\RandomSize.cs" />
@@ -150,6 +154,7 @@
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\Models\Planets\shader\two_side_shader.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\Modules\LOS\Resources\Shaders\GreyscaleForeground.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
@@ -917,6 +922,10 @@
       <Project>{306420fd-b11c-008d-2fe0-bc6ae93aaa69}</Project>
       <Name>Zenject-Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Zenject.csproj">
+      <Project>{3075b643-d459-8e11-cf0b-b496f3b86e08}</Project>
+      <Name>Zenject</Name>
+    </ProjectReference>
     <ProjectReference Include="Zenject-PoolMonitor-Editor.csproj">
       <Project>{4130a442-216b-3290-4bdb-458010e26917}</Project>
       <Name>Zenject-PoolMonitor-Editor</Name>
@@ -924,10 +933,6 @@
     <ProjectReference Include="Zenject-ReflectionBaking-Editor.csproj">
       <Project>{756edfc2-b2a9-7f6c-14c2-f550ef32052e}</Project>
       <Name>Zenject-ReflectionBaking-Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Zenject.csproj">
-      <Project>{3075b643-d459-8e11-cf0b-b496f3b86e08}</Project>
-      <Name>Zenject</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

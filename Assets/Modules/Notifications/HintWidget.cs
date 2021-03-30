@@ -1,10 +1,8 @@
-using System;
+#region
 using Events;
-using Nrjwolf.Tools.AttachAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-
+#endregion
 namespace Modules.Notifications
 {
     public class HintWidget : MonoBehaviour
@@ -19,10 +17,7 @@ namespace Modules.Notifications
         private void OnHintMessage(HintMessage obj)
         {
             gameObject.SetActive(obj.active);
-            if (false == string.IsNullOrEmpty(obj.text))
-            {
-                text.text = obj.text;
-            }
+            if (false == string.IsNullOrEmpty(obj.text)) text.text = obj.text;
         }
     }
 }

@@ -25,26 +25,25 @@ You can contact me by email at guyquad27@gmail.com or on Reddit at https://www.r
 */
 
 
-using UnityEngine;
+#region
 using UnityEditor;
-using System.Collections;
+using UnityEngine;
+#endregion
+[CustomEditor(typeof(CapsuleCollider2D))]
+public class CapsuleCollider_Editor : Editor
+{
+    private bool advanced;
 
-[CustomEditor (typeof(CapsuleCollider2D))]
-public class CapsuleCollider_Editor : Editor {
+    private CapsuleCollider2D capCol;
+    private Vector2 off;
+    private PolygonCollider2D polyCollider;
 
-    CapsuleCollider2D capCol;
-    PolygonCollider2D polyCollider;
-    Vector2 off;
-    bool advanced;
-
-    void OnEnable()
+    private void OnEnable()
     {
         capCol = (CapsuleCollider2D)target;
 
         polyCollider = capCol.GetComponent<PolygonCollider2D>();
-        if (polyCollider == null) {
-            polyCollider = capCol.gameObject.AddComponent<PolygonCollider2D>();
-        }
+        if (polyCollider == null) polyCollider = capCol.gameObject.AddComponent<PolygonCollider2D>();
 
         polyCollider.points = capCol.getPoints();
     }
@@ -59,15 +58,11 @@ public class CapsuleCollider_Editor : Editor {
 
         GUILayout.Space(8);
         capCol.bullet = EditorGUILayout.Toggle("Bullet", capCol.bullet);
-        if(capCol.bullet) capCol.flip = EditorGUILayout.Toggle("Flip", capCol.flip);
+        if (capCol.bullet) capCol.flip = EditorGUILayout.Toggle("Flip", capCol.flip);
 
 
-        if (GUI.changed || !off.Equals(polyCollider.offset))
-        {
-            polyCollider.points = capCol.getPoints();
-        }
+        if (GUI.changed || !off.Equals(polyCollider.offset)) polyCollider.points = capCol.getPoints();
 
         off = polyCollider.offset;
     }
-    
 }

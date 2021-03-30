@@ -26,17 +26,17 @@ You can contact me by email at guyquad27@gmail.com or on Reddit at https://www.r
 
 
 #if UNITY_EDITOR
-using UnityEngine;
-using System.Collections;
+#region
 using System.Collections.Generic;
-
+using UnityEngine;
+#endregion
 [AddComponentMenu("Physics 2D/Capsule Collider 2D")]
-
 [RequireComponent(typeof(PolygonCollider2D))]
-public class CapsuleCollider2D : MonoBehaviour {
+public class CapsuleCollider2D : MonoBehaviour
+{
 
     [HideInInspector]
-    public bool bullet = false, flip = false;
+    public bool bullet, flip;
 
     [HideInInspector]
     [Range(.5f, 25)]
@@ -45,15 +45,15 @@ public class CapsuleCollider2D : MonoBehaviour {
     [Range(1, 25)]
     public float height = 4;
 
-    [Range(10,90)]
+    [Range(10, 90)]
     public int smoothness = 20;
 
     [Range(0, 180)]
-    public int rotation = 0;
-    
-    Vector2 origin, center, center1, center2;
-    List<Vector2> points;
-    float ang = 0;
+    public int rotation;
+    private float ang;
+
+    private Vector2 origin, center, center1, center2;
+    private List<Vector2> points;
 
     public Vector2[] getPoints()
     {
@@ -61,14 +61,15 @@ public class CapsuleCollider2D : MonoBehaviour {
 
         origin = transform.localPosition;
 
-        float r = (height / 2f) - (radius);
+        var r = height / 2f - radius;
 
         if (bullet && flip) r += radius;
-        
+
         center1.x = r * Mathf.Sin(rotation * Mathf.Deg2Rad);
         center1.y = r * Mathf.Cos(rotation * Mathf.Deg2Rad);
 
-        if (bullet) {
+        if (bullet)
+        {
             if (!flip) r += radius;
             else r -= radius;
         }
@@ -83,8 +84,7 @@ public class CapsuleCollider2D : MonoBehaviour {
         ang %= 360;
 
         // top semi circle
-        for (int i = 0; i <= smoothness; i++)
-        {
+        for (var i = 0; i <= smoothness; i++)
             if (bullet && flip)
             {
                 calcPointLocation(radius, center1);
@@ -97,14 +97,12 @@ public class CapsuleCollider2D : MonoBehaviour {
                 calcPointLocation(radius, center1);
                 ang += 180f / smoothness;
             }
-        }
 
         ang -= 180f / smoothness;
         ang %= 360;
 
         // bottom semi circle
-        for (int i = 0; i <= smoothness; i++)
-        {
+        for (var i = 0; i <= smoothness; i++)
             if (bullet && !flip)
             {
                 calcPointLocation(radius, center2);
@@ -117,16 +115,15 @@ public class CapsuleCollider2D : MonoBehaviour {
                 calcPointLocation(radius, center2);
                 ang += 180f / smoothness;
             }
-        }
 
         return points.ToArray();
     }
 
-    void calcPointLocation(float r, Vector2 centerPt)
+    private void calcPointLocation(float r, Vector2 centerPt)
     {
-        float a = ang * Mathf.Deg2Rad;
-        float x = centerPt.x + r * Mathf.Cos(a);
-        float y = centerPt.y + r * Mathf.Sin(a);
+        var a = ang * Mathf.Deg2Rad;
+        var x = centerPt.x + r * Mathf.Cos(a);
+        var y = centerPt.y + r * Mathf.Sin(a);
 
         points.Add(new Vector2(x, y));
     }
