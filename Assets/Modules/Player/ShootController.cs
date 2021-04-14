@@ -11,29 +11,43 @@ public class ShootController : MonoBehaviour
     private float energyRestoration = 1f;
     [SerializeField]
     private float shootEnergyPrice = 0.1f;
+    [SerializeField]
+    public float projectileSpeed = 2f;
 
     public bool Shoot;
     private float _energy = 1f;
     private float _lockTs;
 
-    private void Update()
+    public bool MakeShot()
     {
-        if ((_lockTs -= Time.deltaTime) >= 0)
-            return;
+        if (_lockTs >= 0)
+            return false;
         if (_energy < shootEnergyPrice)
         {
-            _energy += energyRestoration *= Time.deltaTime;
-            return;
+            return false;
         }
+        
+        _lockTs = cooldown;
+        var t = Instantiate(_projectile, transform.parent);
+        t.speed = projectileSpeed;
+        //t.transform.rotation = transform.rotation;
+        t.transform.position = transform.position;
+        t.transform.up = transform.right;
+        return true;
+
+    }
+
+    private void Update()
+    {
+        if (_lockTs>=0)
+            _lockTs -= Time.deltaTime;
+        if (_energy < 1)
+            _energy += energyRestoration *= Time.deltaTime;
 
 
         if (Shoot)
         {
-            _lockTs = cooldown;
-            var t = Instantiate(_projectile, transform.parent);
-            //t.transform.rotation = transform.rotation;
-            t.transform.position = transform.position;
-            t.transform.up = transform.right;
+            MakeShot();
         }
 
     }

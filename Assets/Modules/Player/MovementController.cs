@@ -3,58 +3,34 @@ using UnityEngine;
 #endregion
 public class MovementController : MonoBehaviour, IMovable
 {
-    public bool Accel;
-    public bool Slow;
-    public bool Shoot;
-    public bool Right;
-    public bool Left;
-    public bool StrafeLeft;
-    public bool StrafeRight;
-    [SerializeField]
-    private Vector3 forward;
-
+    public bool speedUp;
+    public bool slowDown;
+    public bool shoot;
+    public bool rotateRight;
+    public bool rotateLeft;
+    public bool strafeLeft;
+    public bool strafeRight;
     [SerializeField]
     private float strafingSpeed = 1f;
-
     [SerializeField]
-    private float rotationSpeed;
-
+    public float rotationSpeed;
     [SerializeField]
     private float accelerationSpeed;
-
-
     [SerializeField]
     private float maxVelocity;
-
     [SerializeField]
     private float minVelocity;
-
     [SerializeField]
-    private float rotationDecceleration;
-
+    private float rotationDeceleration;
     [SerializeField]
-    private float inertia;
+    private float velocityChangeRate;
 
     public Vector3 targetVelocity;
-
-    private Transform _transform;
-
-
-    private Rigidbody2D body;
-
-    private Quaternion currentVelocityRotation;
-
-    private SpriteRenderer spriteRenderer;
-    public MovementController(Transform transform)
-    {
-        Speed = minVelocity;
-    }
-    public float Speed { get; set; }
-
+    private Rigidbody2D _body;
+    private float Speed { get; set; }
     private void Awake()
     {
-        body = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _body = GetComponent<Rigidbody2D>();
     }
 
     public void Update()
@@ -65,60 +41,43 @@ public class MovementController : MonoBehaviour, IMovable
     private void FixedUpdate()
     {
         targetVelocity = transform.rotation * -Vector2.right * Speed;
-        body.velocity = Vector2.MoveTowards(body.velocity, targetVelocity, inertia * Time.fixedDeltaTime);
+        _body.velocity = Vector2.MoveTowards(_body.velocity, targetVelocity, velocityChangeRate * Time.fixedDeltaTime);
         ProcessRotation();
     }
-    public Vector3 Direction => body.velocity.normalized;
-    public float VelocityMagnitude => body.velocity.magnitude;
+    public Vector3 Direction => _body.velocity.normalized;
+    public float VelocityMagnitude => _body.velocity.magnitude;
     public Transform Transform => transform;
 
     private void ProcessSpeed(float dt)
     {
-        if (Slow)
+        if (slowDown)
             Speed += -dt * accelerationSpeed;
-        else if (Accel)
+        else if (speedUp)
             Speed += dt * accelerationSpeed;
         else
             return;
         Speed = Mathf.Clamp(Speed, minVelocity, maxVelocity);
     }
 
-    public void SetSpeed()
-    {
-
-    }
-
-
     public void ProcessStrafing(float dt)
     {
-        if (StrafeLeft)
+        if (strafeLeft || strafeRight)
         {
-            var v = body.transform.up * (dt * strafingSpeed);
-            body.AddForce(new Vector2(v.x, v.y), ForceMode2D.Impulse);
-        }
-        else if (StrafeRight)
-        {
-            var v = body.transform.up * (dt * strafingSpeed);
-            body.AddForce(-new Vector2(v.x, v.y), ForceMode2D.Impulse);
+            var v = (Vector2)_body.transform.up * (dt * strafingSpeed);
+            if (strafeRight) v = -v;
+            _body.AddForce(v, ForceMode2D.Impulse);
         }
     }
 
     private void ProcessRotation()
     {
+        if (!rotateRight && !rotateLeft) return;
         var fdt = Time.fixedDeltaTime;
-        if (Right)
-            transform.Rotate(0, 0, -fdt * rotationSpeed);
-        else if (Left)
-            transform.Rotate(0, 0, fdt * rotationSpeed);
-        else
-            return;
+        transform.Rotate(0, 0, (rotateRight ? -fdt : fdt) * rotationSpeed);
 
-        var velocity = body.velocity;
-        var magnitude = velocity.magnitude;
-        magnitude = magnitude - Time.fixedDeltaTime * rotationDecceleration;
-        if (magnitude < 0) magnitude = 0;
-
-        body.velocity = velocity.normalized * magnitude;
+        var velocity = _body.velocity;
+        var magnitude = Mathf.Max(0,_body.velocity.magnitude - fdt * rotationDeceleration);
+        _body.velocity = velocity.normalized * magnitude;
     }
 }
 

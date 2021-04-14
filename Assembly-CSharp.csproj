@@ -61,7 +61,6 @@
      <Compile Include="Assets\SpaceAssets\Scripts\Misc\RandomSprite.cs" />
      <Compile Include="Assets\Modules\YarnPlayer\DictStorage.cs" />
      <Compile Include="Assets\StateChanged.cs" />
-     <Compile Include="Assets\Models\#OnePotatoKingdom_FULL\Bonus_Assets\Rotation_Script\Rotatator.cs" />
      <Compile Include="Assets\Modules\Player\PlayerInput.cs" />
      <Compile Include="Assets\Modules\Enemies\EnemyRamBehaviour.cs" />
      <Compile Include="Assets\Modules\Enemies\EnemyShootBehaviour.cs" />
@@ -69,12 +68,14 @@
      <Compile Include="Assets\Modules\Environment\ScrollingBackground.cs" />
      <Compile Include="Assets\Modules\Camera\OffsetScrolling.cs" />
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\Flowing.cs" />
+     <Compile Include="Assets\Modules\Planet Generator\MinMax.cs" />
      <Compile Include="Assets\Modules\LOS\Utilities\SMath.cs" />
      <Compile Include="Assets\Modules\YarnPlayer\DialogueLineHandler.cs" />
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\Move.cs" />
      <Compile Include="Assets\Modules\Utils\MonobehaviourExtension.cs" />
      <Compile Include="Assets\SpaceAssets\Scripts\CameraMovement.cs" />
      <Compile Include="Assets\Modules\Player\ShootController.cs" />
+     <Compile Include="Assets\Modules\Planet Generator\IcoSphere.cs" />
      <Compile Include="Assets\Modules\LOS\Core\LOSFullScreenLight.cs" />
      <Compile Include="Assets\Modules\Utils\Vector3Utils.cs" />
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\FlipX.cs" />
@@ -83,13 +84,19 @@
      <Compile Include="Assets\Modules\Animation\AnimationOffset.cs" />
      <Compile Include="Assets\Modules\Player\MovementController.cs" />
      <Compile Include="Assets\Modules\LOS\Utilities\SHelper.cs" />
+     <Compile Include="Assets\Modules\Planet Generator\Planet.cs" />
      <Compile Include="Assets\Modules\LOS\Core\LOSRadialLight.cs" />
+     <Compile Include="Assets\Modules\Enemies\EnemyPlaneInput.cs" />
      <Compile Include="Assets\SpaceAssets\Scripts\ShootingStar.cs" />
+     <Compile Include="Assets\Modules\Utils\Structs.cs" />
+     <Compile Include="Assets\Modules\Planet Generator\Generator.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\ArcCollider2D.cs" />
      <Compile Include="Assets\Modules\Player\Plane.cs" />
      <Compile Include="Assets\Modules\LOS\Core\Event\LOSEventSource.cs" />
      <Compile Include="Assets\UB\HighEndMobilePostEffects\Shaders\D2FogsNoiseTexPE.cs" />
+     <Compile Include="Assets\Modules\Utils\NormalSolver.cs" />
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\ChangeColorOnLOSEvent.cs" />
+     <Compile Include="Assets\Modules\Planet Generator\Water.cs" />
      <Compile Include="Assets\Modules\DI\Installer.cs" />
      <Compile Include="Assets\Modules\LOS\Core\LOSCamera.cs" />
      <Compile Include="Assets\Modules\LOS\Core\Event\LOSEventManager.cs" />
@@ -102,6 +109,8 @@
      <Compile Include="Assets\Modules\Player\Projectile.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\CapsuleCollider2D.cs" />
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\MoveAccordingToDirection.cs" />
+     <Compile Include="Assets\Modules\Utils\MathUtils.cs" />
+     <Compile Include="Assets\Modules\Planet Generator\Noise.cs" />
      <Compile Include="Assets\Modules\Utils\TagSelector\TagSelectorAttribute.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\EllipseCollider2D.cs" />
      <Compile Include="Assets\Modules\Iteractions\OrbitCollider.cs" />
@@ -128,9 +137,10 @@
      <Compile Include="Assets\UB\HighEndMobilePostEffects\Shaders\D2FogsPE.cs" />
      <Compile Include="Assets\Modules\Events\Unsubscribable.cs" />
      <Compile Include="Assets\Modules\LOS\Core\LOSManager.cs" />
+     <Compile Include="Assets\Modules\UI\Scroller.cs" />
      <Compile Include="Assets\Modules\LOS\Core\LOSObjectBase.cs" />
      <Compile Include="Assets\SpaceAssets\Scripts\SpaceManager.cs" />
-     <Compile Include="Assets\Modules\Enemies\EnemyPlaneInput.cs" />
+     <Compile Include="Assets\Modules\Enemies\EnemyBirdInput.cs" />
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\Rotate.cs" />
      <Compile Include="Assets\Modules\Notifications\HintWidget.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\RoundedBoxCollider2D.cs" />
@@ -922,10 +932,6 @@
       <Project>{306420fd-b11c-008d-2fe0-bc6ae93aaa69}</Project>
       <Name>Zenject-Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Zenject.csproj">
-      <Project>{3075b643-d459-8e11-cf0b-b496f3b86e08}</Project>
-      <Name>Zenject</Name>
-    </ProjectReference>
     <ProjectReference Include="Zenject-PoolMonitor-Editor.csproj">
       <Project>{4130a442-216b-3290-4bdb-458010e26917}</Project>
       <Name>Zenject-PoolMonitor-Editor</Name>
@@ -933,6 +939,10 @@
     <ProjectReference Include="Zenject-ReflectionBaking-Editor.csproj">
       <Project>{756edfc2-b2a9-7f6c-14c2-f550ef32052e}</Project>
       <Name>Zenject-ReflectionBaking-Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Zenject.csproj">
+      <Project>{3075b643-d459-8e11-cf0b-b496f3b86e08}</Project>
+      <Name>Zenject</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

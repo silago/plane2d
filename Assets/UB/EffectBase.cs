@@ -8,11 +8,10 @@ namespace UB
     {
         public static Dictionary<string, RenderTexture> AlreadyRendered = new Dictionary<string, RenderTexture>();
 
-        private static bool _insiderendering;
         public static bool InsideRendering
         {
-            get => _insiderendering;
-            set => _insiderendering = value;
+            get;
+            set;
         }
     }
 }

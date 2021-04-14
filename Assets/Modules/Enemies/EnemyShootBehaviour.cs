@@ -1,10 +1,8 @@
-﻿#region
-using System.Collections;
+﻿using System.Collections;
 using Modules.Utils.TagSelector;
 using UnityEngine;
 using Zenject;
 using static Modules.Utils.Vector3Extensions;
-#endregion
 
 
 namespace Modules.Enemies
@@ -12,10 +10,7 @@ namespace Modules.Enemies
     public class EnemyShootBehaviour : MonoBehaviour
     {
 
-        [SerializeField] private Transform aim;
-
         [SerializeField] private Projectile bulletPrefab;
-
         [SerializeField] private float rotationSpeed;
         [Inject(Id = "Player")]
         private IMovable _player;
@@ -28,7 +23,7 @@ namespace Modules.Enemies
 
         private Vector3 prevPlayerPos;
 
-        private Vector3 t = new Vector3();
+        private readonly Vector3 t = new Vector3();
 
         private void Start()
         {
@@ -42,9 +37,6 @@ namespace Modules.Enemies
             Aim();
         }
 
-        private void OnDestroy()
-        {
-        }
         private void OnDrawGizmos()
         {
             Gizmos.DrawSphere(t, 1f);
@@ -52,15 +44,13 @@ namespace Modules.Enemies
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            //if (false == other.CompareTag(filterTag)) return;
-            if (other.transform == _player)
+            if (other.transform == _player.Transform)
                 _target = other.transform;
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.transform == _player) _target = null;
-            //if (false == other.CompareTag(filterTag)) return;
+            if (other.transform == _player.Transform) _target = null;
             _target = null;
         }
 
@@ -111,7 +101,6 @@ namespace Modules.Enemies
                 b.transform.position = transform.position;
             }
         }
-
 
         private void StateBattle()
         {

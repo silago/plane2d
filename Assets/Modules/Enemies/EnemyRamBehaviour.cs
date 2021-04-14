@@ -27,11 +27,11 @@ namespace Modules.Enemies
         private IMovable _player;
 
         private Transform _target;
-        private List<Transform> bullets = new List<Transform>();
+        private readonly List<Transform> bullets = new List<Transform>();
         [TagSelector]
         private string filterTag;
 
-        private Vector3 t = new Vector3();
+        private readonly Vector3 t = new Vector3();
 
         private void Start()
         {

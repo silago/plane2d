@@ -60,6 +60,7 @@
      <Compile Include="Assets\Modules\Custom 2D Colliders\Editor\CapsuleCollider2D_Editor.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\Editor\RoundedBoxCollider2D_Editor.cs" />
      <Compile Include="Assets\Modules\LOS\Editor\LOSLightBaseEditor.cs" />
+     <Compile Include="Assets\Editor\GradientToTexture.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\Editor\StarCollider2D_Editor.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\Editor\ArcCollider2D_Editor.cs" />
      <Compile Include="Assets\Modules\LOS\Editor\LOSFullScreenLightEditor.cs" />
@@ -847,10 +848,6 @@
       <Project>{306420fd-b11c-008d-2fe0-bc6ae93aaa69}</Project>
       <Name>Zenject-Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Zenject.csproj">
-      <Project>{3075b643-d459-8e11-cf0b-b496f3b86e08}</Project>
-      <Name>Zenject</Name>
-    </ProjectReference>
     <ProjectReference Include="Zenject-PoolMonitor-Editor.csproj">
       <Project>{4130a442-216b-3290-4bdb-458010e26917}</Project>
       <Name>Zenject-PoolMonitor-Editor</Name>
@@ -858,6 +855,10 @@
     <ProjectReference Include="Zenject-ReflectionBaking-Editor.csproj">
       <Project>{756edfc2-b2a9-7f6c-14c2-f550ef32052e}</Project>
       <Name>Zenject-ReflectionBaking-Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Zenject.csproj">
+      <Project>{3075b643-d459-8e11-cf0b-b496f3b86e08}</Project>
+      <Name>Zenject</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

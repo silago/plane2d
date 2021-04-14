@@ -20,7 +20,7 @@ namespace Modules.Environment
         protected Vector3 offset = Vector3.zero;
         protected List<Vector3> points = new List<Vector3>();
 
-        private bool toStop = false;
+        private readonly bool toStop = false;
 
         private void Start()
         {

@@ -64,7 +64,7 @@ namespace Events
         public class Subscriber<TMessage, TKey> where TMessage : Message
         {
             private readonly Action<TMessage> _action;
-            private TKey _key;
+            private readonly TKey _key;
             public Subscriber(Action<TMessage> action, TKey key)
             {
                 _action = action;

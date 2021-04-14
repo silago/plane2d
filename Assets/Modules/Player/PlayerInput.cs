@@ -11,12 +11,12 @@ public class PlayerInput : MonoBehaviour
 
     public void Update()
     {
-        mc.Slow = Input.GetKey(KeyCode.DownArrow);
-        mc.Accel = Input.GetKey(KeyCode.UpArrow);
-        mc.Right = Input.GetKey(KeyCode.RightArrow);
-        mc.Left = Input.GetKey(KeyCode.LeftArrow);
-        mc.StrafeLeft = Input.GetKey(KeyCode.Q);
-        mc.StrafeRight = Input.GetKey(KeyCode.E);
+        mc.slowDown = Input.GetKey(KeyCode.DownArrow);
+        mc.speedUp = Input.GetKey(KeyCode.UpArrow);
+        mc.rotateRight = Input.GetKey(KeyCode.RightArrow);
+        mc.rotateLeft = Input.GetKey(KeyCode.LeftArrow);
+        mc.strafeLeft = Input.GetKey(KeyCode.Q);
+        mc.strafeRight = Input.GetKey(KeyCode.E);
         sc.Shoot = Input.GetMouseButton(0);
     }
 }

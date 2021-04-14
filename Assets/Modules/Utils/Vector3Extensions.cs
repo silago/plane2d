@@ -56,10 +56,7 @@ namespace Modules.Utils
                         estimatedTravelTimeOne == float.NaN && estimatedTravelTimeTwo == float.NaN)*/
                     #endregion
 
-            if (estimatedTravelTime < 0 || estimatedTravelTime == float.NaN)
-            {
-                return targetPos;
-            }
+            if (estimatedTravelTime < 0 || estimatedTravelTime == float.NaN) return targetPos;
  #region Offset should be ±, but works fine with just +
             /*if (estimatedTravelTimeOne < estimatedTravelTimeTwo)
 						{

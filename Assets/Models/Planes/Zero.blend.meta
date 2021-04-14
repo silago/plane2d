@@ -6,7 +6,27 @@ ModelImporter:
   - first:
       74: -623603649343465320
     second: Scene
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: crosshair.001
+    second: {fileID: 2100000, guid: e6f1e6e6464228d7d9bb3eda191f4c79, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pilot
+    second: {fileID: 2100000, guid: 35385754d454896b6b90fe33c1bd256a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: zero
+    second: {fileID: 2100000, guid: 9f4a2dc7a8f4359ef83d9c4f23b9a649, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: zerocanopy
+    second: {fileID: 2100000, guid: 032920f5bc9821506b72dddc7ba4c234, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

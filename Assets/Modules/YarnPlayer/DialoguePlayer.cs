@@ -65,10 +65,11 @@ namespace Modules.YarnPlayer
             item.SetLine(obj.Line);
             item.SetText(obj.Text);
             continueButton.gameObject.SetActive(true);
+            continueButton.transform.SetAsLastSibling();
             OnNextFrame(() =>
             {
-                scrollRect.verticalNormalizedPosition = 0f;
                 Canvas.ForceUpdateCanvases();
+                scrollRect.verticalNormalizedPosition = 0f;
             });
         }
 
@@ -96,8 +97,8 @@ namespace Modules.YarnPlayer
 
             OnNextFrame(() =>
             {
-                scrollRect.verticalNormalizedPosition = 0f;
                 Canvas.ForceUpdateCanvases();
+                scrollRect.verticalNormalizedPosition = 0f;
             });
         }
 
@@ -108,7 +109,7 @@ namespace Modules.YarnPlayer
 
         private IEnumerator OnNextFrameCo(Action a)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForEndOfFrame(); 
             a();
         }
 
@@ -136,6 +137,12 @@ namespace Modules.YarnPlayer
                     itButtons.Current.gameObject.transform.SetAsLastSibling();
                 }
             }
+            
+            OnNextFrame(() =>
+            {
+                Canvas.ForceUpdateCanvases();
+                scrollRect.verticalNormalizedPosition = 0f;
+            });
         }
 
 
