@@ -1,6 +1,7 @@
 ﻿#region
 using UnityEngine;
 #endregion
+[RequireComponent(typeof(Rigidbody))]
 public class MovementController : MonoBehaviour, IMovable
 {
     public bool speedUp;
@@ -26,11 +27,11 @@ public class MovementController : MonoBehaviour, IMovable
     private float velocityChangeRate;
 
     public Vector3 targetVelocity;
-    private Rigidbody2D _body;
+    private Rigidbody _body;
     private float Speed { get; set; }
     private void Awake()
     {
-        _body = GetComponent<Rigidbody2D>();
+        _body = GetComponent<Rigidbody>();
     }
 
     public void Update()
@@ -61,12 +62,12 @@ public class MovementController : MonoBehaviour, IMovable
 
     public void ProcessStrafing(float dt)
     {
-        if (strafeLeft || strafeRight)
-        {
-            var v = (Vector2)_body.transform.up * (dt * strafingSpeed);
-            if (strafeRight) v = -v;
-            _body.AddForce(v, ForceMode2D.Impulse);
-        }
+        //if (strafeLeft || strafeRight)
+        //{
+        //    var v = (Vector2)_body.transform.up * (dt * strafingSpeed);
+        //    if (strafeRight) v = -v;
+        //    _body.AddForce(v, ForceMode2D.Impulse);
+        //}
     }
 
     private void ProcessRotation()
