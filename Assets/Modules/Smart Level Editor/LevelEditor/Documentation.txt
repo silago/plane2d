@@ -1,0 +1,101 @@
+﻿Level Editor
+
+
+Introduction
+1 Menu
+	1.1 Edit
+	1.2 Mode
+	1.3 Paint
+	1.4 Layer
+	1.5 Height
+	1.6 Size
+2 Snap
+	2.1 Move
+	2.2 Rotate
+	2.3 Scale
+3 Selected
+4 Objects
+
+
+Introduction
+Level Editor draws an invisible plane at specific Height, this is use as a limit for the Brush.
+You can left click to Create or Delete objects inside the Brush bounds.
+You can also set the Paint mode to Single so you can place objects on top of each other using a collider.
+
+1 Menu
+1.1 Edit
+Press the ESC key to toggle on/off the edit mode.
+Level Editor will only take further input when edit toggle is on.
+
+1.2 Mode
+Press the ‘C’ key to loop through all the modes available, alternatively you can use the default Commands
+Keys that unity uses to switch to Move/Rotate/Scale
+Modes (‘W’, ‘E’, ‘R’ Keys)
+
+1.2.1 Create
+Allows you to create one or more objects with one click.
+The object list will load automatically with the prefabs on your asset folder.
+Make sure you’ve selected at least one object from the list. On your scene view left click to place object.
+
+1.2.2 Delete
+Works similar to Create Mode, move your mouse over the object you want to delete,
+anything inside and contained by the Layers selected with be deleted with left click.
+
+1.2.3 Move
+Allows you to move objects just as unity would, but will always snap to the Snap value.
+
+1.2.4 Rotate
+Allows you to rotate objects with the Unity default handles snapping to the Rotate value
+
+1.2.5 Scale
+Allows you to scale objects with the Unity default handles snapping to the Scale value.
+
+1.3 Paint
+Press the ‘B’ key to loop through the different paint modes.
+
+1.3.1 Single
+Create - Left click to place an object onto the plane of the Height value selected.
+If there’s an object with a collider under the cursor, the brush position will snap to the mouse position in worldspace.
+		
+Delete - Left click to delete an object or objects inside the Brush Area of Size.
+If there’s an object with a collider on the way it will snap the brush position to the object position.
+
+1.3.2 Brush
+Create - Left click and drag mouse to create objects on SceneView.
+		
+Delete - Left click and drag mouse to delete objects inside the Brush Area.
+
+1.4 Layer
+Use this to select the layers you want to work with, the others layers will be ignore.
+
+1.5 Height
+The position in Y of the invisible plane onto which the objects are created or placed. Press the key “-” to lower the plane by Size Y or the key “+” to raise the plane by Size Y.
+
+1.6 Size
+The size of the brush to paint where 1,1,1 will create 1 object.
+
+2 Snap
+2.1 Move
+The snap value for position objects.
+The first float field is for the value of x, the second float field is for the value of y and the third float value for the value of z
+Meaning where x = 1, y = 1, z = 1, the object position value will be snapped in multiples of 1 in each direction
+
+2.2 Rotate
+The snap value for rotating objects
+The first float field is for the value of x, the second float field is for the value of y and the third float value for the value of z
+Meaning where x = 1, y = 1, z = 1, the object rotation value will be snapped in multiples of 1 in each direction
+
+2.3 Scale
+The snap value for scaling objects
+The first float field is for the value of x, the second float field is for the value of y and the third float value for the value of z
+Meaning where x = 1, y = 1, z = 1, the object scale value will be snapped in multiples of 1 in each direction
+
+3 Selected
+Selected are view, shows you the objects you’ve selected from the prefab list for creating objects.
+Left click an object to remove from selection.
+
+
+4 Objects
+The group of objects created by the user, each group can hold up to 100 objects,
+left click to select a single object, ctrl + left click to select multiple objects.
+Right click for context menu, “select” to highlight the object in your Project Window

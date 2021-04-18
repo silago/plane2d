@@ -38,6 +38,9 @@
         },
         {
             "m_Id": "bcdaa0ea9b574a4f83b8c6239b4d2f76"
+        },
+        {
+            "m_Id": "1f972227906543c2836b70e4bbe5417b"
         }
     ],
     "m_Keywords": [],
@@ -140,6 +143,9 @@
         },
         {
             "m_Id": "77cfb4d3f75d4263b809c33c0c7f15cd"
+        },
+        {
+            "m_Id": "657517de1f0445e4969b12b030f1ae54"
         }
     ],
     "m_GroupDatas": [],
@@ -311,6 +317,20 @@
                     "m_Id": "0b6da62c7ae9458a9b12bab0af6a3f02"
                 },
                 "m_SlotId": 2
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "657517de1f0445e4969b12b030f1ae54"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "936e26cf806e4c588b0e7bd9f7da4218"
+                },
+                "m_SlotId": 0
             }
         },
         {
@@ -917,6 +937,29 @@
 }
 
 {
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "1f972227906543c2836b70e4bbe5417b",
+    "m_Guid": {
+        "m_GuidSerialized": "42654229-fe52-4aad-9d36-4ce3b90f36b8"
+    },
+    "m_Name": "Occlusion",
+    "m_DefaultReferenceName": "Vector1_1f972227906543c2836b70e4bbe5417b",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 1,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "231d6e5f1ab242c68eafd7ba2ac53019",
@@ -1057,6 +1100,21 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "Vector1_3937159fe8bd49d688ec46876b975b01",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "30b41c0baa08497a8dbabcd25635df8c",
+    "m_Id": 0,
+    "m_DisplayName": "Occlusion",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
@@ -1625,6 +1683,41 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "657517de1f0445e4969b12b030f1ae54",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 411.0,
+            "y": 524.0,
+            "width": 127.00000762939453,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "30b41c0baa08497a8dbabcd25635df8c"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "1f972227906543c2836b70e4bbe5417b"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "66863146b9004c069541f3b304ff8000",
     "m_Group": {
         "m_Id": ""
@@ -1851,10 +1944,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 497.0,
-            "y": 602.0,
-            "width": 0.0,
-            "height": 0.0
+            "x": 423.0000305175781,
+            "y": 362.0,
+            "width": 142.00001525878907,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -2688,9 +2781,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 434.0,
-            "y": 538.0,
-            "width": 117.0,
+            "x": 427.0,
+            "y": 328.0,
+            "width": 117.00000762939453,
             "height": 34.0
         }
     },

@@ -204,6 +204,7 @@ static class IcoSphere
         //else
             mesh.RecalculateNormals(normalsAngle);
         mesh.RecalculateBounds();
+        mesh.RecalculateTangents();
         mesh.Optimize();
         return mesh;
     }

@@ -93,12 +93,14 @@
      <Compile Include="Assets\Modules\Custom 2D Colliders\ArcCollider2D.cs" />
      <Compile Include="Assets\Modules\Player\Plane.cs" />
      <Compile Include="Assets\Modules\LOS\Core\Event\LOSEventSource.cs" />
+     <Compile Include="Assets\Modules\Enemies\NeutralPlane.cs" />
      <Compile Include="Assets\UB\HighEndMobilePostEffects\Shaders\D2FogsNoiseTexPE.cs" />
      <Compile Include="Assets\Modules\Utils\NormalSolver.cs" />
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\ChangeColorOnLOSEvent.cs" />
      <Compile Include="Assets\Modules\Planet Generator\Water.cs" />
      <Compile Include="Assets\Modules\DI\Installer.cs" />
      <Compile Include="Assets\Modules\LOS\Core\LOSCamera.cs" />
+     <Compile Include="Assets\Models\Shipwrecks\Scripts\CombineChildren.cs" />
      <Compile Include="Assets\Modules\LOS\Core\Event\LOSEventManager.cs" />
      <Compile Include="Assets\Modules\Player\FireController.cs" />
      <Compile Include="Assets\Modules\Camera\Follow.cs" />
@@ -112,6 +114,7 @@
      <Compile Include="Assets\Modules\Utils\MathUtils.cs" />
      <Compile Include="Assets\Modules\Planet Generator\Noise.cs" />
      <Compile Include="Assets\Modules\Utils\TagSelector\TagSelectorAttribute.cs" />
+     <Compile Include="Assets\Models\Shipwrecks\Scripts\MeshCombineUtility.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\EllipseCollider2D.cs" />
      <Compile Include="Assets\Modules\Iteractions\OrbitCollider.cs" />
      <Compile Include="Assets\UB\EffectBase.cs" />
@@ -133,6 +136,7 @@
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\ChangeTextColorOnLOSEvent.cs" />
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\RotateLight.cs" />
      <Compile Include="Assets\SpaceAssets\Scripts\ParallaxMovement.cs" />
+     <Compile Include="Assets\Modules\FX\ContrailController.cs" />
      <Compile Include="Assets\Modules\LOS\Core\LOSLightBase.cs" />
      <Compile Include="Assets\UB\HighEndMobilePostEffects\Shaders\D2FogsPE.cs" />
      <Compile Include="Assets\Modules\Events\Unsubscribable.cs" />
@@ -142,6 +146,7 @@
      <Compile Include="Assets\SpaceAssets\Scripts\SpaceManager.cs" />
      <Compile Include="Assets\Modules\Enemies\EnemyBirdInput.cs" />
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\Rotate.cs" />
+     <Compile Include="Assets\Modules\Utils\Sector.cs" />
      <Compile Include="Assets\Modules\Notifications\HintWidget.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\RoundedBoxCollider2D.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -156,10 +161,12 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Modules\LOS\Resources\Shaders\RadialLightPlus.shader" />
      <None Include="Assets\UB\HighEndMobilePostEffects\Shaders\D2FogsNoiseTex.shader" />
+     <None Include="Assets\Modules\Smart Level Editor\LevelEditor\Documentation.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\Modules\Smart Level Editor\LevelEditor\Readme.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
@@ -167,8 +174,10 @@
      <None Include="Assets\Models\Planets\shader\two_side_shader.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\Modules\LOS\Resources\Shaders\GreyscaleForeground.shader" />
+     <None Include="Assets\Models\Shipwrecks\PrefabsUnityDimensions\Please Read.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\Modules\LOS\Resources\Shaders\Basic.shader" />
+     <None Include="Assets\Models\Shipwrecks\Prefabs\Please Read.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\UB\HighEndMobilePostEffects\Shaders\D2Fogs.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
