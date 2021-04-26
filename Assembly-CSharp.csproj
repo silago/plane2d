@@ -149,6 +149,7 @@
      <Compile Include="Assets\Modules\Utils\Sector.cs" />
      <Compile Include="Assets\Modules\Notifications\HintWidget.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\RoundedBoxCollider2D.cs" />
+     <Compile Include="Assets\Starfield Skybox\Demo\Script\LookCamera.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Fonts\Balsamiq_Sans\OFL.txt" />
@@ -162,7 +163,9 @@
      <None Include="Assets\Modules\LOS\Resources\Shaders\RadialLightPlus.shader" />
      <None Include="Assets\UB\HighEndMobilePostEffects\Shaders\D2FogsNoiseTex.shader" />
      <None Include="Assets\Modules\Smart Level Editor\LevelEditor\Documentation.txt" />
+     <None Include="Assets\Scenes\Nebula3.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\Scenes\Nebula Copy.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
@@ -175,13 +178,16 @@
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\Modules\LOS\Resources\Shaders\GreyscaleForeground.shader" />
      <None Include="Assets\Models\Shipwrecks\PrefabsUnityDimensions\Please Read.txt" />
+     <None Include="Assets\Scenes\Nebula2.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\Scenes\Nebula.shader" />
      <None Include="Assets\Modules\LOS\Resources\Shaders\Basic.shader" />
      <None Include="Assets\Models\Shipwrecks\Prefabs\Please Read.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\UB\HighEndMobilePostEffects\Shaders\D2Fogs.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+     <None Include="Assets\Shaders\Ink Split.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
      <None Include="Assets\Modules\LOS\Resources\Shaders\GreyscaleBackground.shader" />
