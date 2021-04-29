@@ -74,6 +74,7 @@
      <Compile Include="Assets\Modules\LOS\Examples\Scripts\Move.cs" />
      <Compile Include="Assets\Modules\Utils\MonobehaviourExtension.cs" />
      <Compile Include="Assets\SpaceAssets\Scripts\CameraMovement.cs" />
+     <Compile Include="Assets\Starfield Skybox\Demo\Script\LookCamera.cs" />
      <Compile Include="Assets\Modules\Player\ShootController.cs" />
      <Compile Include="Assets\Modules\Planet Generator\IcoSphere.cs" />
      <Compile Include="Assets\Modules\LOS\Core\LOSFullScreenLight.cs" />
@@ -149,7 +150,6 @@
      <Compile Include="Assets\Modules\Utils\Sector.cs" />
      <Compile Include="Assets\Modules\Notifications\HintWidget.cs" />
      <Compile Include="Assets\Modules\Custom 2D Colliders\RoundedBoxCollider2D.cs" />
-     <Compile Include="Assets\Starfield Skybox\Demo\Script\LookCamera.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Fonts\Balsamiq_Sans\OFL.txt" />
