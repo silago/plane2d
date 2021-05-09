@@ -30,8 +30,4 @@ public class Cloud : MonoBehaviour
         var angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
     }
-
-    private void OnValidate()
-    {
-    }
 }

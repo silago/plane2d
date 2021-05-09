@@ -1,4 +1,5 @@
 #region
+using System.Collections.Generic;
 using Events;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,9 +10,19 @@ namespace Modules.YarnPlayer
     {
         [SerializeField]
         private Text _label;
+        [SerializeField]
+        private Color activeColor;
+        [SerializeField]
+        private Color inactiveColor;
 
         [SerializeField]
         private Button _button;
+        [SerializeField]
+        private Transform requirementContainer;
+        [SerializeField]
+        private RequirementOptionView reqPrefab;
+        private List<RequirementOptionView> _options = new List<RequirementOptionView>();
+        private OptionLine _line;
 
         private OptionLine _option;
         public OptionLine optionLine
@@ -19,10 +30,33 @@ namespace Modules.YarnPlayer
             get => _option;
             set
             {
-                _label.text = value.Text;
-                _option = value;
+                SetLine(value);
             }
-            //return _label.text = value;
+        }
+
+        private void SetLine(OptionLine line)
+        {
+            _line = line;
+            _label.text = line.Text;
+            _label.color = line.IsSatisfied ? activeColor : inactiveColor;
+            _option = line;
+            foreach (var child in _options) Destroy(child.gameObject);
+            _options.Clear();
+            
+            if (line.LineRequirements?.Length > 0)
+            {
+                requirementContainer.gameObject.SetActive(true);
+                foreach (LineRequirement requirement in line.LineRequirements)
+                {
+                    var item = Instantiate(reqPrefab, requirementContainer);
+                    item.Init(requirement);
+                    _options.Add(item);
+                }
+            }
+            else
+            {
+                requirementContainer.gameObject.SetActive(false);
+            }
         }
 
         public int OptionId { get; set; }
@@ -36,18 +70,10 @@ namespace Modules.YarnPlayer
         {
         }
 
-        private void OnDisable()
-        {
-        }
-
         public void DisableButton()
         {
             _button.enabled = false;
         }
-
-        //void OnEnable() {
-        //	//this.SubscribeOnce<OptionSelectedMessage>( _ => QueueFree() );
-        //}
 
         public void Show()
         {
@@ -61,10 +87,11 @@ namespace Modules.YarnPlayer
 
         private void OnPressed()
         {
-            this.SendEvent(new OptionSelectedMessage {
-                ID = OptionId,
-                Text = _option.Text
-            });
+            if (_line.IsSatisfied)
+                this.SendEvent(new OptionSelectedMessage {
+                    ID = OptionId,
+                    Text = _option.Text
+                });
         }
     }
 }

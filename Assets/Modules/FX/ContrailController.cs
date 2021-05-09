@@ -1,7 +1,7 @@
+#region
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+#endregion
 public class ContrailController : MonoBehaviour
 {
     [Header("Time Params")]
@@ -15,7 +15,7 @@ public class ContrailController : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private float checkInterval = 1f;
-    [Range(0,10)]
+    [Range(0, 10)]
     [SerializeField]
     private float minVelToPlay = 1f;
     [SerializeField]
@@ -24,13 +24,19 @@ public class ContrailController : MonoBehaviour
     public bool _playByVel = true;
     public bool _playByTime = true;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         StartCoroutine(ProcessTime());
         StartCoroutine(ProcessBody());
     }
 
-    IEnumerator ProcessBody()
+    // Update is called once per frame
+    private void Update()
+    {
+
+    }
+
+    private IEnumerator ProcessBody()
     {
         if (rb == null) yield break;
         for (;;)
@@ -42,32 +48,22 @@ public class ContrailController : MonoBehaviour
         }
     }
 
-    void SetParticlesStatus()
+    private void SetParticlesStatus()
     {
         if (_playByTime && _playByVel)
-        {
-            particles.Play();    
-        }
+            particles.Play();
         else
-        {
             particles.Stop();
-        }
     }
 
-    IEnumerator ProcessTime()
+    private IEnumerator ProcessTime()
     {
         if (changeStateInterval.Max == 0) yield break;
         for (;;)
         {
             yield return new WaitForSeconds(Random.Range(changeStateInterval.Min, changeStateInterval.Max));
-            _playByTime = (Random.Range(0f, 1f) > stopPlayProb);
+            _playByTime = Random.Range(0f, 1f) > stopPlayProb;
             SetParticlesStatus();
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -1,4 +1,5 @@
 ﻿#region
+using System.Collections;
 using Events;
 using Modules.YarnPlayer;
 using UnityEngine;
@@ -11,8 +12,15 @@ public class DialogueStarter : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        StartCoroutine(Do());
+    }
+
+    public IEnumerator Do()
+    {
+        yield return new WaitForEndOfFrame();
         this.SendEvent(new StartDialogueMessage {
             NodeName = NodeName
         });
+        
     }
 }

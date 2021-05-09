@@ -1,13 +1,11 @@
-#region
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Events;
 using UnityEngine;
 using UnityEngine.UI;
-#endregion
 
-// process options
 namespace Modules.YarnPlayer
 {
     public class DialoguePlayer : MonoBehaviour
@@ -23,7 +21,6 @@ namespace Modules.YarnPlayer
 
         [SerializeField] private DialogueLineHandler linePrefab;
         private readonly List<YarnDialogueOptionNode> _buttons = new List<YarnDialogueOptionNode>();
-        // Called when the node enters the scene tree for the first time.
         private void Awake()
         {
             mainContainer.SetActive(false);
@@ -45,18 +42,15 @@ namespace Modules.YarnPlayer
             });
 
         }
-
         private void OnStartDialogueMessage(StartDialogueMessage obj)
         {
             Time.timeScale = 0f;
             mainContainer.SetActive(true);
-            closeButton.gameObject.SetActive(false);
         }
 
         private void OnDialogueComplete(DialogueComplete _)
         {
             continueButton.gameObject.SetActive(false);
-            closeButton.gameObject.SetActive(true);
         }
 
         private void OnNewLine(NewLineMessage obj)
@@ -73,27 +67,19 @@ namespace Modules.YarnPlayer
             });
         }
 
+        private void CopyNode(YarnDialogueOptionNode origin)
+        {
+            var copy = Instantiate(origin, place);
+            copy.OptionId = origin.OptionId;
+            copy.optionLine = origin.optionLine;
+            copy.DisableButton();
+        }
+
         private void OnOptionSelected(OptionSelectedMessage msg)
         {
-            //DialogueLineHandler item = Instantiate(linePrefab, place);
-            //item.SetText(msg.Text);
-            for (var index = 0; index < _buttons.Count; index++)
-            {
-                var btn = _buttons[index];
-                if (msg.ID == btn.OptionId)
-                {
-                    var copy = Instantiate(btn, place);
-                    copy.OptionId = btn.OptionId;
-                    copy.optionLine = btn.optionLine;
-                    _buttons[index].DisableButton();
-                    _buttons[index] = copy;
-                    copy.Hide();
-                }
-                else
-                {
-                    btn.Hide();
-                }
-            }
+            var selectedBtn= _buttons.First(x => x.OptionId == msg.ID);
+            CopyNode(selectedBtn);
+            _buttons.ForEach(x=>x.Hide());
 
             OnNextFrame(() =>
             {
@@ -102,15 +88,15 @@ namespace Modules.YarnPlayer
             });
         }
 
-        private void OnNextFrame(Action a)
+        private void OnNextFrame(Action action)
         {
-            StartCoroutine(OnNextFrameCo(a));
+            StartCoroutine(OnNextFrameCo(action));
         }
 
-        private IEnumerator OnNextFrameCo(Action a)
+        private IEnumerator OnNextFrameCo(Action action)
         {
             yield return new WaitForEndOfFrame(); 
-            a();
+            action();
         }
 
         private void OnOptionsProvided(OptionsProvidedMessage obj)
@@ -122,34 +108,26 @@ namespace Modules.YarnPlayer
                 _buttons.Add(btn);
             }
 
-            var itOptions = obj.Options.GetEnumerator();
-            var itButtons = _buttons.GetEnumerator();
-            var i = 0;
-            using (itOptions)
-            using (itButtons)
+            _buttons.ForEach(x => {x.gameObject.SetActive(false);});
+            foreach (var kv in obj.Options)
             {
-                while (itButtons.MoveNext() && itOptions.MoveNext())
+                YarnDialogueOptionNode btn = _buttons[kv.Key];
+                if (kv.Value.IsAvailable == false)
                 {
-                    //itButtons.Current.OptionId = itOptions.Current.Key;
-                    itButtons.Current.optionLine = itOptions.Current.Value;
-                    itButtons.Current.OptionId = i++;
-                    itButtons.Current.gameObject.SetActive(true);
-                    itButtons.Current.gameObject.transform.SetAsLastSibling();
+                    continue;
                 }
+                btn.OptionId = kv.Key;
+                btn.optionLine = kv.Value;
+                btn.gameObject.SetActive(true);
+                btn.transform.SetAsLastSibling();
+                btn.gameObject.SetActive(true);
             }
-            
+
             OnNextFrame(() =>
             {
                 Canvas.ForceUpdateCanvases();
                 scrollRect.verticalNormalizedPosition = 0f;
             });
         }
-
-
-        //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-        //  public override void _Process(float delta)
-        //  {
-        //      
-        //  }
     }
 }

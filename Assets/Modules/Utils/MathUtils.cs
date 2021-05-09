@@ -1,5 +1,7 @@
+#region
 using System;
 using UnityEngine;
+#endregion
 namespace Modules.Utils
 {
     public static class MathUtils

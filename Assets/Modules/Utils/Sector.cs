@@ -1,18 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+#region
 using UnityEngine;
-
+#endregion
 public class Sector : MonoBehaviour
 {
     public Vector3 sectorSize;
-    private void OnDrawGizmosSelected()
-    {
-        var color = Gizmos.color;
-        Gizmos.color = Color.green;
-        OnDrawGizmos();
-        Gizmos.color = color;
-    }
     private void OnDrawGizmos()
     {
         var pos = transform.position;
@@ -21,13 +12,20 @@ public class Sector : MonoBehaviour
         var b = pos + MulAxis(new Vector3(1, 1), halfSize);
         var c = pos + MulAxis(new Vector3(1, -1), halfSize);
         var d = pos + MulAxis(new Vector3(-1, -1), halfSize);
-        Gizmos.DrawLine(a,b);
-        Gizmos.DrawLine(b,c);
-        Gizmos.DrawLine(c,d);
-        Gizmos.DrawLine(d,a);
+        Gizmos.DrawLine(a, b);
+        Gizmos.DrawLine(b, c);
+        Gizmos.DrawLine(c, d);
+        Gizmos.DrawLine(d, a);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        var color = Gizmos.color;
+        Gizmos.color = Color.green;
+        OnDrawGizmos();
+        Gizmos.color = color;
     }
 
-    Vector3 MulAxis(Vector3 dir, Vector3 val)
+    private Vector3 MulAxis(Vector3 dir, Vector3 val)
     {
         return new Vector3(
             dir.x * val.x,

@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 2b3799b613597a470948393fb7870905
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 94073015eacc34c1d8fc6786e43d60ca, type: 3}
+  baseLanguageID: ru-RU
+  stringIDs: []
+  AnyImplicitStringIDs: 0
+  isSuccesfullyParsed: 0
+  parseErrorMessage: "Error on line 18 at position 7:\nno viable alternative at input
+    '<<jump '\n    <<jump Sally.Watch>>\n      ^^^^^"
+  baseLanguage: {instanceID: 0}
+  localizations: []
+  localizationDatabase: {instanceID: 0}

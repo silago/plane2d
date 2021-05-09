@@ -105,16 +105,16 @@ Material:
     - Vector1_6867764093f448199034994fd005b455: 0
     - Vector1_900e5f10997e43ceb5d1298fb7ae6fdc: 2
     - Vector1_db5e67046bb94c2896e1672b3cf28e91: -1
-    - _A: 10
+    - _A: 20
     - _Absorption: 2.92
     - _AlphaClip: 0
     - _Blend: 0
-    - _Brightness: 0.018
+    - _Brightness: -0.01
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ColorSpeed: 0.3
-    - _Contrast: 2
+    - _Contrast: 2.27
     - _Cull: 2
     - _Cutoff: 0.5
     - _Density: 5
@@ -134,7 +134,7 @@ Material:
     - _GlossyReflections: 0
     - _LeftSmooth: 0
     - _Metallic: 0
-    - _Mix: 0.173
+    - _Mix: 0.429
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _Pow: 10
