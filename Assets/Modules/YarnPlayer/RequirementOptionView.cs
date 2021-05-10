@@ -6,7 +6,6 @@ namespace Modules.YarnPlayer
 {
     public class RequirementOptionView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        
         const float TimeToAppear = 1.0f;
         [SerializeField]
         private Color defaultColor;

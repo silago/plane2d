@@ -14,10 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
   - Id: Coins
-    Name: Coins
+    Name: coins
     Icon: {fileID: 21300000, guid: 8f4bf9faf80b35547a7c9d6fcbd95924, type: 3}
+    ResourceType: 0
   - Id: GreenBall
-    Name: GreenBall
-    Icon: {fileID: 21300000, guid: 586d4fa47fc87b040821f0bda8d8c0c2, type: 3}
+    Name: green balls
+    Icon: {fileID: 21300000, guid: 87ce72eebed9ec340b33293d85080d6e, type: 3}
+    ResourceType: 0
+  - Id: TestQuest
+    Name: green ball's quest quality
+    Icon: {fileID: 21300000, guid: d29c79686d850a942b2eca6bda485723, type: 3}
+    ResourceType: 0
   defaultResourceSprite: {fileID: 21300000, guid: 36cf4f0d0da425c4686031a2b8955f42,
     type: 3}

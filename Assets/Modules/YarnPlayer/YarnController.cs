@@ -23,12 +23,12 @@ namespace Modules.YarnPlayer
         private IDictionary<string, string> _stringTable = new Dictionary<string, string>();
         private Dictionary<string, Delegate> commandHandlers = new Dictionary<string, Delegate>();
         private UserDataProvider _userDataProvider;
-
-        
+        private IVariableStorage _variableStorage;
 
         [Inject]
-        void Construct(UserDataProvider users)
+        void Construct(UserDataProvider users, IVariableStorage variableStorage)
         {
+            _variableStorage = variableStorage;
             _userDataProvider = users;
         }
         
@@ -65,8 +65,7 @@ namespace Modules.YarnPlayer
         private Dialogue InitDialogue(Program program)
         {
             //IVariableStorage variableStorage = new MemoryVariableStore(); 
-            var variableStorage = new DialogueDataStorage(_userDataProvider);
-            var dialogue = new Dialogue(variableStorage) {
+            var dialogue = new Dialogue(_variableStorage) {
                 DialogueCompleteHandler = DialogueCompleteHandle,
                 NodeCompleteHandler = NodeCompleteHandler,
                 NodeStartHandler = NodeStartHandler,

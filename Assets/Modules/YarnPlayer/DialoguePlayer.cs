@@ -13,6 +13,7 @@ namespace Modules.YarnPlayer
         [SerializeField] private GameObject mainContainer;
         [SerializeField] private Button continueButton;
         [SerializeField] private Button closeButton;
+        [SerializeField] private ResourceChangeInfo _resourceChangeInfoPrefab;
         [SerializeField] private ScrollRect scrollRect;
 
         [SerializeField] private YarnDialogueOptionNode optionPrefab;
@@ -29,6 +30,7 @@ namespace Modules.YarnPlayer
             this.Subscribe<NewLineMessage>(OnNewLine);
             this.Subscribe<DialogueComplete>(OnDialogueComplete);
             this.Subscribe<StartDialogueMessage>(OnStartDialogueMessage);
+            this.Subscribe<DialogueDataStorage.DialogueResourceChanged<int>>(OnDialogueResourceChanged);
 
             continueButton.onClick.AddListener(() =>
             {
@@ -41,6 +43,10 @@ namespace Modules.YarnPlayer
                 mainContainer.SetActive(false);
             });
 
+        }
+        private void OnDialogueResourceChanged(DialogueDataStorage.DialogueResourceChanged<int> obj)
+        {
+           Instantiate(_resourceChangeInfoPrefab, place).Init(obj); 
         }
         private void OnStartDialogueMessage(StartDialogueMessage obj)
         {
@@ -70,8 +76,9 @@ namespace Modules.YarnPlayer
         private void CopyNode(YarnDialogueOptionNode origin)
         {
             var copy = Instantiate(origin, place);
-            copy.OptionId = origin.OptionId;
-            copy.optionLine = origin.optionLine;
+            //copy.OptionId = origin.OptionId;
+            //copy.optionLine = origin.optionLine;
+            copy.ClearRequirements();
             copy.DisableButton();
         }
 

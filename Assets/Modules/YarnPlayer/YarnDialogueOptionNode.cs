@@ -34,14 +34,23 @@ namespace Modules.YarnPlayer
             }
         }
 
+        public void ClearRequirements()
+        {
+            foreach (var child in _options) Destroy(child.gameObject);
+            _options.Clear();
+            foreach (Transform child in requirementContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
         private void SetLine(OptionLine line)
         {
             _line = line;
             _label.text = line.Text;
             _label.color = line.IsSatisfied ? activeColor : inactiveColor;
             _option = line;
-            foreach (var child in _options) Destroy(child.gameObject);
-            _options.Clear();
+            ClearRequirements();
             
             if (line.LineRequirements?.Length > 0)
             {

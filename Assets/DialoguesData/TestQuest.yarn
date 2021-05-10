@@ -32,9 +32,10 @@ title: TQ2
         << set $TestQuest to 1 >>
         Теперь у тебя {$GreenBall} шаров
         << set $GreenBall to ($GreenBall+1) >>
+        <<jump TQ2>>
     -> Отказаться
-    <<jump TQ2>>
--> Отдать зеленый шар [R $GreenBall>0][/R]
+        <<jump TQ2>>
+-> Отдать зеленый шар [R GreenBall>0][/R]
     << set $GreenBall to ($GreenBall-1) >>
     Вещий: Замечательно! У тебя теперь {$GreenBall} Текстовый квест сработал
     <<jump TQ3>>

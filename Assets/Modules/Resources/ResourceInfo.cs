@@ -8,5 +8,11 @@ namespace Modules.Resources
         public string Id;
         public string Name;
         public Sprite Icon;
+        public ResourceType ResourceType;
+    }
+
+    public enum ResourceType
+    {
+        Default, Quest
     }
 }
