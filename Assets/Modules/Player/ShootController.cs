@@ -13,6 +13,7 @@ public class ShootController : MonoBehaviour
     private float shootEnergyPrice = 0.1f;
     [SerializeField]
     public float projectileSpeed = 2f;
+    public float ShooterSpeed { private get; set; }
 
     public bool Shoot;
     private float _energy = 1f;
@@ -29,7 +30,7 @@ public class ShootController : MonoBehaviour
         
         _lockTs = cooldown;
         var t = Instantiate(_projectile, transform.parent);
-        t.speed = projectileSpeed;
+        t.speed = projectileSpeed + ShooterSpeed;
         //t.transform.rotation = transform.rotation;
         t.transform.position = transform.position;
         t.transform.up = transform.right;

@@ -17,6 +17,7 @@ public class PlayerInput : MonoBehaviour
         mc.rotateLeft = Input.GetKey(KeyCode.LeftArrow);
         mc.strafeLeft = Input.GetKey(KeyCode.Q);
         mc.strafeRight = Input.GetKey(KeyCode.E);
-        sc.Shoot = Input.GetMouseButton(0);
+        sc.ShooterSpeed = mc.VelocityMagnitude;
+        sc.Shoot = Input.GetMouseButton(2);
     }
 }

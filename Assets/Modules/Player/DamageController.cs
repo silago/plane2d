@@ -14,12 +14,16 @@ public class DamageMessage : Message
     public int Damage;
 }
 
+public class DisplayHullMessage : Message
+{
+    public bool Active;
+    public int Id;
+}
+
 namespace Modules.Game.Player
 {
     public class DamageController : MonoBehaviour
     {
-        [SerializeField]
-        private Renderer _renderer;
         [SerializeField]
         private ParticleSystem destroyEffect;
         [SerializeField]
@@ -39,14 +43,11 @@ namespace Modules.Game.Player
                 p.transform.position = transform.position;
                 p.gameObject.SetActive(true);
                 this.DoWithDelay(0.3f, () => Destroy(gameObject));
-                //_renderer.enabled = false;
-                //StartCoroutine(OnEffectEnd(p, () => {Destroy(this.gameObject);} ));
             }
             else
             {
                 var p = Instantiate(damageEffect, transform);
                 p.gameObject.SetActive(true);
-                //StartCoroutine(OnEffectEnd(p, () => {Destroy(p.gameObject);} ));
             }
         }
 
@@ -62,6 +63,20 @@ namespace Modules.Game.Player
             while (p.IsAlive())
                 yield return new WaitForSeconds(1);
             Destroy(p.gameObject);
+        }
+        private void OnBecameVisible()
+        {
+            this.SendEvent(new DisplayHullMessage() {
+                Active = true,
+                Id = GetInstanceID()
+            });
+        }
+        private void OnBecameInvisible()
+        {
+            this.SendEvent(new DisplayHullMessage() {
+                Active = true,
+                Id = GetInstanceID()
+            });
         }
     }
 
