@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 04db64e855b734da38c523f0a08f057c
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 94073015eacc34c1d8fc6786e43d60ca, type: 3}
+  baseLanguageID: ru-RU
+  stringIDs:
+  - line:PussumFields-PussumFields-0
+  - line:PussumFields-PussumFields-1
+  - line:PussumFields-PussumFields-2
+  - line:PussumFields-PussumFields-3
+  - line:PussumFields-PussumFields-4
+  - line:PussumFields-PussumFields-5
+  AnyImplicitStringIDs: 1
+  isSuccesfullyParsed: 1
+  parseErrorMessage: "Error in Assets/Planets/PossumFields/PussumFields.yarn line
+    9\n            << set $LadyQuest to 1 >>\nUndeclared variable $LadyQuest"
+  baseLanguage: {fileID: 7128917941130120860, guid: 04db64e855b734da38c523f0a08f057c,
+    type: 3}
+  localizations: []
+  localizationDatabase: {instanceID: 0}
