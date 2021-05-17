@@ -18,6 +18,7 @@ public class DisplayHullMessage : Message
 {
     public bool Active;
     public int Id;
+    public int InitialHull;
 }
 
 namespace Modules.Game.Player
