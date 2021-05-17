@@ -11,7 +11,9 @@ public class DestroyMessage : Message
 }
 public class DamageMessage : Message
 {
+    public int Id;
     public int Damage;
+    public int CurrentHull;
 }
 
 public class DisplayHullMessage : Message
@@ -19,6 +21,7 @@ public class DisplayHullMessage : Message
     public bool Active;
     public int Id;
     public int InitialHull;
+    public int CurrentHull;
 }
 
 namespace Modules.Game.Player
@@ -30,15 +33,18 @@ namespace Modules.Game.Player
         [SerializeField]
         private ParticleSystem damageEffect;
         [SerializeField]
-        private int Hull;
+        private int initialHull;
+        [SerializeField]
+        private int currentHull;
         private void Awake()
         {
-            this.Subscribe<DamageMessage, int>(OnDamage, transform.GetInstanceID()).BindTo(this);
+            this.Subscribe<DamageMessage, int>(OnDamage, gameObject.GetInstanceID()).BindTo(this);
+            if (currentHull == default) currentHull = initialHull;
         }
         private void OnDamage(DamageMessage obj)
         {
-            Hull -= obj.Damage;
-            if (Hull <= 0)
+            currentHull -= obj.Damage;
+            if (currentHull <= 0)
             {
                 var p = Instantiate(destroyEffect, transform.parent);
                 p.transform.position = transform.position;
@@ -50,6 +56,11 @@ namespace Modules.Game.Player
                 var p = Instantiate(damageEffect, transform);
                 p.gameObject.SetActive(true);
             }
+            this.SendEvent(new DamageMessage() {
+                Id = gameObject.GetInstanceID(),
+                Damage = obj.Damage,
+                CurrentHull = currentHull
+            });
         }
 
         private IEnumerator OnEffectEnd(ParticleSystem p, Action cb)
@@ -69,14 +80,16 @@ namespace Modules.Game.Player
         {
             this.SendEvent(new DisplayHullMessage() {
                 Active = true,
-                Id = GetInstanceID()
+                Id = gameObject.GetInstanceID(),
+                InitialHull = initialHull,
+                CurrentHull = currentHull
             });
         }
         private void OnBecameInvisible()
         {
             this.SendEvent(new DisplayHullMessage() {
                 Active = true,
-                Id = GetInstanceID()
+                Id = gameObject.GetInstanceID()
             });
         }
     }
