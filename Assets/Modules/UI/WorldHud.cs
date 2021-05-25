@@ -1,93 +1,58 @@
+#region
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Events;
+using Modules.Common;
 using UnityEngine;
-using UnityEngine.UI;
-using Object = System.Object;
-
-public class HullWidget : MonoBehaviour
+#endregion
+namespace Modules.UI
 {
-    [SerializeField]
-    private Text current;
-    [SerializeField]
-    private Text initial;
-    public int Current { set => current.text = value.ToString(); }
-    public int Initial { set => initial.text = value.ToString(); }
-}
-
-public class Pool<T> where T : Component 
-{
-    private Stack<T> _pool = new Stack<T>();
-    private T _prefab;
-    public Pool(T prefab, int initial = 0)
+    public class WorldHud : MonoBehaviour
     {
-        _prefab = prefab;
-    }
+        [SerializeField]
+        private Vector3 offset;
+        [SerializeField]
+        private HullWidget prefab;
+        private readonly Dictionary<int, (Transform,HullWidget)> _items = new Dictionary<int, (Transform,HullWidget)>();
 
-    public T Pick()
-    {
-        if (_pool.Count == 0) EnlargePool(1);
-        return _pool.Pop();
-    }
-
-    public void Return(T item)
-    {
-        item.gameObject.SetActive(false);
-        _pool.Push(item);
-    }
-
-    private void EnlargePool(int size)
-    {
-        for (var i = 0; i < size; i++)
+        private Pool<HullWidget> _pool;
+        private void Awake()
         {
-            var item = UnityEngine.Object.Instantiate(_prefab);
-            item.gameObject.SetActive(false);
-            _pool.Push(item);
+            this.Subscribe<DisplayHullMessage>(OnHull);
+            this.Subscribe<DamageMessage>(OnDamage);
+            _pool = new Pool<HullWidget>(prefab) {
+            };
         }
-    }
-}
-public class WorldHud : MonoBehaviour
-{
-
-    private Pool<HullWidget> _pool;
-    private Dictionary<int, HullWidget> _items = new Dictionary<int, HullWidget>();
-    [SerializeField]
-    private int defaultSize = 10;
-    [SerializeField]
-    private HullWidget prefab;
-    private void Awake()
-    {
-        this.Subscribe<DisplayHullMessage>(OnHull);
-        this.Subscribe<DamageMessage>(OnDamage);
-        _pool = new Pool<HullWidget>(prefab);
-    }
-
-    
-    private void OnDamage(DamageMessage obj)
-    {
-        if (_items.TryGetValue(obj.Id, out var item))
+        private void Update()
         {
-            item.Current = obj.CurrentHull;
+            foreach (var (target, widget) in _items.Values)
+            {
+                widget.transform.position = offset + Camera.main.WorldToScreenPoint(target.position) ;
+            }
         }
-    }
-    private void OnHull(DisplayHullMessage obj)
-    {
-        if (obj.Active)
+
+        private void OnDamage(DamageMessage obj)
         {
-            var item = _pool.Pick();
-            item.gameObject.SetActive(true);
-            item.Current = obj.CurrentHull;
-            item.Initial = obj.InitialHull;
-            _items.Add(obj.Id, item);
+            if (_items.TryGetValue(obj.Id, out var item)) item.Item2.Current = obj.CurrentHull;
         }
-        else
+        private void OnHull(DisplayHullMessage obj)
         {
-            var item = _items[obj.Id];
-            item.gameObject.SetActive(false);
-            _items.Remove(obj.Id);
-            _pool.Return(item);
+            if (obj.Active)
+            {
+                var item = _pool.Pick();
+                item.transform.SetParent(transform);
+                item.gameObject.SetActive(true);
+                item.Current = obj.CurrentHull;
+                item.Initial = obj.InitialHull;
+                _items.Add(obj.Id, (obj.Target,item));
+            }
+            else
+            {
+                var item = _items[obj.Id];
+                item.Item2.gameObject.SetActive(false);
+                _items.Remove(obj.Id);
+                _pool.Return(item.Item2);
+            }
         }
     }
 }

@@ -22,6 +22,7 @@ public class DisplayHullMessage : Message
     public int Id;
     public int InitialHull;
     public int CurrentHull;
+    public Transform Target;
 }
 
 namespace Modules.Game.Player
@@ -82,13 +83,14 @@ namespace Modules.Game.Player
                 Active = true,
                 Id = gameObject.GetInstanceID(),
                 InitialHull = initialHull,
-                CurrentHull = currentHull
+                CurrentHull = currentHull,
+                Target = transform
             });
         }
         private void OnBecameInvisible()
         {
             this.SendEvent(new DisplayHullMessage() {
-                Active = true,
+                Active = false,
                 Id = gameObject.GetInstanceID()
             });
         }

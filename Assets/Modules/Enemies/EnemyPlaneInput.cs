@@ -31,7 +31,7 @@ namespace Modules.Enemies
         private float diffA;
         [SerializeField]
         private float diff;
-        [Inject(Id = "Player")]
+        //[Inject(Id = "Player")]
         private IMovable _player;
         private float _prevAngle = 0;
         [SerializeField]
@@ -111,7 +111,7 @@ namespace Modules.Enemies
                 else
                     movementController.rotateLeft = true;
         }
-        [SerializeField]
+        /*
         private void OnDrawGizmosSelected()
         {
             var position = transform.position;
@@ -129,6 +129,7 @@ namespace Modules.Enemies
             Gizmos.color = Color.red;
             Gizmos.DrawLine(position, position - transform.right);
         }
+        */
 
         private void OnValidate()
         {
