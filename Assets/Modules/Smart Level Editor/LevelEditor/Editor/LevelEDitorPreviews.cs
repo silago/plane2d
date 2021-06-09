@@ -70,6 +70,7 @@ namespace Smart
                     previews[i].transform.rotation = Quaternion.FromToRotation(Vector3.up,  hit.normal);
                 }
             }
+
         }
 
         void PreviewGUIChanged()

@@ -24,6 +24,12 @@ namespace Smart
 
             return selected[index];
         }
+             
+        public void SetToGlobal(Transform trans, bool bSetScale)
+        {
+        }
+
+
 
         void Create()
         {
@@ -49,9 +55,9 @@ namespace Smart
 
                 if(null == result) { continue; }
 
+                result.transform.localScale = previews[i].transform.localScale;
                 result.transform.SetParent(GetRoot());
                 result.transform.position = previews[i].transform.position;
-                result.transform.localScale = previews[i].transform.localScale;
                 result.transform.rotation = previews[i].transform.rotation;
                 Undo.RegisterCreatedObjectUndo(result, "LeveEditor.CreateObject");
             }

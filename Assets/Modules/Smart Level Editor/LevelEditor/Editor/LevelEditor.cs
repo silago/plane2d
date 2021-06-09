@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Smart
@@ -73,10 +74,21 @@ namespace Smart
         //
         // Methods
         //  
-    
+
         void OnSceneGUI(SceneView view)
         {
             e = Event.current;
+            
+            if (e.type == EventType.KeyDown && e.keyCode == KeyCode.A)
+            {
+                for (int i = 0; i < previews.Count; i++)
+                    previews[i].transform.Rotate(0f,15f,0);
+            }
+            if (e.type == EventType.KeyDown && e.keyCode == KeyCode.D)
+            {
+                for (int i = 0; i < previews.Count; i++)
+                    previews[i].transform.Rotate(0f,-15f,0f);
+            }
 
             this.view = view;
             
@@ -90,12 +102,17 @@ namespace Smart
             ControlHeight();
             SceneGUIButtons();
             EditUpdate();
-
+            
             if(isFocused)
             {
                 Repaint();
             }
+            
+            
+            
         }
+        
+        
 
         void SelectionChanged()
         {

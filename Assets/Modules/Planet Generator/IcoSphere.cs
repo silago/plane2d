@@ -61,6 +61,8 @@ static class IcoSphere
 
         return i;
     }
+    
+    
 
     public static Mesh Create(int recursionLevel, bool flatShaded, Func<Vector3, float> heightFunc, float normalsAngle = 0, float trashHold = 1.4f)
     {
@@ -195,14 +197,29 @@ static class IcoSphere
 
         mesh.vertices = (flatShaded ? newVerts : vertList).ToArray();
         mesh.triangles = triangles.ToArray();
-        mesh.uv = new Vector2[mesh.vertices.Length];
+        var uv = new Vector2[mesh.vertices.Length];
+        for(var i= 0; i < mesh.vertices.Length; i++){
+            var unitVector = mesh.vertices[i].normalized;
+            Vector2 ICOuv = new Vector2(0, 0);
+            ICOuv.x = (Mathf.Atan2(unitVector.x, unitVector.z) + Mathf.PI) / Mathf.PI / 2;
+            ICOuv.y = (Mathf.Acos(unitVector.y) + Mathf.PI) / Mathf.PI - 1;
+            uv[i] = new Vector2(ICOuv.x, ICOuv.y);
+        }
+ 
+        mesh.uv = uv; 
+        
+        
         if(flatShaded)
             mesh.tangents = tangents.ToArray();
         
-        //if(flatShaded)
-        //    mesh.normals = normals.ToArray();
-        //else
+        if(flatShaded)
+            mesh.normals = normals.ToArray();
+        else
+        {
             mesh.RecalculateNormals(normalsAngle);
+        }
+         
+        
         mesh.RecalculateBounds();
         mesh.RecalculateTangents();
         mesh.Optimize();

@@ -12,6 +12,9 @@ namespace Modules.Resources
         [SerializeField]
         private Sprite defaultResourceSprite;
 
+
+        public Dictionary<string, ResourceInfo> Resources => _resourceDict;
+
         private Dictionary<string, ResourceInfo> _resourceDict;
 
         public ResourceInfo this[string index] => _resourceDict.TryGetValue(index, out var resource) ? resource : new ResourceInfo {
