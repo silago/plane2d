@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Modules.Resources;
 namespace Modules.Inventory
 {
     public class InventoryDataProvider
     {
+        public event Action Update;
         // make cache
         private ResourceSettings _resourceSettings;
         private UserDataProvider _userDataProvider;
@@ -24,6 +27,15 @@ namespace Modules.Inventory
             }
             return result.ToArray();
         }
-        
+
+        public Dictionary<ResourceType, (ResourceInfo, int)[]> GetGroupedResources()
+        {
+            return GetUserResources().Where(x=>x.Item2>0).GroupBy(x => x.Item1.ResourceType).ToDictionary(x=>x.Key,x=>x.ToArray());
+        }
+
+        public virtual void OnUpdate()
+        {
+            Update?.Invoke();
+        }
     }
 }

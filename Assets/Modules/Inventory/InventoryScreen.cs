@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using Modules.Common;
+using Modules.Resources;
 using Modules.Utils;
 using UnityEngine;
 using Zenject;
@@ -13,21 +16,44 @@ namespace Modules.Inventory
         private Transform inventory;
         [SerializeField]
         private InventoryItemPrefab inventoryItemPrefab;
-        
+        [SerializeField]
+        private InventoryGroup inventoryGroupPrefab;
+
         [Inject]
-        public  void Construct(InventoryDataProvider inventoryDataProvider)
+        void Construct(InventoryDataProvider inventoryData)
         {
-            _inventoryDataProvider = inventoryDataProvider;
+            _inventoryDataProvider = inventoryData;
         }
+
+
+        private void Start()
+        {
+            if (Content.gameObject.activeSelf)
+                OnShow();
+            _inventoryDataProvider.Update +=  OnShow;
+        }
+        private List<GameObject> groupsGameObjects = new List<GameObject>();
 
         protected override void OnShow()
         {
-            var items = _inventoryDataProvider.GetUserResources();
-            inventory.ClearChildren();
-            foreach (var (info, count) in items)
+            foreach (var groupsGameObject in groupsGameObjects)
             {
-                inventoryItemPrefab.Instantiate(inventory, info, count);
+                Destroy(groupsGameObject);
+            }
+            var groups = _inventoryDataProvider.GetGroupedResources();
+            foreach (var group  in groups)
+            {
+                var groupGO = Instantiate(inventoryGroupPrefab, inventory);
+                groupsGameObjects.Add(groupGO.gameObject);
+                groupGO.label.text = group.Key.ToString();
+                foreach (var (info, count) in group.Value)
+                {
+                    if (count == 0) continue;
+                    inventoryItemPrefab.Instantiate(groupGO.transform, info, count);
+                }
             }
         }
+        
+        
     }
 }

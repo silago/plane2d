@@ -11,8 +11,25 @@ namespace Modules.Resources
         public ResourceType ResourceType;
     }
 
+    [Flags]
+    enum ResourceFlags
+    {
+        InvisibleInInventory
+    }
+
+    
+    /* proporsoal
+     
+        public enumResourceType {
+            Item.
+        }
+     
+     */
     public enum ResourceType
     {
-        Default, Quest
+        Misc = 0,
+        Resource = 1,
+        Quest = 2,
+        Item = 3,
     }
 }

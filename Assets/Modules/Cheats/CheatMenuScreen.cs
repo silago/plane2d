@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Events;
 using Modules.Common;
+using Modules.Inventory;
+using Modules.Resources;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Zenject;
 #endregion
 namespace Modules.GameFlow.Screens
 {
@@ -26,7 +29,24 @@ namespace Modules.GameFlow.Screens
                 Root, new List<TextButton>()
             }
         };
+        private InventoryDataProvider _inventoryDataProvider;
+        private UserDataProvider _userDataProvider;
+        private ResourceSettings _resourceSettings;
         public string CurrentDir { get; private set; } = Root;
+
+
+        [Inject]
+        void Construct(
+            InventoryDataProvider inventoryDataProvider,
+            UserDataProvider userDataProvider,
+            ResourceSettings resourceSettings
+            )
+        {
+            
+            _inventoryDataProvider = inventoryDataProvider;
+            _userDataProvider = userDataProvider;
+            _resourceSettings = resourceSettings;
+        }
 
         private void Start()
         {
@@ -141,6 +161,17 @@ namespace Modules.GameFlow.Screens
                     Active = false
                 }, ScreenId.Map);
             });
+
+
+            foreach (var res in _resourceSettings.data)
+            {
+                this.Add($"Add {res.Name}", () =>
+                {
+                    _userDataProvider[res.Id] ++ ;
+                    _inventoryDataProvider.OnUpdate();
+                },"Resources");
+            }
+            
         }
     }
 }

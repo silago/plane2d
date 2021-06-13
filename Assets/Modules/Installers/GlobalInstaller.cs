@@ -1,3 +1,4 @@
+using Modules.Inventory;
 using Modules.Resources;
 using UnityEngine;
 using Yarn;
@@ -11,6 +12,7 @@ public class GlobalInstaller : MonoInstaller
     {
         Container.BindInterfacesAndSelfTo<ResourceSettings>().FromInstance(resourceSettings).AsSingle().NonLazy();
         Container.Bind<UserDataProvider>().AsSingle().NonLazy();
+        Container.Bind<InventoryDataProvider>().AsSingle().NonLazy();
         Container.Bind<IVariableStorage>().To<DialogueDataStorage>().AsSingle().NonLazy();
     }
 }

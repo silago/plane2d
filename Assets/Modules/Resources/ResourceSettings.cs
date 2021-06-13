@@ -8,7 +8,7 @@ namespace Modules.Resources
     public class ResourceSettings : ScriptableObject, ISerializationCallbackReceiver
     {
         [SerializeField]
-        private ResourceInfo[] data;
+        public ResourceInfo[] data;
         [SerializeField]
         private Sprite defaultResourceSprite;
 
