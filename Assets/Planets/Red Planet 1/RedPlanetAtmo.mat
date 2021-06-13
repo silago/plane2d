@@ -8,9 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: RedPlanetAtmo
-  m_Shader: {fileID: -6465566751694194690, guid: 57ccc1408c4dee31fa0c88c9f0d7be02,
+  m_Shader: {fileID: -6465566751694194690, guid: a826272f090667bdd9ca2b992f301004,
     type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _RECEIVE_SHADOWS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -77,9 +77,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_212a1db5d5794cd2895b8021525e1c83: 0.407
+    - Vector1_012875f8607945249b3b6eff71cf2be7: 0
+    - Vector1_212a1db5d5794cd2895b8021525e1c83: 1
     - Vector1_8ca735ab221d4cea866476ddfcfca1e9: 0
-    - Vector1_f786b2a730984e3bb35ddb1b13992b19: -0.168
+    - Vector1_c506860ec01f4719a673d3087e5c5acb: 0
+    - Vector1_e1fad91cb38a49969a79436663ceb365: 1.5
+    - Vector1_eb3a1a73ca564ac581d5a95e5d6d5a99: 5
+    - Vector1_f786b2a730984e3bb35ddb1b13992b19: 0.5
+    - Vector1_fa46c22f8fc84828b81d546a2e3b30d0: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -108,7 +113,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 0.5511556, b: 0.33490568, a: 0.6392157}
+    - _Color: {r: 1, g: 0.49450034, b: 0, a: 0.050980393}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
