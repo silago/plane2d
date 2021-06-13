@@ -5,18 +5,18 @@ using Events;
 using Modules.Utils;
 using UnityEngine;
 #endregion
-public class DestroyMessage : Message
+public class DestroyMessage : IMessage
 {
     public int Damage;
 }
-public class DamageMessage : Message
+public class DamageMessage : IMessage
 {
     public int Id;
     public int Damage;
     public int CurrentHull;
 }
 
-public class DisplayHullMessage : Message
+public class DisplayHullMessage : IMessage
 {
     public bool Active;
     public int Id;

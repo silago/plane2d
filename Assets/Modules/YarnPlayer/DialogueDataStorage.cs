@@ -61,11 +61,11 @@ public class DialogueDataStorage : IVariableStorage
     }
     
 
-    public class DialogueResourceChangedMessagePack<T> : Message
+    public class DialogueResourceChangedMessagePack<T> : IMessage
     {
         public DialogueResourceChanged<T>[] Data;
     }
-    public class DialogueResourceChanged<T> : Message
+    public class DialogueResourceChanged<T> : IMessage
     {
         public ResourceInfo ResourceInfo;
         public T Prev;

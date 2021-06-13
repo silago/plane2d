@@ -10,9 +10,9 @@ namespace Modules.Common
         protected abstract ScreenId ScreenId { get;  }
         [SerializeField]
         protected Transform Content;
-        private void Awake()
+        protected void Awake()
         {
-            this.Subscribe<ChangeScreenState,ScreenId>(OnChangeScreenStateMessage,ScreenId.Inventory).BindTo(this);
+            this.Subscribe<ChangeScreenState,ScreenId>(OnChangeScreenStateMessage,ScreenId).BindTo(this);
         }
 
         protected virtual void OnShow()
@@ -29,14 +29,15 @@ namespace Modules.Common
         }
     }
 
-    public class ChangeScreenState : Message
+    public class ChangeScreenState : IMessage
     {
         public bool Active;
-        public ScreenId ScreenId;
     }
     public enum ScreenId
     {
         None = 0,
         Inventory = 1,
+        Map = 2,
+        Cheats =3,
     }
 }

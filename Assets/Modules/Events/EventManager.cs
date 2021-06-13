@@ -8,23 +8,24 @@ namespace Events
 
     public static class ObjectExt
     {
-        public static Subscriber<T> Subscribe<T>(this object _, Action<T> cb) where T : Message
+        public static Subscriber<T> Subscribe<T>(this object _, Action<T> cb) where T : IMessage
         {
             EventManager<T>.Subscribe(cb);
             return new Subscriber<T>(cb);
         }
 
-        public static void Unsubscribe<T>(this object _, Action<T> cb) where T : Message
+        public static void Unsubscribe<T>(this object _, Action<T> cb) where T : IMessage
         {
             EventManager<T>.Unsubscribe(cb);
         }
+        
 
-        public static void SendEvent<T>(this object _, T data = null) where T : Message
+        public static void SendEvent<T>(this object _, T data ) where T : IMessage
         {
             EventManager<T>.Invoke(data);
         }
 
-        public static void SubscribeOnce<T>(this object @this, Action<T> action) where T : Message
+        public static void SubscribeOnce<T>(this object @this, Action<T> action) where T : IMessage
         {
             void WrapperAction(T data)
             {
@@ -35,16 +36,16 @@ namespace Events
             EventManager<T>.Subscribe(WrapperAction);
         }
 
-        public static void Unsubscribe<TMessage, TKey>(this object _, Action<TMessage> action, TKey key) where TMessage : Message
+        public static void Unsubscribe<TMessage, TKey>(this object _, Action<TMessage> action, TKey key) where TMessage : IMessage
         {
             TopicEventManager<TMessage, TKey>.Unsubscribe(action, key);
         }
-        public static Subscriber<TMessage, TKey> Subscribe<TMessage, TKey>(this object _, Action<TMessage> action, TKey key) where TMessage : Message
+        public static Subscriber<TMessage, TKey> Subscribe<TMessage, TKey>(this object _, Action<TMessage> action, TKey key) where TMessage : IMessage
         {
             TopicEventManager<TMessage, TKey>.Subscribe(action, key);
             return new Subscriber<TMessage, TKey>(action, key);
         }
-        public static void SendEvent<TMessage, TKey>(this object _, TMessage data, TKey key) where TMessage : Message
+        public static void SendEvent<TMessage, TKey>(this object _, TMessage data, TKey key) where TMessage : IMessage
         {
             TopicEventManager<TMessage, TKey>.Invoke(data, key);
         }
@@ -61,7 +62,7 @@ namespace Events
             }
         }
 
-        public class Subscriber<TMessage, TKey> where TMessage : Message
+        public class Subscriber<TMessage, TKey> where TMessage : IMessage
         {
             private readonly Action<TMessage> _action;
             private readonly TKey _key;
@@ -79,7 +80,7 @@ namespace Events
             }
         }
 
-        public class Subscriber<T> where T : Message
+        public class Subscriber<T> where T : IMessage
         {
             private readonly Action<T> _action;
             public Subscriber(Action<T> action)
@@ -96,16 +97,14 @@ namespace Events
         }
     }
 
-    public abstract class Message
-    {
-    }
+    public interface IMessage {}
 
-    public abstract class BoolMessage : Message
+    public abstract class BoolMessage : IMessage
     {
         public bool active { get; set; }
     }
 
-    public abstract class BaseValueMessage<T> : Message
+    public abstract class BaseValueMessage<T> : IMessage
     {
         public T value { get; set; }
     }
@@ -120,7 +119,7 @@ namespace Events
         }
     }
 
-    internal static class TopicEventManager<TMessage, TKey> where TMessage : Message
+    internal static class TopicEventManager<TMessage, TKey> where TMessage : IMessage
     {
         private static readonly Dictionary<TKey, EventContainer<TMessage>> _events = new Dictionary<TKey, EventContainer<TMessage>>();
 
@@ -142,7 +141,7 @@ namespace Events
         }
     }
 
-    internal static class EventManager<T> where T : Message
+    internal static class EventManager<T> where T : IMessage
     {
         public static event Action<T> Event;
         public static void Subscribe(Action<T> cb)
@@ -155,7 +154,7 @@ namespace Events
             Event -= cb;
         }
 
-        public static void Invoke(T data = null)
+        public static void Invoke(T data )
         {
             Event?.Invoke(data);
         }

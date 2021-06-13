@@ -34,7 +34,7 @@ namespace Modules.YarnPlayer
 
             continueButton.onClick.AddListener(() =>
             {
-                this.SendEvent<ContinueMessage>();
+                this.SendEvent<ContinueMessage>(null);
             });
 
             closeButton.onClick.AddListener(() =>

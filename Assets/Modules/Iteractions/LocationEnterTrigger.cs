@@ -10,7 +10,7 @@ internal class HintMessage : BoolMessage
     public string text { get; set; }
 }
 
-internal class LocationEnterMsg : Message
+internal class LocationEnterMsg : IMessage
 {
     public string dialogueId { get; set; }
 }
