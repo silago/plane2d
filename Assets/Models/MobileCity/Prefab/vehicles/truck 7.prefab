@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4073723465915428}
   - component: {fileID: 33084999409641778}
   - component: {fileID: 23178984230040308}
-  - component: {fileID: 65832649440975936}
   m_Layer: 0
   m_Name: truck 7
   m_TagString: Untagged
@@ -28,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1194367832112102}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 4696507849603488}
   - {fileID: 4061934348940832}
@@ -88,19 +87,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &65832649440975936
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194367832112102}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.024889, y: 4.3376107, z: 8.456348}
-  m_Center: {x: 0.008267283, y: 2.4033926, z: -0.2599709}
 --- !u!1 &1207976173568094
 GameObject:
   m_ObjectHideFlags: 0

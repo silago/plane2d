@@ -174,7 +174,6 @@ GameObject:
   - component: {fileID: 4099410931336546}
   - component: {fileID: 33993152018541812}
   - component: {fileID: 23393227272502528}
-  - component: {fileID: 65617289362798560}
   m_Layer: 0
   m_Name: car 01
   m_TagString: Untagged
@@ -191,7 +190,7 @@ Transform:
   m_GameObject: {fileID: 1535770675938168}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: 3.63, y: 0, z: 20.53}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 4100290822034862}
   - {fileID: 4913290990012662}
@@ -249,19 +248,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &65617289362798560
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535770675938168}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.0833497, y: 1.6680815, z: 5.0828733}
-  m_Center: {x: 0.0027719736, y: 1.2110819, z: 0.022234797}
 --- !u!1 &1574973400350862
 GameObject:
   m_ObjectHideFlags: 0

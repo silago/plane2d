@@ -92,7 +92,6 @@ GameObject:
   - component: {fileID: 4500968931224102}
   - component: {fileID: 33020478629964186}
   - component: {fileID: 23085243609789318}
-  - component: {fileID: 65921295445225488}
   m_Layer: 0
   m_Name: bus 1
   m_TagString: Untagged
@@ -109,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 1568019925079022}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 4657122195248246}
   - {fileID: 4953718178090768}
@@ -167,19 +166,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &65921295445225488
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1568019925079022}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.191426, y: 3.4925306, z: 12.183163}
-  m_Center: {x: -0.00033259392, y: 2.025342, z: -0.11338997}
 --- !u!1 &1572640376387888
 GameObject:
   m_ObjectHideFlags: 0
