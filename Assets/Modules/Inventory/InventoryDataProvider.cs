@@ -10,12 +10,16 @@ namespace Modules.Inventory
         // make cache
         private ResourceSettings _resourceSettings;
         private UserDataProvider _userDataProvider;
+        // slotId => id maybe
+        private StringStorage<ResourceSubType> _equippedItems = new StringStorage<ResourceSubType>();
         
         public  InventoryDataProvider(UserDataProvider userDataProvider, ResourceSettings resourceSettings)
         {
             _resourceSettings = resourceSettings;
             _userDataProvider = userDataProvider;
         }
+        public void Equip(ResourceSubType type, string itemId) => _equippedItems[type] = itemId;
+        public string GetEquippedItem(ResourceSubType type) => _equippedItems[type]; 
 
         public (ResourceInfo, int)[] GetUserResources()
         {

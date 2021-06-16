@@ -7,29 +7,11 @@ namespace Modules.Resources
     {
         public string Id;
         public string Name;
+        public string Description;
         public Sprite Icon;
-        public ResourceType ResourceType;
+        public ResourceType ResourceType; // Group
+        public ResourceSubType ResourceSubType; // Type
+        public ResourceFlags Flags;
     }
 
-    [Flags]
-    enum ResourceFlags
-    {
-        InvisibleInInventory
-    }
-
-    
-    /* proporsoal
-     
-        public enumResourceType {
-            Item.
-        }
-     
-     */
-    public enum ResourceType
-    {
-        Misc = 0,
-        Resource = 1,
-        Quest = 2,
-        Item = 3,
-    }
 }

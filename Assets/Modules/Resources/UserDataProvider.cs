@@ -1,15 +1,23 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Events;
 using Modules.YarnPlayer;
+
+public class ResourceChanged : IMessage
+{
+    public string Name;
+    public int Value;
+}
+
 namespace Modules.Resources
 {
-
     public class UserDataProvider
     {
         private ResourceSettings _resourceSettings;
-        private IntStorage<string> _intStorage   = new IntStorage<string>();
-        private FloatStorage<string> _floatStorage  = new FloatStorage<string>();
-        private StringStorage<string>        _stringStorage = new StringStorage<string>();
+        private IntStorage<string>    _intStorage   = new IntStorage<string>();
+        private FloatStorage<string>  _floatStorage  = new FloatStorage<string>();
+        private StringStorage<string> _stringStorage = new StringStorage<string>();
         public UserDataProvider(ResourceSettings resourceSettings)
         {
             _resourceSettings = resourceSettings;
@@ -17,7 +25,15 @@ namespace Modules.Resources
         public int this[string index]
         {
             get => _intStorage[index];
-            set => _intStorage[index ]= value;
+            set
+            {
+                _intStorage[index] = value;
+                this.SendEvent(new ResourceChanged() {Name = index, Value = value} );
+            }
+        }
+
+        public void SubscribeResourceChange(Action<int> action)
+        {
         }
 
         public ResourceInfo GetResourceInfo(string key) => _resourceSettings[key.Trim('$')];

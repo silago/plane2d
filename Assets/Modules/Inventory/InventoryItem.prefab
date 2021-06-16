@@ -268,7 +268,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4360282121279971830
 CanvasRenderer:
@@ -323,3 +323,15 @@ MonoBehaviour:
   count: {fileID: 5156947394578300331}
   icon: {fileID: 3056990575608559022}
   countContainer: {fileID: 116108761413766718}
+  graphics:
+  - {fileID: 5070501765565979407}
+  selectedColor: {r: 0.986157, g: 1, b: 0.6273585, a: 0}
+  regularColor: {r: 1, g: 1, b: 1, a: 1}
+  info:
+    Id: 
+    Name: 
+    Description: 
+    Icon: {fileID: 0}
+    ResourceType: 0
+    ResourceSubType: 0
+    Flags: 0

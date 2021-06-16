@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 namespace Modules.Inventory
 {
-    public class InventoryItemPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+    public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
         [SerializeField]
         private Text count;
@@ -22,10 +22,10 @@ namespace Modules.Inventory
         private Color selectedColor;
         [SerializeField]
         private Color regularColor;
-        public event Action<ResourceInfo> OnClick = resourceInfo => {};
+        public event Action<InventoryItem> OnClick = resourceInfo => {};
         
         public ResourceInfo info;
-        public InventoryItemPrefab Instantiate(Transform parent, ResourceInfo info, int itemCount)
+        public InventoryItem Instantiate(Transform parent, ResourceInfo info, int itemCount)
         {
             var item = Instantiate(this, parent);
             item.count.text = itemCount.ToString();
@@ -41,6 +41,6 @@ namespace Modules.Inventory
 
         public void OnPointerEnter(PointerEventData eventData) => OnIn();
         public void OnPointerExit(PointerEventData eventData) => OnOut();
-        public void OnPointerDown(PointerEventData eventData) => OnClick(info);
+        public void OnPointerDown(PointerEventData eventData) => OnClick(this);
     }
 }
