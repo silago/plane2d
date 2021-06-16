@@ -8,6 +8,9 @@ public class DialogueStarter : MonoBehaviour
 {
     [SerializeField]
     private string NodeName;
+    
+    [SerializeField]
+    private string Caption;
 
     // Start is called before the first frame update
     private void Start()
@@ -19,7 +22,7 @@ public class DialogueStarter : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         this.SendEvent(new StartDialogueMessage {
-            NodeName = NodeName
+            NodeName = NodeName, Caption = Caption
         });
         
     }

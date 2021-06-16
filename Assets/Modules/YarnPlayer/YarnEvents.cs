@@ -17,6 +17,7 @@ namespace Modules.YarnPlayer
     public class StartDialogueMessage : IMessage
     {
         public string NodeName { get; set; }
+        public string Caption  { get; set; }
     }
 
     public class OptionSelectedMessage : IMessage

@@ -161,6 +161,20 @@ namespace Modules.GameFlow.Screens
                     Active = false
                 }, ScreenId.Map);
             });
+            
+            this.Add("Show Inventory", () =>
+            {
+                this.SendEvent(new ChangeScreenState() {
+                    Active = true
+                }, ScreenId.Inventory);
+            });
+            
+            this.Add("Hide Inventory", () =>
+            {
+                this.SendEvent(new ChangeScreenState() {
+                    Active = false
+                }, ScreenId.Inventory);
+            });
 
 
             foreach (var res in _resourceSettings.data)

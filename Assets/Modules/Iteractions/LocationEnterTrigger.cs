@@ -23,6 +23,8 @@ namespace Modules.Iteractions
 
         [SerializeField]
         private string DialogueId;
+        [SerializeField]
+        private string LocationName;
 
         [SerializeField] private string text;
         private void OnTriggerEnter2D(Collider2D other)
@@ -44,9 +46,9 @@ namespace Modules.Iteractions
         private void OnTriggerStay2D(Collider2D other)
         {
             if (Input.GetKeyDown(KeyCode.E))
-                //this.SendEvent(new LocationEnterMsg {dialogueId = DialogueId});
                 this.SendEvent(new StartDialogueMessage {
-                    NodeName = DialogueId
+                    NodeName = DialogueId,
+                    Caption = LocationName 
                 });
         }
     }

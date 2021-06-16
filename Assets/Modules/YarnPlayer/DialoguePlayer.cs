@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +10,7 @@ namespace Modules.YarnPlayer
 {
     public class DialoguePlayer : MonoBehaviour
     {
+        [SerializeField] private Text caption;
         [SerializeField] private GameObject mainContainer;
         [SerializeField] private Button continueButton;
         [SerializeField] private Button closeButton;
@@ -50,6 +51,7 @@ namespace Modules.YarnPlayer
         }
         private void OnStartDialogueMessage(StartDialogueMessage obj)
         {
+            this.caption.text = obj.Caption;
             Time.timeScale = 0f;
             mainContainer.SetActive(true);
         }
