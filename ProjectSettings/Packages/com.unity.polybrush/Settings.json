@@ -71,7 +71,7 @@
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "Scattering.AvoidOverlappingObjects",
-                "value": "{\"m_Value\":true}"
+                "value": "{\"m_Value\":false}"
             },
             {
                 "type": "UnityEngine.Polybrush.BrushMirror, Unity.Polybrush, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -126,7 +126,7 @@
             {
                 "type": "UnityEditor.Polybrush.PrefabLoadout, Unity.Polybrush.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "ScatteringEditor.userLoadout",
-                "value": "{\"m_Value\":{\"infos\":[{\"palette\":{\"fileID\":11400000,\"guid\":\"45026697e7ec6439baf4de69bf6d8928\",\"type\":2},\"prefab\":{\"fileID\":1869657991275158,\"guid\":\"170d0709820db8c42862abd4eb909a06\",\"type\":3}}]}}"
+                "value": "{\"m_Value\":{\"infos\":[{\"palette\":{\"fileID\":11400000,\"guid\":\"45026697e7ec6439baf4de69bf6d8928\",\"type\":2},\"prefab\":{\"fileID\":100010,\"guid\":\"1636030e71800264b88efcfced31859a\",\"type\":3}},{\"palette\":{\"fileID\":11400000,\"guid\":\"45026697e7ec6439baf4de69bf6d8928\",\"type\":2},\"prefab\":{\"fileID\":100044,\"guid\":\"b145870054d5de24da06da86bcb3cba2\",\"type\":3}},{\"palette\":{\"fileID\":11400000,\"guid\":\"45026697e7ec6439baf4de69bf6d8928\",\"type\":2},\"prefab\":{\"fileID\":100010,\"guid\":\"b2fbed95255c3714786776577fcb605b\",\"type\":3}}]}}"
             }
         ]
     }
