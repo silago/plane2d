@@ -1,4 +1,5 @@
 #region
+using Modules.Player;
 using UnityEngine;
 #endregion
 public class PlayerInput : MonoBehaviour
@@ -15,8 +16,8 @@ public class PlayerInput : MonoBehaviour
         mc.speedUp = Input.GetKey(KeyCode.UpArrow);
         mc.rotateRight = Input.GetKey(KeyCode.RightArrow);
         mc.rotateLeft = Input.GetKey(KeyCode.LeftArrow);
-        mc.strafeLeft = Input.GetKey(KeyCode.Q);
-        mc.strafeRight = Input.GetKey(KeyCode.E);
+        //mc.strafeLeft = Input.GetKey(KeyCode.Q);
+        //mc.strafeRight = Input.GetKey(KeyCode.E);
         sc.ShooterSpeed = mc.VelocityMagnitude;
         sc.Shoot = Input.GetMouseButton(2);
     }

@@ -18,8 +18,8 @@ namespace Modules.UI
         private Pool<HullWidget> _pool;
         private void Awake()
         {
-            this.Subscribe<DisplayHullMessage>(OnHull);
-            this.Subscribe<DamageMessage>(OnDamage);
+            this.Subscribe<DisplayHullMessage>(OnHull).BindTo(this);
+            this.Subscribe<DamageMessage>(OnDamage).BindTo(this);
             _pool = new Pool<HullWidget>(prefab) {
             };
         }

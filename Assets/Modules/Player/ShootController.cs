@@ -1,4 +1,5 @@
 #region
+using System;
 using UnityEngine;
 #endregion
 public class ShootController : MonoBehaviour
@@ -14,10 +15,15 @@ public class ShootController : MonoBehaviour
     [SerializeField]
     public float projectileSpeed = 2f;
     public float ShooterSpeed { private get; set; }
+    private Collider[] _colliders;
 
     public bool Shoot;
     private float _energy = 1f;
     private float _lockTs;
+    private void Awake()
+    {
+        _colliders = GetComponents<Collider>();
+    }
 
     public bool MakeShot()
     {
@@ -30,6 +36,10 @@ public class ShootController : MonoBehaviour
         
         _lockTs = cooldown;
         var t = Instantiate(_projectile, transform.parent);
+        foreach (var col in _colliders)
+        {
+            Physics.IgnoreCollision(col, t.GetComponent<Collider>());
+        }
         t.speed = projectileSpeed + ShooterSpeed;
         //t.transform.rotation = transform.rotation;
         t.transform.position = transform.position;

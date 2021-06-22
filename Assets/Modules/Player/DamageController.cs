@@ -16,6 +16,12 @@ public class DamageMessage : IMessage
     public int CurrentHull;
 }
 
+/*
+public class VisibleStateChangeEmitter {
+
+}
+*/
+
 public class DisplayHullMessage : IMessage
 {
     public bool Active;
@@ -27,6 +33,7 @@ public class DisplayHullMessage : IMessage
 
 namespace Modules.Game.Player
 {
+
     public class DamageController : MonoBehaviour
     {
         [SerializeField]
@@ -37,15 +44,35 @@ namespace Modules.Game.Player
         private int initialHull;
         [SerializeField]
         private int currentHull;
-        private void Awake()
+        protected virtual int Hull
+        {
+            get => currentHull;
+            set => currentHull = value;
+        } 
+        protected virtual void Awake()
         {
             this.Subscribe<DamageMessage, int>(OnDamage, gameObject.GetInstanceID()).BindTo(this);
-            if (currentHull == default) currentHull = initialHull;
+            if (Hull == default) Hull = initialHull;
+            
+            this.SendEvent(new DisplayHullMessage() {
+                Active = true,
+                Id = gameObject.GetInstanceID(),
+                InitialHull = initialHull,
+                CurrentHull = Hull,
+                Target = transform
+            });
         }
-        private void OnDamage(DamageMessage obj)
+
+        protected virtual void OnDestroy()
         {
-            currentHull -= obj.Damage;
-            if (currentHull <= 0)
+            this.SendEvent(new DisplayHullMessage() {
+                Active = false,
+                Id = gameObject.GetInstanceID()
+            });
+        }
+        protected void OnDamage(DamageMessage obj)
+        {
+            if ((Hull-=obj.Damage) <= 0)
             {
                 var p = Instantiate(destroyEffect, transform.parent);
                 p.transform.position = transform.position;
@@ -54,13 +81,14 @@ namespace Modules.Game.Player
             }
             else
             {
-                var p = Instantiate(damageEffect, transform);
+                var p = Instantiate(damageEffect, transform.parent);
+                p.transform.position = transform.position;
                 p.gameObject.SetActive(true);
             }
             this.SendEvent(new DamageMessage() {
                 Id = gameObject.GetInstanceID(),
                 Damage = obj.Damage,
-                CurrentHull = currentHull
+                CurrentHull = Hull
             });
         }
 
@@ -77,13 +105,14 @@ namespace Modules.Game.Player
                 yield return new WaitForSeconds(1);
             Destroy(p.gameObject);
         }
+        
         private void OnBecameVisible()
         {
             this.SendEvent(new DisplayHullMessage() {
                 Active = true,
                 Id = gameObject.GetInstanceID(),
                 InitialHull = initialHull,
-                CurrentHull = currentHull,
+                CurrentHull = Hull,
                 Target = transform
             });
         }

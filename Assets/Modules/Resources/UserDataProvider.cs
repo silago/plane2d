@@ -29,6 +29,7 @@ namespace Modules.Resources
             {
                 _intStorage[index] = value;
                 this.SendEvent(new ResourceChanged() {Name = index, Value = value} );
+                this.SendEvent(new ResourceChanged() {Name = index, Value = value} , index);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿#region
 using System.Collections;
 using System.Collections.Generic;
+using Modules.Player;
 using Modules.Utils.TagSelector;
 using UnityEngine;
 using Zenject;

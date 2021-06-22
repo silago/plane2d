@@ -1,4 +1,5 @@
 #region
+using Modules.Player;
 using UnityEngine;
 using Zenject;
 #endregion

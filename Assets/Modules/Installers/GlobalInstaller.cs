@@ -1,4 +1,5 @@
 using Modules.Inventory;
+using Modules.Player;
 using Modules.Resources;
 using UnityEngine;
 using Yarn;
@@ -14,5 +15,7 @@ public class GlobalInstaller : MonoInstaller
         Container.Bind<UserDataProvider>().AsSingle().NonLazy();
         Container.Bind<InventoryDataProvider>().AsSingle().NonLazy();
         Container.Bind<IVariableStorage>().To<DialogueDataStorage>().AsSingle().NonLazy();
+        Container.Bind<Updater>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
+        Container.Bind<PlayerModel>().AsSingle().NonLazy();
     }
 }

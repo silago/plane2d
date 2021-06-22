@@ -1,8 +1,5 @@
-#region
 using Events;
 using UnityEngine;
-#endregion
-[RequireComponent(typeof(Collider2D))]
 public class Projectile : MonoBehaviour
 {
     [SerializeField]
@@ -19,11 +16,11 @@ public class Projectile : MonoBehaviour
         if ((ttl -= Time.deltaTime) <= 0)
             Destroy(gameObject);
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         this.SendEvent(new DamageMessage {
             Damage = damage
-        }, other.transform.GetInstanceID());
+        }, other.gameObject.GetInstanceID());
         Destroy(gameObject);
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Modules.Player;
 using Modules.Utils;
 using UnityEngine;
 using Zenject;
