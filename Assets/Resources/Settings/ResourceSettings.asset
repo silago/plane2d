@@ -15,15 +15,38 @@ MonoBehaviour:
   data:
   - Id: Coins
     Name: coins
+    Description: 
     Icon: {fileID: 21300000, guid: 8f4bf9faf80b35547a7c9d6fcbd95924, type: 3}
     ResourceType: 0
+    ResourceSubType: 0
+    Flags: 0
   - Id: GreenBall
     Name: green balls
+    Description: 
     Icon: {fileID: 21300000, guid: 87ce72eebed9ec340b33293d85080d6e, type: 3}
     ResourceType: 0
+    ResourceSubType: 0
+    Flags: 0
   - Id: TestQuest
     Name: green ball's quest quality
+    Description: 
     Icon: {fileID: 21300000, guid: d29c79686d850a942b2eca6bda485723, type: 3}
     ResourceType: 0
+    ResourceSubType: 0
+    Flags: 1
+  - Id: Hull
+    Name: Hull
+    Description: 
+    Icon: {fileID: 21300000, guid: d29c79686d850a942b2eca6bda485723, type: 3}
+    ResourceType: 0
+    ResourceSubType: 0
+    Flags: 1
+  - Id: Fuel
+    Name: Fuel
+    Description: 
+    Icon: {fileID: 21300000, guid: 571f730ec39b9bc47a7f77fe69df724d, type: 3}
+    ResourceType: 0
+    ResourceSubType: 0
+    Flags: 0
   defaultResourceSprite: {fileID: 21300000, guid: 36cf4f0d0da425c4686031a2b8955f42,
     type: 3}

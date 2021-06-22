@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Planeta
+  - Enemy
+  - ProjectTile
+  - AreaTrigger
   layers:
   - Default
   - TransparentFX
@@ -14,12 +17,12 @@ TagManager:
   - UI
   - Player
   - Enemy
-  - PlayerProjectile
   - '-'
-  - EnemyProjectile
+  - '-'
+  - '-'
   - MapUI
-  - 
-  - 
+  - Trigger
+  - Projectile
   - 
   - 
   - 
