@@ -9,11 +9,45 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 94073015eacc34c1d8fc6786e43d60ca, type: 3}
   baseLanguageID: ru-RU
-  stringIDs: []
-  AnyImplicitStringIDs: 0
-  isSuccesfullyParsed: 0
-  parseErrorMessage: "Error on line 18 at position 7:\nno viable alternative at input
-    '<<jump '\n    <<jump Sally.Watch>>\n      ^^^^^"
-  baseLanguage: {instanceID: 0}
+  stringIDs:
+  - line:Test-PossumFields-0
+  - line:Test-PossumFields-1
+  - line:Test-PossumFields-2
+  - line:Test-PossumFields-3
+  - line:Test-PossumFields.Intro-4
+  - line:Test-PossumFields.Intro-5
+  - line:Test-PossumFields.Intro-6
+  - line:Test-PossumFields.Intro-7
+  - line:Test-PossumFields.Intro-8
+  - line:Test-PossumFields.Intro-9
+  - line:Test-PossumFields.Intro-10
+  - line:Test-PossumFields.Intro-11
+  - line:Test-PossumFields.Intro-12
+  - line:Test-PossumFields.Intro-13
+  - line:Test-PossumFields.Intro-14
+  - line:Test-PossumFields.Intro-15
+  - line:Test-PossumFields.Shop-16
+  - line:Test-PossumFields.Shop-17
+  - line:Test-PossumFields.Shop-18
+  - line:Test-PossumFields.Shop-19
+  - line:Test-PossumFields.Shop-20
+  - line:Test-PossumFields.Shop-21
+  - line:Test-PossumFields.Shop-22
+  - line:Test-PossumFields.Shop-23
+  - line:Test-PossumFields.Shop-24
+  - line:Test-PossumFields.Shop-25
+  - line:Test-PossumFields.Shop-26
+  - line:Test-PossumFields.Shop-27
+  - line:Test-PossumFields.Shop-28
+  AnyImplicitStringIDs: 1
+  isSuccesfullyParsed: 1
+  parseErrorMessage: 'Error in Assets/DialoguesData/Test.yarn line 3
+
+    <<if $PossumFieldsStatus
+    == 0>>
+
+    Undeclared variable $PossumFieldsStatus'
+  baseLanguage: {fileID: 7128917941130120860, guid: 2b3799b613597a470948393fb7870905,
+    type: 3}
   localizations: []
   localizationDatabase: {instanceID: 0}
