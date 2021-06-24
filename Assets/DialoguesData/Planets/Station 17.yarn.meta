@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 2db059af23303b3779b5876a97d3d9fe
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 94073015eacc34c1d8fc6786e43d60ca, type: 3}
+  baseLanguageID: ru-RU
+  stringIDs:
+  - line:Station 17-Station17-0
+  - line:Station 17-Station17-1
+  - line:Station 17-Station17-2
+  - line:Station 17-Station17-3
+  - line:Station 17-Station17-4
+  AnyImplicitStringIDs: 1
+  isSuccesfullyParsed: 1
+  parseErrorMessage: 
+  baseLanguage: {instanceID: 0}
+  localizations: []
+  localizationDatabase: {instanceID: 0}

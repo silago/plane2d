@@ -1,0 +1,64 @@
+fileFormatVersion: 2
+guid: c850cd81747acd30194a3fe96033adae
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 94073015eacc34c1d8fc6786e43d60ca, type: 3}
+  baseLanguageID: ru-RU
+  stringIDs:
+  - line:PossumFields-PossumFields-0
+  - line:PossumFields-PossumFields-1
+  - line:PossumFields-PossumFields-2
+  - line:PossumFields-PossumFields.Intro-3
+  - line:PossumFields-PossumFields.Intro-4
+  - line:PossumFields-PossumFields.Intro-5
+  - line:PossumFields-PossumFields.Intro-6
+  - line:PossumFields-PossumFields.Intro-7
+  - line:PossumFields-PossumFields.Intro-8
+  - line:PossumFields-PossumFields.Intro-9
+  - line:PossumFields-PossumFields.Intro-10
+  - line:PossumFields-PossumFields.Intro-11
+  - line:PossumFields-PossumFields.Intro-12
+  - line:PossumFields-PossumFields.Intro-13
+  - line:PossumFields-PossumFields.Intro-14
+  - line:PossumFields-PossumFields.Shop-15
+  - line:PossumFields-PossumFields.Shop-16
+  - line:PossumFields-PossumFields.Shop-17
+  - line:PossumFields-PossumFields.Shop-18
+  - line:PossumFields-PossumFields.Shop-19
+  - line:PossumFields-PossumFields.Inside-20
+  - line:PossumFields-PossumFields.Inside-21
+  - line:PossumFields-PossumFields.Inside-22
+  - line:PossumFields-PossumFields.Inside-23
+  - line:PossumFields-PossumFields.Inside-24
+  - line:PossumFields-PossumFields.Inside-25
+  - line:PossumFields-PossumFields.Inside-26
+  - line:PossumFields-PossumFields.Inside-27
+  - line:PossumFields-PossumFields.Inside-28
+  - line:PossumFields-PossumFields.Inside-29
+  - line:PossumFields-PossumFields.Inside-30
+  - line:PossumFields-PossumFields.Inside-31
+  - line:PossumFields-PossumFields.Inside-32
+  - line:PossumFields-PossumFields.Inside-33
+  - line:PossumFields-PossumFields.Inside-34
+  - line:PossumFields-PossumFields.Inside-35
+  - line:PossumFields-PossumFields.Inside-36
+  - line:PossumFields-PossumFields.Inside-37
+  - line:PossumFields-PossumFields.Inside-38
+  - line:PossumFields-PossumFields.Inside-39
+  - line:PossumFields-PossumFields.Inside-40
+  - line:PossumFields-PossumFields.Inside-41
+  - line:PossumFields-PossumFields.Inside-42
+  - line:PossumFields-PossumFields.Inside-43
+  AnyImplicitStringIDs: 1
+  isSuccesfullyParsed: 1
+  parseErrorMessage: "Error in Assets/DialoguesData/Planets/PossumFields.yarn line
+    41\n    <<set $Hull to 100>> \nUndeclared variable $Hull"
+  baseLanguage: {fileID: 7128917941130120860, guid: c850cd81747acd30194a3fe96033adae,
+    type: 3}
+  localizations: []
+  localizationDatabase: {instanceID: 0}

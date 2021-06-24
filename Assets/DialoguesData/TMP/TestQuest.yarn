@@ -1,0 +1,47 @@
+title: TQ0
+tags:
+---
+<<declare $TestQuest = 0>>
+<<declare $GreenBall = 0>>
+
+<<if $TestQuest is 0>>
+    <<jump TQ1 >>
+<<endif>>
+<<if $TestQuest is 1>>
+    <<jump TQ2 >>
+<<endif>>
+===
+
+title: TQ1
+---
+Вещий: Это простой текстовый квест. Я даю тебе тебе Зеленый Шар и если ты его забираешь, что мы сможем двигаться дальше
+-> Забрать зеленый шар
+    << set $GreenBall to ($GreenBall+1) >>
+    Теперь у тебя {$GreenBall} шаров
+-> Отазаться
+<< set $TestQuest to 1 >>
+<<jump TQ2 >>
+===
+
+title: TQ2
+---
+Вещий: Тебе нужно отдать мне этот шар
+-> Но у меня его нет! <<if $GreenBall < 1>>
+    Вещий: А почему ты не забрал его сразу?
+    -> Забрать зеленый шар
+        << set $TestQuest to 1 >>
+        Теперь у тебя {$GreenBall} шаров
+        << set $GreenBall to ($GreenBall+1) >>
+        <<jump TQ2>>
+    -> Отказаться
+        <<jump TQ2>>
+-> Отдать зеленый шар [R GreenBall>0][/R]
+    << set $GreenBall to ($GreenBall-1) >>
+    Вещий: Замечательно! У тебя теперь {$GreenBall} Текстовый квест сработал
+    <<jump TQ3>>
+===
+
+title: TQ3
+---
+Вещий:  Текстовый квест закончен.
+===
