@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Modules.Common;
 using Modules.Resources;
+using Modules.YarnPlayer;
 using UnityEngine;
 using Zenject;
 namespace Modules.Inventory
@@ -70,6 +71,7 @@ namespace Modules.Inventory
                 foreach (var (info, count) in group.Value)
                 {
                     if (count == 0) continue;
+                    if (info.Flags.HasFlag(ResourceFlags.InvisibleInInventory)) continue;
                     Transform parent;
                     if (info.Flags.HasFlag(ResourceFlags.Equippable)
                         && (_equipped.TryGetValue(info.ResourceSubType, out var id))

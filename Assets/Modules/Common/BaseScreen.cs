@@ -10,9 +10,21 @@ namespace Modules.Common
         protected abstract ScreenId ScreenId { get;  }
         [SerializeField]
         protected Transform Content;
+        [SerializeField]
+        protected KeyCode keyCode = KeyCode.None;
         protected void Awake()
         {
             this.Subscribe<ChangeScreenState,ScreenId>(OnChangeScreenStateMessage,ScreenId).BindTo(this);
+        }
+
+        protected virtual void Update()
+        {
+            if (keyCode != KeyCode.None && Input.GetKeyDown(keyCode))
+            {
+                Content.gameObject.SetActive(!Content.gameObject.activeSelf);
+                if (Content.gameObject.activeSelf) 
+                    OnShow();
+            } 
         }
 
         protected virtual void OnShow()

@@ -1,4 +1,5 @@
 #region
+using System;
 using Events;
 using Modules.YarnPlayer;
 using UnityEngine;
@@ -27,29 +28,48 @@ namespace Modules.Iteractions
         private string LocationName;
 
         [SerializeField] private string text;
-        private void OnTriggerEnter2D(Collider2D other)
+        private bool available = false;
+        private void OnTriggerEnter(Collider other)
         {
+            available = true;
             this.SendEvent(new HintMessage {
                 active = true,
                 text = text
             });
         }
 
-        private void OnTriggerExit2D(Collider2D other)
+        private void OnTriggerExit(Collider other)
         {
+            available = false;
             this.SendEvent(new HintMessage {
                 active = false
             });
         }
-
-
-        private void OnTriggerStay2D(Collider2D other)
+        private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (available && Input.GetKeyUp(KeyCode.E))
+            {
+                available = false;
+                this.SendEvent(new HintMessage {
+                    active = false
+                });
+                this.SendEvent(new StartDialogueMessage {
+                    NodeName = DialogueId,
+                    Caption = LocationName 
+                });
+                
+            }
+        }
+
+        /*
+        private void OnTriggerStay(Collider other)
+        {
+            if (Input.GetKeyUp(KeyCode.E))
                 this.SendEvent(new StartDialogueMessage {
                     NodeName = DialogueId,
                     Caption = LocationName 
                 });
         }
+        */
     }
 }

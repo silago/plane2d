@@ -65,7 +65,7 @@ namespace Modules.YarnPlayer
         {
             var item = Instantiate(linePrefab, place);
             item.SetLine(obj.Line);
-            var t = obj.Text.Replace("\n", System.Environment.NewLine);
+            var t = obj.Text.Replace("\\n", System.Environment.NewLine);
             item.SetText(t);
             continueButton.gameObject.SetActive(true);
             continueButton.transform.SetAsLastSibling();

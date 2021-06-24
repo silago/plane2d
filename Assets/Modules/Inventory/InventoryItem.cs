@@ -28,6 +28,8 @@ namespace Modules.Inventory
         public InventoryItem Instantiate(Transform parent, ResourceInfo info, int itemCount)
         {
             var item = Instantiate(this, parent);
+            item.gameObject.SetActive(true);
+            item.gameObject.name = info.Name;
             item.count.text = itemCount.ToString();
             item.countContainer.SetActive(itemCount > 1);
             item.icon.sprite = info.Icon;

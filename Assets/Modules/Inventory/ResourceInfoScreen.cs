@@ -44,7 +44,7 @@ namespace Modules.Inventory
         public void Open(InventoryItem item, bool isEquipped)
         {
             gameObject.SetActive(true);
-            description.text = item.info.Description;
+            description.text = item.name + ": "+ item.info.Description;
             _currentItem = item;
             description.text = item.info.Description;
             //icon.overrideSprite = item.info.Icon;

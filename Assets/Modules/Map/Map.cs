@@ -59,8 +59,7 @@ namespace Modules.Map
             );
         private void Start()
         {
-            
-            var x = MapBounds();
+           //var x = MapBounds();
            StartCoroutine(UpdateMap());
         }
 
@@ -77,8 +76,9 @@ namespace Modules.Map
 
         
         protected override ScreenId ScreenId => ScreenId.Map;
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
             foreach (var (worldTransform, mapTransform) in _mapElements)
             {
                 //relative to player
@@ -142,7 +142,7 @@ namespace Modules.Map
                 var pos  = center  + (Vector2) ScaleToMask(target.position * scale);
                DrawCircle(texture, color, (int)pos.x, (int)pos.y,radius);
                texture.Apply();
-               yield return new WaitForSeconds(0.3f);
+               yield return new WaitForSeconds(1f);
             } 
         }
         

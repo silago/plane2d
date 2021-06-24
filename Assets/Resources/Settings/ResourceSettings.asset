@@ -15,7 +15,7 @@ MonoBehaviour:
   data:
   - Id: Coins
     Name: coins
-    Description: 
+    Description: "\u042D\u0442\u043E \u0434\u0435\u043D\u0435\u0436\u043A\u0438"
     Icon: {fileID: 21300000, guid: 8f4bf9faf80b35547a7c9d6fcbd95924, type: 3}
     ResourceType: 0
     ResourceSubType: 0
@@ -36,8 +36,8 @@ MonoBehaviour:
     Flags: 1
   - Id: Hull
     Name: Hull
-    Description: 
-    Icon: {fileID: 21300000, guid: d29c79686d850a942b2eca6bda485723, type: 3}
+    Description: "\u0417\u0430\u043F\u0430\u0441 \u043F\u0440\u043E\u0447\u043D\u043E\u0441\u0442\u0438"
+    Icon: {fileID: 21300000, guid: 995e3b8995a6e2949bd966e9435150f3, type: 3}
     ResourceType: 0
     ResourceSubType: 0
     Flags: 1
@@ -45,7 +45,18 @@ MonoBehaviour:
     Name: Fuel
     Description: 
     Icon: {fileID: 21300000, guid: 571f730ec39b9bc47a7f77fe69df724d, type: 3}
-    ResourceType: 0
+    ResourceType: 1
+    ResourceSubType: 0
+    Flags: 0
+  - Id: RamenParsel
+    Name: The Parsel
+    Description: "\u042D\u0442\u043E \u043A\u043D\u0438\u0433\u0430, \u043D\u0430\u043F\u0438\u0441\u0430\u043D\u043D\u0430\u044F
+      \u043D\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043D\u043E\u0439 \u0434\u0435\u0432\u0443\u0448\u043A\u043E\u0439
+      \u043E\u0441\u0442\u0440\u043E\u0432\u043E\u0432 \u043F\u043E\u0441\u0441\u0443\u043C\u043E\u0432.
+      \u041E\u043D\u0430 \u043E\u0447\u0435\u043D\u044C \u0436\u0434\u0435\u0442,
+      \u0447\u0442\u043E \u0432\u044B \u0435\u0435 \u0434\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u0435"
+    Icon: {fileID: 21300000, guid: 571f730ec39b9bc47a7f77fe69df724d, type: 3}
+    ResourceType: 2
     ResourceSubType: 0
     Flags: 0
   defaultResourceSprite: {fileID: 21300000, guid: 36cf4f0d0da425c4686031a2b8955f42,

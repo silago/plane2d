@@ -90,6 +90,7 @@ namespace Modules.YarnPlayer
 
         public void Run(string node)
         {
+            _dialogue.Stop();
             _dialogue.SetNode(node);
             _dialogue.Continue();
         }
