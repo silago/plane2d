@@ -174,14 +174,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_508e1a35c05f466c812079542bf185d4: 256
-    - Vector1_5d0d5d3f508f4ba189768614b60a1ffc: 2
-    - Vector1_61d31acdc4ff4edc9f2382cdcffef0df: 0.3
-    - Vector1_6907dfee50d144ab9d9dadd2d97a608a: 1
-    - Vector1_6c2e62c842c747dabb16c489acb1cf27: -0.1
-    - Vector1_dc8f4a641a3f4ae0b12a042ff3caf788: 0.1
-    - Vector1_efea70b9d00b4b65aa0906afaf3f158c: 1
-    - Vector1_f931cb8d1a9a4c03b367d8d98a7bb477: 1
+    - Vector1_508e1a35c05f466c812079542bf185d4: 0
+    - Vector1_5d0d5d3f508f4ba189768614b60a1ffc: 0
+    - Vector1_61d31acdc4ff4edc9f2382cdcffef0df: 0
+    - Vector1_6907dfee50d144ab9d9dadd2d97a608a: 0
+    - Vector1_6c2e62c842c747dabb16c489acb1cf27: 0
+    - Vector1_dc8f4a641a3f4ae0b12a042ff3caf788: 0
+    - Vector1_efea70b9d00b4b65aa0906afaf3f158c: 0
+    - Vector1_f931cb8d1a9a4c03b367d8d98a7bb477: 0.52
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -196,13 +196,13 @@ Material:
     - _EnableHeightBlend: 1
     - _EnableInstancedPerPixelNormal: 0
     - _EnvironmentReflections: 1
-    - _Gloss: 0.485
+    - _Gloss: 0.375
     - _GlossMapScale: 0
     - _Glossiness: 0.018
     - _GlossinessSource: 0
     - _GlossyReflections: 0
     - _HeightTransition: 0
-    - _Metallic: 0.328
+    - _Metallic: 0
     - _Metallic0: 0
     - _Metallic1: 0
     - _Metallic2: 0
@@ -229,7 +229,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 0.036535647, b: 0, a: 1}
+    - _Color: {r: 0.60938054, g: 0.7735849, b: 0.7233933, a: 1}
     - _EmissionColor: {r: 1024, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []

@@ -253,15 +253,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "dev.yarnspinner.unity": {
-      "version": "https://github.com/YarnSpinnerTool/YarnSpinner-Unity.git#develop",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.textmeshpro": "1.4.1"
-      },
-      "hash": "1b30441f76887a90713c8b07e63f910848c5db96"
-    },
     "nrjwolf.games.attachattributes": {
       "version": "https://github.com/Nrjwolf/unity-auto-attach-component-attributes.git",
       "depth": 0,

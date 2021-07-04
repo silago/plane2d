@@ -39,6 +39,10 @@ namespace Modules.Resources
 
         public ResourceInfo GetResourceInfo(string key) => _resourceSettings[key.Trim('$')];
 
+        public LineRequirement[] ResolveLineRequirement(ResourceCondition[] x)
+        {
+            return x.Select(r => ResolveLineRequirement(r)).ToArray();
+        }
         public LineRequirement ResolveLineRequirement(ResourceCondition x)
         {
             return new LineRequirement(
