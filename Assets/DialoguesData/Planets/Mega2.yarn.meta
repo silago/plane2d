@@ -8,19 +8,9 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 94073015eacc34c1d8fc6786e43d60ca, type: 3}
-  baseLanguageID: ru-RU
-  stringIDs:
-  - line:Mega2-Mega2-0
-  - line:Mega2-Mega2-1
-  - line:Mega2-Mega2-2
-  - line:Mega2-Mega2-3
-  - line:Mega2-Mega2-4
-  - line:Mega2-Mega2-5
-  - line:Mega2-Mega2-6
-  - line:Mega2-Mega2-7
-  AnyImplicitStringIDs: 1
-  isSuccesfullyParsed: 1
-  parseErrorMessage: 
-  baseLanguage: {instanceID: 0}
-  localizations: []
-  localizationDatabase: {instanceID: 0}
+  LastImportHadImplicitStringIDs: 1
+  LastImportHadAnyStrings: 1
+  isSuccessfullyParsed: 1
+  parseErrorMessage: "Error in Assets/DialoguesData/Planets/Mega2.yarn line 7\n   
+    \u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0443\u0439\u0442\u0435, {$address}!
+    \nUndeclared variable $address"

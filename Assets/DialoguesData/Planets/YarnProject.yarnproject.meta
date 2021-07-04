@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 4e4ffbf3846b41f15a474c1b1d429599
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 053561912b1654d80a424bb0696a74ae, type: 3}
+  sourceScripts:
+  - {fileID: 6391573757903218779, guid: 688fb499a6ae84c5c915e3f6019559ed, type: 3}
+  - {fileID: 6391573757903218779, guid: c850cd81747acd30194a3fe96033adae, type: 3}
+  - {fileID: 6391573757903218779, guid: 2db059af23303b3779b5876a97d3d9fe, type: 3}
+  compileError: "Error in Assets/DialoguesData/Planets/Mega2.yarn line 7\n    \u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0443\u0439\u0442\u0435,
+    {$address}! \nUndeclared variable $address"
+  serializedDeclarations: []
+  defaultLanguage: ru-RU
+  languagesToSourceAssets: []
+  useAddressableAssets: 0

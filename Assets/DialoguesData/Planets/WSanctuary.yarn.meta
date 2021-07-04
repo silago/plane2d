@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bb39728bac8040461b717dac4d0906f1
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 94073015eacc34c1d8fc6786e43d60ca, type: 3}
+  LastImportHadImplicitStringIDs: 0
+  LastImportHadAnyStrings: 0
+  isSuccessfullyParsed: 0
+  parseErrorMessage: "Error on line 1 at position 8:token recognition error at: '-\u0437'\n\n\nTokens:\n1:0
+    ID \"\u041F\u043B\u0430\u043D\u0435\u0442\u0430\""

@@ -1,29 +1,30 @@
+
 title: PossumFields
 ---
-<<declare $PossumFieldsStatus=0 as number>>
-<<declare $Coins=0 as number>>
-<<declare $BrokenHearAmulet=0 as number>>
-<<declare $Food=0 as number>>
-<<declare $RamenParsel=0 as number>>
-<<declare $Fuel=0 as number>>
-<<declare $Hull=0 as number>>
-
+<<declare $PossumFieldsStatus=0>>
+<<declare $Coins=0>>
+<<declare $BrokenHearAmulet=0>>
+<<declare $Food=0>>
+<<declare $RamenParsel=0>>
+<<declare $Fuel=0>>
+<<declare $Hull=0>>
+<<declare $address ="">>
 
 <<if $PossumFieldsStatus == 0>>
-<<jump PossumFields.Intro>>
+    <<jump PossumFields_Intro>>
 <<endif>>
 Поля поссумов. Здесь был я. Здесь был мой дом. Теперь меня здесь больше не будет.
 -> Зал ожидания
-    <<jump PossumFields.Inside>>
+    <<jump PossumFields_Inside>>
 -> Магазин
-    <<jump PossumFields.Shop>>
+    <<jump PossumFields_Shop>>
 ===
 
-title: PossumFields.Intro
-tags: 
+title: PossumFields_Intro
+tags:   
 ---
-<<declare $address ="" as string>>
 Инспектор: Здравствуйте. Перед отлетом всем необходимо заполнить анкету. Подскажите, как я могу к вам обращаться
+<<set $Hull to 100>> 
 -> Товарищ
     <<set $address to "Товарищ">>
 -> Господин
@@ -40,17 +41,17 @@ tags:
 -> Зачем мне причины? Я дышу, когда могу дышать. Сплю, когда могу спать. Бегу, когда могу бежать. Так и тут.
 -> Мой разум разрушен, а сердце погасло. Эти руины вокруг потухшего кострища не греют и не спасают от ветра.
     <<set $BrokenHearAmulet to 1>> 
-<<set $Hull to 100>> 
-Инспектор: Хорошо. После отправки вам потребуется посетить Урчин-Сити. Вы сможете его найти двигаясь ровно на север отсюда. \n Там вам выдадут необходимые документы и лицензию пилота. До тех пор другие планеты будут закрыты для полета. Всего доброго, не забудьте купить топливо.    
+Инспектор: Хорошо. После отправки вам потребуется посетить Урчин-Сити. Вы сможете его найти двигаясь ровно на север отсюда.
+Там вам выдадут необходимые документы и лицензию пилота. До тех пор другие планеты будут закрыты для полета. Всего доброго, не забудьте купить топливо.    
 <<set $PossumFieldsStatus to 1>>
 <<jump PossumFields>>
 ===
 
-title: PossumFields.Shop
+title: PossumFields_Shop
 ---
 Магазин товаров для улетающих и всех остальных. 
--> Елочка вонючка [R Coins>1][/R]
--> Мешок топлива (10 единиц)[R Coins>10][/R]
+-> Елочка вонючка [R Condition="Coins>1"/]
+-> Мешок топлива (10 единиц)[R Condition="Coins>1"/]
     <<set $Coins to ($Coins-10) >>
     <<set $Fuel to ($Fuel+50) >>
 -> Уйтий
@@ -58,7 +59,7 @@ title: PossumFields.Shop
 <<jump PossumFields>>
 ===
 
-title: PossumFields.Inside
+title: PossumFields_Inside
 ---
 Высокие окна режут просторный зал освещенными блоками пыли. Ветер закручивается в маленькие водовороты. Редкие посетители дремлют в креслах.
 -> Девушка с плакатом <<if $RamenParsel == 0>>
@@ -70,6 +71,7 @@ title: PossumFields.Inside
             <<set $RamenParsel to 1>>
         -> Согласиться
             <<set $Coins to ($Coins+15) >>
+            <<set $RamenParsel to 2>>
             Спасибо! Счастливого полета!
     -> Отказаться
         <<set $RamenParsel to 1>>
@@ -79,7 +81,7 @@ title: PossumFields.Inside
             <<set $RamenParsel to 2>>
 -> Девушка с плакатом <<if $RamenParsel == 2>>
     О, привет. Как поживаете?!
-    <<jump PossumFields.Inside>>
+    <<jump PossumFields_Inside>>
 -> Девушка с плакатом <<if $RamenParsel == 1>>
     О, привет. Вы передумали?
     -> Отказаться
@@ -87,7 +89,7 @@ title: PossumFields.Inside
         Спасибо! Счастливого полета!
         <<set $Coins to ($Coins+15) >>
         <<set $RamenParsel to 2>>
--> Купить шаверму [R Coins>1][/R]
+-> Купить шаверму [R Condition="Coins>1"][/R]
     <<set $Food to ($Food+1) >>
     <<set $Coins to ($Coins-1) >>
     (Господи. Зачем она мне?)
