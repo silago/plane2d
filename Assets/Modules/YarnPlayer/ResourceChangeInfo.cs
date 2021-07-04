@@ -13,18 +13,13 @@ public class ResourceChangeInfo : MonoBehaviour
     [SerializeField]
     private string losePatter = "You you've lost {0} {1}. Now you have {2}";
     //private string unchagedPattern = $"{1} amount is unchaged. You gave {0}";
-    
-    public void Init(DialogueDataStorage.DialogueResourceChanged<int> data)
-    {
 
-        if (data.Current == data.Prev)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        string pattern; 
-        pattern = data.Current > data.Prev ? addPattern : losePatter;
-        text.text = string.Format(pattern, Mathf.Abs(data.Current - data.Prev), data.ResourceInfo.Name, data.Current);
-        Icon.sprite = data.ResourceInfo.Icon;
+    public ResourceChangeInfo Instantiate(Transform parent, DialogueDataStorage.DialogueResourceChanged<int> data)
+    {
+        var item = Instantiate(this, parent);
+        var pattern = data.Current > data.Prev ? addPattern : losePatter;
+        item.text.text = string.Format(pattern, Mathf.Abs(data.Current - data.Prev), data.ResourceInfo.Name, data.Current);
+        item.Icon.sprite = data.ResourceInfo.Icon;
+        return item;
     }
 }

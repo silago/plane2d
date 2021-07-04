@@ -23,6 +23,7 @@ namespace Modules.YarnPlayer
 
         [SerializeField] private DialogueLineHandler linePrefab;
         private readonly List<YarnDialogueOptionNode> _buttons = new List<YarnDialogueOptionNode>();
+        private List<GameObject> _history = new List<GameObject>();
         private void Awake()
         {
             mainContainer.SetActive(false);
@@ -43,11 +44,14 @@ namespace Modules.YarnPlayer
                 Time.timeScale = 1f;
                 mainContainer.SetActive(false);
             });
-
         }
         private void OnDialogueResourceChanged(DialogueDataStorage.DialogueResourceChanged<int> obj)
         {
-           Instantiate(_resourceChangeInfoPrefab, place).Init(obj); 
+            if (obj.Current != obj.Prev)
+            {
+                var item = _resourceChangeInfoPrefab.Instantiate(place, obj);
+                _history.Add(item.gameObject);
+            }
         }
         private void OnStartDialogueMessage(StartDialogueMessage obj)
         {
@@ -63,7 +67,13 @@ namespace Modules.YarnPlayer
 
         private void OnNewLine(NewLineMessage obj)
         {
+            foreach (var historyItem in _history)
+            {
+               Destroy(historyItem); 
+            }
+            
             var item = Instantiate(linePrefab, place);
+            _history.Add(item.gameObject);
             item.SetLine(obj.Line);
             var t = obj.Text.Replace("\\n", System.Environment.NewLine);
             item.SetText(t);
@@ -79,6 +89,7 @@ namespace Modules.YarnPlayer
         private void CopyNode(YarnDialogueOptionNode origin)
         {
             var copy = Instantiate(origin, place);
+            _history.Add(copy.gameObject);
             //copy.OptionId = origin.OptionId;
             //copy.optionLine = origin.optionLine;
             copy.ClearRequirements();

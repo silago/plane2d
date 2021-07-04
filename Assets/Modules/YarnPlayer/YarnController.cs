@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Reflection;
 using Events;
 using Modules.Resources;
 using UnityEngine;
 using Yarn;
+using Yarn.Markup;
 using Yarn.Unity;
 using Zenject;
 
@@ -14,8 +16,9 @@ namespace Modules.YarnPlayer
 {
     public class YarnController : MonoBehaviour
     {
+        public YarnProject yarnProject;
         [SerializeField]
-        private List<YarnProgram> programs;
+        private List<Program> programs;
         private Dialogue _dialogue;
         private Program _mainProgram;
         private IDictionary<string, string> _stringTable = new Dictionary<string, string>();
@@ -41,8 +44,8 @@ namespace Modules.YarnPlayer
 
         private void LoadPrograms()
         {
-            foreach (var p in programs) AddStringTable(p);
-            _mainProgram = Program.Combine(programs.Select(x => x.GetProgram()).ToArray());
+            //foreach (var p in programs) AddStringTable(p);
+            _mainProgram = yarnProject.GetProgram(); 
             _dialogue = InitDialogue(_mainProgram);
         }
 
@@ -189,6 +192,7 @@ namespace Modules.YarnPlayer
 
         ResourceCondition[] GetResourceConditions(Tag tag)
         {
+            
             return tag.Attributes.Select( x=>
                 new ResourceCondition(x.Name,x.Type.FromText(), int.Parse(x.Value))
             ).ToArray();
@@ -232,13 +236,6 @@ namespace Modules.YarnPlayer
             
             public ResourceAttribute(string name, string value)
             {
-                var type = name;
-                //if (!ResourceType.TryParse(name, out Type))
-                //{
-                //    Debug.LogError($"could not parse {name} attribute");
-                //    return;
-                //}
-                
                 switch (value[0])
                 {
                     case '>':
@@ -272,19 +269,21 @@ namespace Modules.YarnPlayer
                 //    localisedLine.Text = Dialogue.ParseMarkup(text);
 
                 foreach (var opt in options.Options)
-            {
-                _stringTable.TryGetValue(opt.Line.ID, out var rawText);
-                var lineData = LineParser.ParseLine(rawText);
-                //var lineTags = GetAllTags(rawText);
-                
+                {
+                    var lineData = GetLocalizedLine(opt.Line);
+                    var lineText = _dialogue.ParseMarkup(lineData.RawText).Text;
                 optionsStrings[opt.ID] = new OptionLine {
                     IsAvailable = opt.IsAvailable,
                     Line = opt.Line,
   //                Text = lineData.Text,
-                    Text = Dialogue.ExpandSubstitutions(lineData.Text, opt.Line.Substitutions)
+                    Text = Dialogue.ExpandSubstitutions(lineText, lineData.Substitutions)
                 };
 
-                var lineRequirements = lineData.GetLineRequirements().Select(x => _userDataProvider.ResolveLineRequirement(x));
+                var lineRequirements = new LineRequirement[] {
+                };// lineData.GetLineRequirements().Select(x => _userDataProvider.ResolveLineRequirement(x));
+                var conditions = GetRequirements(lineData);
+                lineRequirements = _userDataProvider.ResolveLineRequirement(conditions);
+                
                 optionsStrings[opt.ID].LineRequirements = lineRequirements.ToArray();
                 optionsStrings[opt.ID].IsSatisfied = lineRequirements.All(x => x.IsSatisfied);
             }
@@ -294,17 +293,57 @@ namespace Modules.YarnPlayer
             });
         }
 
+
+        ResourceCondition[] GetRequirements(LocalizedLine line)
+        {
+
+            var result = new List<ResourceCondition>();
+            MarkupParseResult attributes = _dialogue.ParseMarkup(line.RawText);
+            //if (attribures. == null) return result.ToArray();
+            foreach (MarkupAttribute attr in attributes.Attributes.Where(x=>x.Name == Tags.R))
+            {
+                var condition = attr.Properties["Condition"];
+                var text = condition.StringValue;
+                
+                string[] splitResult = null;
+                foreach (var op in new[] { '=', '>', '<' })
+                    if ((splitResult = text.Split(op)).Length == 2)
+                        result.Add( new ResourceCondition(splitResult[0], op.ToString().FromText(), int.Parse(splitResult[1])
+                        ));
+
+            }
+            return result.ToArray();
+        }
+
         private void OnOptionSelected(int optionId)
         {
             _dialogue.SetSelectedOption(optionId);
             _dialogue.Continue();
         }
 
+        private LocalizedLine GetLocalizedLine(Line line)
+        {
+            string textLanguageCode = System.Globalization.CultureInfo.CurrentCulture.Name;
+            var text = yarnProject.GetLocalization(textLanguageCode).GetLocalizedString(line.ID);
+            var x = new LocalizedLine();
+            var f = x.Text;
+            return new LocalizedLine()
+            {
+                TextID = line.ID,
+                RawText = text,
+                Substitutions = line.Substitutions,
+            };
+            
+
+
+        }
+
         private void LineHandler(Line line)
         {
-            _stringTable.TryGetValue(line.ID, out var rawText);
+            //_stringTable.TryGetValue(line.ID, out var rawText);
+            var localizedLine = GetLocalizedLine(line); 
 
-            var text = Dialogue.ExpandSubstitutions(rawText, line.Substitutions);
+            var text = Dialogue.ExpandSubstitutions(localizedLine.RawText, line.Substitutions);
             var lineData = LineParser.ParseLine(text);
             this.SendEvent(new NewLineMessage {
                 Text = text,
@@ -313,11 +352,10 @@ namespace Modules.YarnPlayer
             _dialogue.Continue();
         }
 
-        public void AddStringTable(YarnProgram yarnScript)
+        public void AddStringTable(Program yarnScript)
         {
-            var text = yarnScript.defaultStringTable.text;
-            var data = StringTableEntry.ParseFromCSV(text);
-            _stringTable = data.ToDictionary(x => x.ID, x => x.Text);
+            //var data = StringTableEntry.ParseFromCSV(yarnScript.);
+            //stringTable = data.ToDictionary(x => x.ID, x => x.Text);
         }
         
         private object[] GetPreparedParametersForMethod(string[] parameters, MethodInfo methodInfo)
@@ -357,23 +395,8 @@ namespace Modules.YarnPlayer
             }
             return finalParameters;
         }
-        
     }
 
-    public static class TagsExtension
-    {
-        public static ResourceCondition[] GetLineRequirements(this LineData line)
-        {
-            Tag tag;
-            if ((tag = line.Tags.FirstOrDefault(x => x.Name == Tags.R.ToString())) != null)
-            {
-                return tag.Attributes.Select( x=>
-                    new ResourceCondition(x.Name,x.Type.FromText(), int.Parse(x.Value))
-                ).ToArray();
-            }
-            return new ResourceCondition[]{};
-        }
-    }
     
         public class LineRequirement
         {
