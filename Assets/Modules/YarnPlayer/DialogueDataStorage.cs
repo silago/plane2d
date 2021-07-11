@@ -10,16 +10,16 @@ using Yarn.Unity;
 using Type = Yarn.Type;
 public class DialogueDataStorage : IVariableStorage
 {
-    private readonly UserDataProvider _userDataProvider;
+    private readonly DataProvider _dataProvider;
     private readonly ResourceSettings _resourceSettings;
     private List<DialogueResourceChanged<int>> IntMessageStash = new List<DialogueResourceChanged<int>>();
     private string Trim(string s) => s.Trim('$');
-    public  DialogueDataStorage(UserDataProvider userDataProvider, ResourceSettings resourceSettings)
+    public  DialogueDataStorage(DataProvider dataProvider, ResourceSettings resourceSettings)
     {
         _resourceSettings = resourceSettings;
-        _userDataProvider = userDataProvider;
+        _dataProvider = dataProvider;
     }
-    public void SetValue(string variableName, string stringValue) => _userDataProvider.Set(Trim(variableName), stringValue);
+    public void SetValue(string variableName, string stringValue) => _dataProvider.Set(Trim(variableName), stringValue);
     
     // we set value through dialogue and want to notify
     public void SetValue(string variableName, float floatValue)
@@ -28,18 +28,18 @@ public class DialogueDataStorage : IVariableStorage
         variableName = variableName.Trim('$');
         var msg = new DialogueResourceChanged<int>() {
             ResourceInfo = _resourceSettings[variableName],
-            Prev = _userDataProvider[variableName]
+            Prev = _dataProvider[variableName]
         };
         msg.Current = msg.Prev + value;
-        _userDataProvider[variableName] = value; 
+        _dataProvider[variableName] = value; 
         IntMessageStash.Add(msg);
         SendMessagesLater();
         //this.SendEvent(msg);
     }
-    public void SetValue(string variableName, bool boolValue)     => _userDataProvider[Trim(variableName)] = boolValue ? 1 : 0;
+    public void SetValue(string variableName, bool boolValue)     => _dataProvider[Trim(variableName)] = boolValue ? 1 : 0;
     public bool TryGetValue<T>(string variableName, out T result)
     {
-        return _userDataProvider.TryGetValue(Trim(variableName), out result);
+        return _dataProvider.TryGetValue(Trim(variableName), out result);
     }
 
     async void SendMessagesLater()

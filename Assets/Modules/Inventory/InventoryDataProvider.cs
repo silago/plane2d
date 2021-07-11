@@ -9,14 +9,14 @@ namespace Modules.Inventory
         public event Action Update;
         // make cache
         private ResourceSettings _resourceSettings;
-        private UserDataProvider _userDataProvider;
+        private DataProvider _dataProvider;
         // slotId => id maybe
         private StringStorage<ResourceSubType> _equippedItems = new StringStorage<ResourceSubType>();
         
-        public  InventoryDataProvider(UserDataProvider userDataProvider, ResourceSettings resourceSettings)
+        public  InventoryDataProvider(DataProvider dataProvider, ResourceSettings resourceSettings)
         {
             _resourceSettings = resourceSettings;
-            _userDataProvider = userDataProvider;
+            _dataProvider = dataProvider;
         }
         public void Equip(ResourceSubType type, string itemId) => _equippedItems[type] = itemId;
         public string GetEquippedItem(ResourceSubType type) => _equippedItems[type]; 
@@ -27,7 +27,7 @@ namespace Modules.Inventory
             var resources = _resourceSettings.Resources;
             foreach (var resourceInfo in resources)
             {
-                result.Add((resourceInfo.Value, _userDataProvider[resourceInfo.Key]));
+                result.Add((resourceInfo.Value, _dataProvider[resourceInfo.Key]));
             }
             return result.ToArray();
         }

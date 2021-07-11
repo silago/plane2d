@@ -23,14 +23,14 @@ namespace Modules.YarnPlayer
         private Program _mainProgram;
         private IDictionary<string, string> _stringTable = new Dictionary<string, string>();
         private Dictionary<string, Delegate> commandHandlers = new Dictionary<string, Delegate>();
-        private UserDataProvider _userDataProvider;
+        private DataProvider _dataProvider;
         private IVariableStorage _variableStorage;
 
         [Inject]
-        void Construct(UserDataProvider users, IVariableStorage variableStorage)
+        void Construct(DataProvider users, IVariableStorage variableStorage)
         {
             _variableStorage = variableStorage;
-            _userDataProvider = users;
+            _dataProvider = users;
         }
         
         private void Awake()
@@ -200,7 +200,7 @@ namespace Modules.YarnPlayer
         
         bool CheckLineRequirement(Tag tag)
         {
-            return _userDataProvider.Check(GetResourceConditions(tag));
+            return _dataProvider.Check(GetResourceConditions(tag));
         }
 
 
@@ -282,7 +282,7 @@ namespace Modules.YarnPlayer
                 var lineRequirements = new LineRequirement[] {
                 };// lineData.GetLineRequirements().Select(x => _userDataProvider.ResolveLineRequirement(x));
                 var conditions = GetRequirements(lineData);
-                lineRequirements = _userDataProvider.ResolveLineRequirement(conditions);
+                lineRequirements = _dataProvider.ResolveLineRequirement(conditions);
                 
                 optionsStrings[opt.ID].LineRequirements = lineRequirements.ToArray();
                 optionsStrings[opt.ID].IsSatisfied = lineRequirements.All(x => x.IsSatisfied);

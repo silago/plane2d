@@ -7,7 +7,7 @@ namespace Modules.Player
 {
     public class PlayerModel 
     {
-        private readonly UserDataProvider _userData;
+        private readonly DataProvider _data;
         public float CurrentFuelConsumeProgress = 0;
         private float fuelConsumeSpeed = 0.05f;
         private Vector3 _targetVelocity;
@@ -15,14 +15,14 @@ namespace Modules.Player
         public event Action<float> FuelConsumeProgress = f => {};
         public int CurrentFuel
         {
-            get => _userData[ResourceNames.Fuel];
-            protected set => _userData[ResourceNames.Fuel] = value;
+            get => _data[ResourceNames.Fuel];
+            protected set => _data[ResourceNames.Fuel] = value;
         }
-        public int CurrentHull => _userData[ResourceNames.Hull];
+        public int CurrentHull => _data[ResourceNames.Hull];
 
-        public PlayerModel(UserDataProvider userDataProvider, Updater updater)
+        public PlayerModel(DataProvider dataProvider, Updater updater)
         {
-            _userData = userDataProvider;
+            _data = dataProvider;
             _updater = updater;
             _updater.Started += () =>
             {
@@ -40,7 +40,7 @@ namespace Modules.Player
             for (;;)
             {
                 yield return new WaitForSeconds(1);
-                var current = _userData[ResourceNames.Fuel];
+                var current = _data[ResourceNames.Fuel];
                 if (current <=0 ) continue;
                 FuelConsumeProgress.Invoke(CurrentFuelConsumeProgress);
                 if ((CurrentFuelConsumeProgress += fuelConsumeSpeed * _targetVelocity.magnitude) >= 1)

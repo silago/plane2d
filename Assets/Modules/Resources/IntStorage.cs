@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
 
-public class IntStorage<T> 
+public class IntStorage<T>
 {
-    private string Key(T k) => $"{typeof(T)}_{k}";
+    public string Prefix = "";
+    private string Key(T k) => $"{Prefix}_{typeof(T)}_{k}";
     public int this[T index]
     {
         get => PlayerPrefs.GetInt(Key(index), 0);

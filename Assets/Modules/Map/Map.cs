@@ -30,6 +30,11 @@ namespace Modules.Map
         private Vector3 WorldCenter => Vector3.zero; 
         private static Vector3 MapCenter => Vector3.zero;
         private Vector2 _maskScale;
+        private string SavedTexture
+        {
+            get => PlayerPrefs.GetString("Map");
+            set => PlayerPrefs.SetString("Map",value);
+        } 
         private Rect MapBounds()
         {
             var r = new Rect {
@@ -50,6 +55,38 @@ namespace Modules.Map
             _maskScale = mask.rectTransform.localScale;
             this.Subscribe<MapElement>(OnMapElement);
             base.Awake();
+            LoadTexture();
+        }
+
+        void LoadTexture()
+        {
+            var data = SavedTexture;
+            Texture2D texture = mask.mainTexture as Texture2D;
+            if (string.IsNullOrEmpty(data))
+            {
+                var white = Color.white;
+                for (var x = 0; x < texture.width; x++)
+                    for (var y = 0; y < texture.height; y++)
+                    {
+                        texture.SetPixel(x,y, Color.white);
+                    }
+            }
+            else
+            {
+                var saved = TextureExtension.FromBase64(data);
+                texture.SetPixels(saved.GetPixels());
+            }
+            texture.Apply();
+        }
+
+        private void OnDisable()
+        {
+            SaveTexture();
+        }
+
+        void SaveTexture()
+        {
+            SavedTexture = (mask.mainTexture as Texture2D).ToBase64();
         }
 
         private Vector3 ScaleToMask(Vector3 from) =>
@@ -139,7 +176,7 @@ namespace Modules.Map
             if (texture == null) yield break;
             for (;;)
             {
-                var pos  = center  + (Vector2) ScaleToMask(target.position * scale);
+                var pos  = center  + (Vector2) ScaleToMask(target.position * scale / _maskScale);
                DrawCircle(texture, color, (int)pos.x, (int)pos.y,radius);
                texture.Apply();
                yield return new WaitForSeconds(1f);

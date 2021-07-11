@@ -30,7 +30,7 @@ namespace Modules.GameFlow.Screens
             }
         };
         private InventoryDataProvider _inventoryDataProvider;
-        private UserDataProvider _userDataProvider;
+        private DataProvider _dataProvider;
         private ResourceSettings _resourceSettings;
         public string CurrentDir { get; private set; } = Root;
 
@@ -38,13 +38,13 @@ namespace Modules.GameFlow.Screens
         [Inject]
         void Construct(
             InventoryDataProvider inventoryDataProvider,
-            UserDataProvider userDataProvider,
+            DataProvider dataProvider,
             ResourceSettings resourceSettings
             )
         {
             
             _inventoryDataProvider = inventoryDataProvider;
-            _userDataProvider = userDataProvider;
+            _dataProvider = dataProvider;
             _resourceSettings = resourceSettings;
         }
 
@@ -181,7 +181,7 @@ namespace Modules.GameFlow.Screens
             {
                 this.Add($"Add {res.Name}", () =>
                 {
-                    _userDataProvider[res.Id] ++ ;
+                    _dataProvider[res.Id] ++ ;
                     _inventoryDataProvider.OnUpdate();
                 },"Resources");
             }

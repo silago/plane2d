@@ -1,3 +1,4 @@
+using Modules.Game;
 using Modules.Inventory;
 using Modules.Player;
 using Modules.Resources;
@@ -11,8 +12,9 @@ public class GlobalInstaller : MonoInstaller
     private ResourceSettings resourceSettings;
     public override void InstallBindings()
     {
+        Container.Bind<SaveAndLoadProvider>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<ResourceSettings>().FromInstance(resourceSettings).AsSingle().NonLazy();
-        Container.Bind<UserDataProvider>().AsSingle().NonLazy();
+        Container.Bind<DataProvider>().AsSingle().NonLazy();
         Container.Bind<InventoryDataProvider>().AsSingle().NonLazy();
         Container.Bind<IVariableStorage>().To<DialogueDataStorage>().AsSingle().NonLazy();
         Container.Bind<Updater>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();

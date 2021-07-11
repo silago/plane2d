@@ -1,7 +1,9 @@
 using UnityEngine;
 public class FloatStorage<T> 
 {
-    private string Key(T k) => $"{typeof(T)}_{k}";
+    
+    public string Prefix = "";
+    private string Key(T k) => $"{Prefix}_{typeof(T)}_{k}";
     public float this[T index]
     {
         get => PlayerPrefs.GetFloat(Key(index), 0f);

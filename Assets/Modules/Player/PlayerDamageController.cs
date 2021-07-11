@@ -6,11 +6,11 @@ namespace Modules.Game.Player
 {
     public class PlayerDamageController : DamageController
     {
-        private UserDataProvider _userdata;
+        private DataProvider _userdata;
         [Inject]
-        public void Construct(UserDataProvider userDataProvider)
+        public void Construct(DataProvider dataProvider)
         {
-            _userdata = userDataProvider;
+            _userdata = dataProvider;
         }
         protected override int Hull
         {
