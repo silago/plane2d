@@ -21,16 +21,5 @@ namespace Modules.Enemies
                 _input.SetAttackTarget(target);
             }
         }
-
-        /*
-        private void OnTriggerExit(Collider other)
-        {
-            if (_currentTarget != null && other.transform == _currentTarget.Transform)
-            {
-                _currentTarget = null;
-                _input.SetAttackTarget(_currentTarget);
-            }
-        }
-        */
     }
 }

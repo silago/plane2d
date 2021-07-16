@@ -7,7 +7,7 @@ using UnityEngine;
 #endregion
 public class DestroyMessage : IMessage
 {
-    public int Damage;
+    public Transform Transform;
 }
 public class DamageMessage : IMessage
 {
@@ -15,12 +15,6 @@ public class DamageMessage : IMessage
     public int Damage;
     public int CurrentHull;
 }
-
-/*
-public class VisibleStateChangeEmitter {
-
-}
-*/
 
 public class DisplayHullMessage : IMessage
 {
@@ -33,7 +27,6 @@ public class DisplayHullMessage : IMessage
 
 namespace Modules.Game.Player
 {
-
     public class DamageController : MonoBehaviour
     {
         [SerializeField]
@@ -77,6 +70,7 @@ namespace Modules.Game.Player
                 var p = Instantiate(destroyEffect, transform.parent);
                 p.transform.position = transform.position;
                 p.gameObject.SetActive(true);
+                this.SendEvent(new DestroyMessage { Transform =  this.transform}, this.GetInstanceID());
                 this.DoWithDelay(0.3f, () => Destroy(gameObject));
             }
             else

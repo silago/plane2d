@@ -54,12 +54,9 @@ public class ShootController : MonoBehaviour
             _lockTs -= Time.deltaTime;
         if (_energy < 1)
             _energy += energyRestoration *= Time.deltaTime;
-
-
         if (Shoot)
         {
             MakeShot();
         }
-
     }
 }

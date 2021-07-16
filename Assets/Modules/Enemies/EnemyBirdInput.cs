@@ -8,8 +8,9 @@ using static Modules.Utils.MathUtils;
 using Random = UnityEngine.Random;
 namespace Modules.Enemies
 {
-    public class EnemyBirdInput : MonoBehaviour
+    public class EnemyBirdInput : MonoBehaviour//, ISetTarget
     {
+        /*
         public bool setRadius;
         [SerializeField]
         private MovementController mc;
@@ -24,30 +25,18 @@ namespace Modules.Enemies
 
         [SerializeField]
         private State currentState = State.Default;
-
-        [SerializeField]
-        private float diffB;
-        [SerializeField]
-        private float diffA;
         [SerializeField]
         private float diff;
-        [Inject(Id = "Player")]
         private IMovable _player;
         private float _prevAngle = 0;
         private void Start()
         {
             StartCoroutine(WaitForAttack());
+            StartCoroutine(ChangeTargetsCo());
+            _currentTarget = targets.First();
         }
         public void Update()
         {
-            //mc.Slow = Input.GetKey(KeyCode.DownArrow);
-            //mc.Accel = Input.GetKey(KeyCode.UpArrow);
-            //mc.Right = Input.GetKey(KeyCode.RightArrow);
-            //mc.Left = Input.GetKey(KeyCode.LeftArrow);
-            //mc.StrafeLeft = Input.GetKey(KeyCode.Q);
-            //mc.StrafeRight = Input.GetKey(KeyCode.E);
-            //sc.Shoot = Input.GetMouseButton(0);
-
             mc.speedUp = true;
             mc.rotateRight = mc.rotateLeft = false;
             diff = 0;
@@ -74,20 +63,6 @@ namespace Modules.Enemies
                     mc.rotateRight = true;
                 else
                     mc.rotateLeft = true;
-        }
-        private void OnDrawGizmosSelected()
-        {
-            var position = transform.position;
-            FindTangents(target.position, desiredDistance, position, out var pointA, out var pointB);
-            diffA = Vector3.SignedAngle(pointA - (Vector2)position, -transform.right, transform.forward);
-            diffB = Vector3.SignedAngle(pointB - (Vector2)position, -transform.right, Vector3.forward);
-            //diffAngle = diff;
-
-            Gizmos.DrawLine(position, pointA);
-            Gizmos.DrawLine(position, pointB);
-            Gizmos.DrawLine(position, position - transform.right);
-            Gizmos.color = new Color(0, 0, 0, 0.3f);
-            Gizmos.DrawSphere(target.position, desiredDistance);
         }
 
         private void OnValidate()
@@ -122,6 +97,26 @@ namespace Modules.Enemies
             Default, Attack
         }
         
+        public IMovable AttackTarget { get; private set; }
+        
+        [SerializeField]
+        private Transform[] targets;
+        [SerializeField]
+        private Transform _currentTarget;
+        public void SetAttackTarget(IMovable item)
+        {
+            AttackTarget = item;
+            if (item != null)
+            {
+                _currentTarget = item.Transform;
+            }
+            else
+            {
+                _currentTarget = targets[Random.Range(0, targets.Length)];
+                currentState = State.Default;
+            }
+        }
+        */
         
     }
 }

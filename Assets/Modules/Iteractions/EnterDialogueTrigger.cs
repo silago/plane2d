@@ -18,14 +18,13 @@ internal class LocationEnterMsg : IMessage
 
 namespace Modules.Iteractions
 {
-    [RequireComponent(typeof(Collision2D))]
-    public class LocationEnterTrigger : MonoBehaviour
+    public class EnterDialogueTrigger : MonoBehaviour
     {
 
         [SerializeField]
-        private string DialogueId;
+        public string DialogueId;
         [SerializeField]
-        private string LocationName;
+        public string LocationName;
 
         [SerializeField] private string text;
         private bool available = false;
