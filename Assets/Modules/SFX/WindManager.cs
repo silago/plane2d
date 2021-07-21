@@ -23,7 +23,7 @@ public class WindManager : MonoBehaviour
     private void PlaySound()
     {
         var soundName = names[Random.Range(0, names.Length)];
-        this.SendEvent(new PlayOnceMessage(soundName) {
+        this.SendEvent(new PlaySoundOnce(soundName) {
             Callback = PlaySound
         });
     }

@@ -13,7 +13,7 @@ public class SoundManager : MonoBehaviour
     private AudioSource sourcePrefab;
     private Pool<AudioSource> _pool;
     public EffectGroup[] effects;
-    public Dictionary<string, Dictionary<string, AudioClip>> _effects = new Dictionary<string, Dictionary<string, AudioClip>>();
+    public Dictionary<string, Dictionary<string, AudioEffect>> _effects = new Dictionary<string, Dictionary<string, AudioEffect>>();
     private AudioSource _musicSource;
     private const string DEFAULT_GROUP_NAME = "_";
     private void Awake()
@@ -21,9 +21,9 @@ public class SoundManager : MonoBehaviour
         foreach (var group in effects)
         {
             if (string.IsNullOrEmpty(group.id)) group.id = DEFAULT_GROUP_NAME;
-            var effectGroup = _effects[group.id] = new Dictionary<string, AudioClip>();
+            var effectGroup = _effects[group.id] = new Dictionary<string, AudioEffect>();
             foreach (var effect in group.effects)
-                effectGroup[effect.id] = effect.clip;
+                effectGroup[effect.id] = effect;
         }
         
         _pool = new Pool<AudioSource>(sourcePrefab);
@@ -32,17 +32,17 @@ public class SoundManager : MonoBehaviour
         _musicSource.loop = false;
         StartCoroutine(StartMusicQueue());
         
-        this.Subscribe<PlayOnceMessage>(OnPlayMessage);
-        this.Subscribe<PlayLongMessage>(OnLongPlay);
+        this.Subscribe<PlaySoundOnce>(OnPlayMessage);
+        this.Subscribe<PlaySoundLong>(OnLongPlay);
         this.Subscribe<PlayMusicMessage>(OnMusicPlay);
     }
 
-    private AudioClip _nextMusicClip = null;
+    private AudioEffect _nextMusicClip = null;
     private void OnMusicPlay(PlayMusicMessage obj)
     {
         var (group, soundName) = (string.IsNullOrEmpty(obj.Group)) ? SplitSoundName(obj.Id) : (obj.Group, obj.Id);
         var clip = GetClip(group, soundName);
-        if (clip != _musicSource.clip)
+        if (clip.clip != _musicSource.clip)
         {
             _nextMusicClip = clip; 
         }
@@ -55,37 +55,41 @@ public class SoundManager : MonoBehaviour
         {
             if (_musicSource.isPlaying == false && _nextMusicClip != null)
             {
-                _musicSource.PlayOneShot(_nextMusicClip);
+                _musicSource.volume = _nextMusicClip.volume;
+                _musicSource.PlayOneShot(_nextMusicClip.clip);
+                yield return new WaitForSeconds(_nextMusicClip.clip.length);
                 _nextMusicClip = null;
-                yield return new WaitForSeconds(_nextMusicClip.length);
             } 
             yield return new WaitForSeconds(5);
         }
     }
 
-    private AudioClip GetClip(string group, string name)
+    private AudioEffect GetClip(string group, string name)
     {
         
         if (!_effects.TryGetValue(group, out var musicGroup)
                 || !@musicGroup.TryGetValue(name, out var effect)) return null;
         return effect;
     }
-    private void OnLongPlay(PlayLongMessage obj)
+    private void OnLongPlay(PlaySoundLong obj)
     {
         var (group, soundName) = (string.IsNullOrEmpty(obj.Group)) ? SplitSoundName(obj.Id) : (obj.Group, obj.Id);
         var source = _pool.Pick();
-        source.clip = GetClip(group,name);
+        var effect = GetClip(group,soundName);
+        source.volume = effect.volume;
+        source.clip = effect.clip;
         source.loop = true;
         source.Play();
         obj.Complete += () => { source.Stop(); _pool.Return(source); };
     }
-    private void OnPlayMessage(PlayOnceMessage obj)
+    private void OnPlayMessage(PlaySoundOnce obj)
     {
         var (group, soundName) = (string.IsNullOrEmpty(obj.Group)) ? SplitSoundName(obj.Id) : (obj.Group, obj.Id);
         var effect  = GetClip(group,soundName);
         var source =  _pool.Pick();
-        source.PlayOneShot(effect);
-        this.DoWithDelay(effect.length, () =>
+        source.volume = effect.volume;
+        source.PlayOneShot(effect.clip);
+        this.DoWithDelay(effect.clip.length, () =>
         {
             _pool.Return(source);
             obj.Callback?.Invoke();
@@ -117,14 +121,14 @@ public static class SoundObjectExtensions
     {
         @self.SendEvent(new PlayMusicMessage(group, soundName));
     }
-    public static void PlayEffect(this object @self, string soundName, string group)
+    public static void PlayEffect(this object @self, string soundName, string group = null)
     {
-        @self.SendEvent(new PlayOnceMessage(group, group));
+        @self.SendEvent(new PlaySoundOnce( soundName));
     }
     
     public static void PlayLong(this object @self, string soundName, string group = "", Action completion = null)
     {
-        @self.SendEvent(new PlayLongMessage(group, soundName, completion));
+        @self.SendEvent(new PlaySoundLong(group, soundName));
     }
     
 
@@ -136,25 +140,15 @@ public class PlayMusicMessage : BaseSoundMessage
     public PlayMusicMessage(string id) : base(id) {}
 }
 
-public class PlayLongMessage : BaseSoundMessage
+public class PlaySoundLong : BaseSoundMessage
 {
     public event Action Complete;
-    public PlayLongMessage(string group, string id, Action complete) : base(group, id)
-    {
-        Complete = complete;
-        Group =group;
-        Id = id;
-    }
+    public PlaySoundLong(string group, string id) : base(group, id) {}
     public void Stop()
     {
         Complete?.Invoke();
     }
-    public PlayLongMessage(string id, Action complete) : base(id)
-    {
-        Complete = complete;
-        Group = null;
-        Id = id;
-    }
+    public PlaySoundLong(string id) : base(id) {}
 }
 
 public abstract class BaseSoundMessage : IMessage
@@ -173,11 +167,11 @@ public abstract class BaseSoundMessage : IMessage
     }
 }
 
-public class PlayOnceMessage : BaseSoundMessage
+public class PlaySoundOnce : BaseSoundMessage
 {
     public Action Callback;
-    public PlayOnceMessage(string @group, string id) : base(@group, id) {}
-    public PlayOnceMessage(string id) : base(id) {}
+    public PlaySoundOnce(string @group, string id) : base(@group, id) {}
+    public PlaySoundOnce(string id) : base(id) {}
 }
 
 [Serializable]
@@ -193,4 +187,6 @@ public class AudioEffect
 {
     public string id;
     public AudioClip clip;
+    [Range(0,1)]
+    public float volume = 1;
 }

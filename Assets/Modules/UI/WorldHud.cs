@@ -23,7 +23,7 @@ namespace Modules.UI
             _pool = new Pool<HullWidget>(prefab) {
             };
         }
-        private void Update()
+        private void LateUpdate()
         {
             foreach (var (target, widget) in _items.Values)
             {

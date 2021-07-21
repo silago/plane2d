@@ -38,7 +38,7 @@ public class ShootController : MonoBehaviour
         var t = Instantiate(_projectile, transform.parent);
         foreach (var col in _colliders)
         {
-            Physics.IgnoreCollision(col, t.GetComponent<Collider>());
+            Physics.IgnoreCollision(col, t.Collider);
         }
         t.speed = projectileSpeed + ShooterSpeed;
         //t.transform.rotation = transform.rotation;
@@ -54,9 +54,9 @@ public class ShootController : MonoBehaviour
             _lockTs -= Time.deltaTime;
         if (_energy < 1)
             _energy += energyRestoration *= Time.deltaTime;
-        if (Shoot)
+        if (Shoot && (MakeShot()))
         {
-            MakeShot();
+           this.PlayEffect("Common.Shoot"); 
         }
     }
 }

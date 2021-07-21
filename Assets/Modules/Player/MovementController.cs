@@ -18,15 +18,15 @@ namespace Modules.Player
         [SerializeField]
         private float accelerationSpeed;
         [SerializeField]
-        private float maxVelocity;
+        public float maxVelocity;
         [SerializeField]
-        private float minVelocity;
+        public float minVelocity;
         [SerializeField]
         private float rotationDeceleration;
         [SerializeField]
         private float velocityChangeRate;
         private Rigidbody _body;
-        private float Speed { get; set; }
+        public float Speed { get; set; }
         public Vector3 Direction => _body.velocity.normalized;
         public float VelocityMagnitude
         {

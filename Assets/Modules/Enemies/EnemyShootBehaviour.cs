@@ -97,6 +97,7 @@ namespace Modules.Enemies
                 yield return new WaitForSeconds(3);
                 if (active == false) continue;
                 var b = Instantiate(bulletPrefab, transform.parent);
+                this.PlayEffect("Common.Shoot"); 
                 b.gameObject.SetActive(true);
                 b.transform.rotation = transform.rotation;
                 b.transform.position = transform.position;

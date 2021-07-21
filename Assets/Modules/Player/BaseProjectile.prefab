@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 417fda6e7d1e4e14b9b1241feb144090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 1168942529637665175}
   ttl: 2
   speed: 5
   damage: 1
@@ -61,6 +62,7 @@ TrailRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0

@@ -3,6 +3,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField]
+    public Collider Collider;
+    [SerializeField]
     private float ttl = 10;
     [SerializeField]
     public float speed;
@@ -21,6 +23,8 @@ public class Projectile : MonoBehaviour
         this.SendEvent(new DamageMessage {
             Damage = damage
         }, other.gameObject.GetInstanceID());
+        this.PlayEffect("Common.Hit"); 
         Destroy(gameObject);
+        
     }
 }
