@@ -28,6 +28,7 @@ public class SoundManager : MonoBehaviour
         
         _pool = new Pool<AudioSource>(sourcePrefab);
         _musicSource = _pool.Pick();
+        _musicSource.gameObject.name = "music"; 
         _musicSource.loop = false;
         StartCoroutine(StartMusicQueue());
         
@@ -39,7 +40,8 @@ public class SoundManager : MonoBehaviour
     private AudioClip _nextMusicClip = null;
     private void OnMusicPlay(PlayMusicMessage obj)
     {
-        var clip = GetClip(obj.Group, obj.Id);
+        var (group, soundName) = (string.IsNullOrEmpty(obj.Group)) ? SplitSoundName(obj.Id) : (obj.Group, obj.Id);
+        var clip = GetClip(group, soundName);
         if (clip != _musicSource.clip)
         {
             _nextMusicClip = clip; 
@@ -55,6 +57,7 @@ public class SoundManager : MonoBehaviour
             {
                 _musicSource.PlayOneShot(_nextMusicClip);
                 _nextMusicClip = null;
+                yield return new WaitForSeconds(_nextMusicClip.length);
             } 
             yield return new WaitForSeconds(5);
         }
@@ -62,51 +65,33 @@ public class SoundManager : MonoBehaviour
 
     private AudioClip GetClip(string group, string name)
     {
-        if (string.IsNullOrEmpty(group)) group = DEFAULT_GROUP_NAME;
+        
         if (!_effects.TryGetValue(group, out var musicGroup)
                 || !@musicGroup.TryGetValue(name, out var effect)) return null;
         return effect;
     }
     private void OnLongPlay(PlayLongMessage obj)
     {
+        var (group, soundName) = (string.IsNullOrEmpty(obj.Group)) ? SplitSoundName(obj.Id) : (obj.Group, obj.Id);
         var source = _pool.Pick();
-        source.clip = GetClip(obj.Group,obj.Id);
+        source.clip = GetClip(group,name);
         source.loop = true;
         source.Play();
         obj.Complete += () => { source.Stop(); _pool.Return(source); };
     }
     private void OnPlayMessage(PlayOnceMessage obj)
     {
-        var effect  = GetClip(obj.Group,obj.Id);
-        var source = _pool.Pick();
+        var (group, soundName) = (string.IsNullOrEmpty(obj.Group)) ? SplitSoundName(obj.Id) : (obj.Group, obj.Id);
+        var effect  = GetClip(group,soundName);
+        var source =  _pool.Pick();
         source.PlayOneShot(effect);
         this.DoWithDelay(effect.length, () =>
         {
             _pool.Return(source);
+            obj.Callback?.Invoke();
         });
     }
-}
-
-public static class SoundObjectExtensions
-{
-    public static void PlayMusic(this object @self, string soundName)
-    {
-        var (group, name) = SplitSoundName(soundName);
-        @self.SendEvent(new PlayMusicMessage(group, name));
-    }
-    public static void PlayEffect(this object @self, string soundName)
-    {
-        var (group, name) = SplitSoundName(soundName);
-        @self.SendEvent(new PlayOnceMessage(group, name));
-    }
     
-    public static void PlayLong(this object @self, string soundName, Action completion)
-    {
-        var (group, name) = SplitSoundName(soundName);
-        @self.SendEvent(new PlayLongMessage(group, name, completion));
-    }
-    
-
     public static (string,string) SplitSoundName(string name)
     {
         string effect = null;
@@ -121,33 +106,50 @@ public static class SoundObjectExtensions
             group = parts[0];
             effect = parts[1];
         }
+        if (group == null) group = DEFAULT_GROUP_NAME;
         return (group, effect);
     }
 }
 
-public class PlayMusicMessage : IMessage
+public static class SoundObjectExtensions
 {
-    public string Group ;
-    public string Id;
-    public PlayMusicMessage(string group, string id)
+    public static void PlayMusic(this object @self, string soundName, string group = "")
     {
-        Group =group;
-        Id = id;
+        @self.SendEvent(new PlayMusicMessage(group, soundName));
     }
+    public static void PlayEffect(this object @self, string soundName, string group)
+    {
+        @self.SendEvent(new PlayOnceMessage(group, group));
+    }
+    
+    public static void PlayLong(this object @self, string soundName, string group = "", Action completion = null)
+    {
+        @self.SendEvent(new PlayLongMessage(group, soundName, completion));
+    }
+    
+
 }
 
-public class PlayLongMessage : IMessage
+public class PlayMusicMessage : BaseSoundMessage
+{
+    public PlayMusicMessage(string group, string id) : base(group, id) {}
+    public PlayMusicMessage(string id) : base(id) {}
+}
+
+public class PlayLongMessage : BaseSoundMessage
 {
     public event Action Complete;
-    public string Group ;
-    public string Id;
-    public PlayLongMessage(string group, string id, Action complete)
+    public PlayLongMessage(string group, string id, Action complete) : base(group, id)
     {
         Complete = complete;
         Group =group;
         Id = id;
     }
-    public PlayLongMessage(string id, Action complete)
+    public void Stop()
+    {
+        Complete?.Invoke();
+    }
+    public PlayLongMessage(string id, Action complete) : base(id)
     {
         Complete = complete;
         Group = null;
@@ -155,20 +157,27 @@ public class PlayLongMessage : IMessage
     }
 }
 
-public class PlayOnceMessage : IMessage
+public abstract class BaseSoundMessage : IMessage
 {
     public string Group ;
     public string Id;
-    public PlayOnceMessage(string group, string id)
+    public BaseSoundMessage(string group, string id)
     {
         Group =group;
         Id = id;
     }
-    public PlayOnceMessage(string id)
+    public BaseSoundMessage(string id)
     {
         Group = null;
         Id = id;
     }
+}
+
+public class PlayOnceMessage : BaseSoundMessage
+{
+    public Action Callback;
+    public PlayOnceMessage(string @group, string id) : base(@group, id) {}
+    public PlayOnceMessage(string id) : base(id) {}
 }
 
 [Serializable]

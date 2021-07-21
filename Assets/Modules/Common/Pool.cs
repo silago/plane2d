@@ -6,15 +6,24 @@ namespace Modules.Common
     {
         private Stack<T> _pool = new Stack<T>();
         private T _prefab;
+        private Transform parent;
+        public Pool(T prefab, Transform parent)
+        {
+            _prefab = prefab;
+            this.parent = parent;
+        }
         public Pool(T prefab)
         {
             _prefab = prefab;
+            parent = prefab.transform.parent;
         }
 
         public T Pick()
         {
             if (_pool.Count == 0) EnlargePool(1);
-            return _pool.Pop();
+            var item =  _pool.Pop();
+            item.gameObject.SetActive(true);
+            return item;
         }
 
         public void Return(T item)
@@ -27,7 +36,7 @@ namespace Modules.Common
         {
             for (var i = 0; i < size; i++)
             {
-                var item = UnityEngine.Object.Instantiate(_prefab);
+                var item = UnityEngine.Object.Instantiate(_prefab, parent);
                 item.gameObject.SetActive(false);
                 _pool.Push(item);
             }
